@@ -285,46 +285,6 @@
         background-color var(--motion-duration-base) var(--motion-ease-standard),
         box-shadow var(--motion-duration-base) var(--motion-ease-standard),
         border-color var(--motion-duration-base) var(--motion-ease-standard);
-      overflow: hidden;
-    }
-
-    /* ── Ripple ──────────────────────────────────────────────────── */
-    .cds-checkbox {
-      --ripple-x: 50%;
-      --ripple-y: 50%;
-      --ripple-size: 0px;
-    }
-
-    .cds-checkbox::after {
-      content: '';
-      position: absolute;
-      top: var(--ripple-y);
-      left: var(--ripple-x);
-      width: var(--ripple-size);
-      height: var(--ripple-size);
-      margin-top: calc(var(--ripple-size) / -2);
-      margin-left: calc(var(--ripple-size) / -2);
-      background: rgba(255, 255, 255, 0.35);
-      border-radius: 50%;
-      transform: scale(0);
-      opacity: 1;
-      pointer-events: none;
-    }
-
-    @keyframes ripple-burst {
-      to {
-        transform: scale(1);
-        opacity: 0;
-      }
-    }
-
-    .cds-checkbox.is-rippling::after {
-      animation: ripple-burst 500ms cubic-bezier(0, 0, 0.2, 1) forwards;
-    }
-
-    /* Unchecked ripple uses a darker colour */
-    .cds-checkbox.config-unchecked::after {
-      background: rgba(0, 0, 0, 0.10);
     }
 
     .cds-checkbox-icon {
@@ -417,7 +377,14 @@
       font-size: var(--font-size-s);
       font-weight: var(--font-weight-regular);
       color: var(--color-text-primary);
-      line-height: 1.4;
+      line-height: 1;
+    }
+
+    /* Sofia Pro carries more internal leading above the cap-height than
+       below the baseline — a small upward nudge corrects the optical offset.
+       Scoped to wilko only so Rubik on Homebase is unaffected. */
+    [data-brand="wilko"] .cds-checkbox-label {
+      transform: translateY(-1px);
     }
 
     .cds-checkbox-wrapper.state-disabled .cds-checkbox-label {
@@ -857,7 +824,7 @@
       var boxClass = 'cds-checkbox config-' + currentConfig + getStateClass();
 
       var html = '<div class="' + wrapperClass + '" data-index="' + index + '" data-config="' + currentConfig + '">';
-      html += '<div class="' + boxClass + '" data-ripple>';
+      html += '<div class="' + boxClass + '">';
       html += getIconSvg();
       html += '</div>';
       if (showLabel && labelText) {
@@ -891,7 +858,7 @@
       if (extras.length) caption += ' · ' + extras.join(' + ');
       document.getElementById('preview-caption').textContent = caption;
 
-      // Rebind ripple + toggle interactions
+      // Rebind toggle interactions
       bindInteractions();
     }
 
@@ -1100,25 +1067,17 @@
       var p   = '<span class="snip-prop">';    var pc  = '</span>';
 
       var out = '';
-      out += c + '// CDS Checkbox — ripple effect' + cc + '\n';
-      out += c + '// Requires: position:relative + overflow:hidden on .cds-checkbox' + cc + '\n\n';
-      out += fn + 'document' + fnc + '.' + fn + 'querySelectorAll' + fnc + '(' + str + '\'.cds-checkbox\'' + strc + ').' + fn + 'forEach' + fnc + '(' + kw + 'function' + kwc + '(box) {\n';
-      out += '  box.' + fn + 'addEventListener' + fnc + '(' + str + '\'mousedown\'' + strc + ', ' + kw + 'function' + kwc + '(e) {\n';
-      out += '    ' + kw + 'var' + kwc + ' wrapper = box.' + p + 'closest' + pc + '(' + str + '\'.cds-checkbox-wrapper\'' + strc + ');\n';
-      out += '    ' + kw + 'if' + kwc + ' (wrapper && wrapper.' + fn + 'classList' + fnc + '.' + fn + 'contains' + fnc + '(' + str + '\'state-disabled\'' + strc + ')) ' + kw + 'return' + kwc + ';\n';
-      out += '    ' + kw + 'var' + kwc + ' rect = box.' + fn + 'getBoundingClientRect' + fnc + '();\n';
-      out += '    ' + kw + 'var' + kwc + ' x    = e.' + p + 'clientX' + pc + ' - rect.' + p + 'left' + pc + ';\n';
-      out += '    ' + kw + 'var' + kwc + ' y    = e.' + p + 'clientY' + pc + ' - rect.' + p + 'top' + pc + ';\n';
-      out += '    ' + kw + 'var' + kwc + ' size = ' + fn + 'Math' + fnc + '.' + fn + 'max' + fnc + '(rect.' + p + 'width' + pc + ', rect.' + p + 'height' + pc + ') * 2.5;\n';
-      out += '    box.' + fn + 'style' + fnc + '.' + fn + 'setProperty' + fnc + '(' + str + '\'--ripple-x\'' + strc + ', x + ' + str + '\'px\'' + strc + ');\n';
-      out += '    box.' + fn + 'style' + fnc + '.' + fn + 'setProperty' + fnc + '(' + str + '\'--ripple-y\'' + strc + ', y + ' + str + '\'px\'' + strc + ');\n';
-      out += '    box.' + fn + 'style' + fnc + '.' + fn + 'setProperty' + fnc + '(' + str + '\'--ripple-size\'' + strc + ', size + ' + str + '\'px\'' + strc + ');\n';
-      out += '    box.' + fn + 'classList' + fnc + '.' + fn + 'remove' + fnc + '(' + str + '\'is-rippling\'' + strc + ');\n';
-      out += '    ' + kw + 'void' + kwc + ' box.' + p + 'offsetWidth' + pc + ';\n';
-      out += '    box.' + fn + 'classList' + fnc + '.' + fn + 'add' + fnc + '(' + str + '\'is-rippling\'' + strc + ');\n';
-      out += '  });\n';
-      out += '  box.' + fn + 'addEventListener' + fnc + '(' + str + '\'animationend\'' + strc + ', ' + kw + 'function' + kwc + '() {\n';
-      out += '    box.' + fn + 'classList' + fnc + '.' + fn + 'remove' + fnc + '(' + str + '\'is-rippling\'' + strc + ');\n';
+      out += c + '// CDS Checkbox — toggle interaction' + cc + '\n';
+      out += c + '// Toggles checked ↔ unchecked on click' + cc + '\n\n';
+      out += fn + 'document' + fnc + '.' + fn + 'querySelectorAll' + fnc + '(' + str + '\'.cds-checkbox-wrapper\'' + strc + ').' + fn + 'forEach' + fnc + '(' + kw + 'function' + kwc + '(wrapper) {\n';
+      out += '  wrapper.' + fn + 'addEventListener' + fnc + '(' + str + '\'click\'' + strc + ', ' + kw + 'function' + kwc + '() {\n';
+      out += '    ' + kw + 'if' + kwc + ' (wrapper.' + fn + 'classList' + fnc + '.' + fn + 'contains' + fnc + '(' + str + '\'state-disabled\'' + strc + ')) ' + kw + 'return' + kwc + ';\n';
+      out += '    ' + kw + 'var' + kwc + ' box = wrapper.' + fn + 'querySelector' + fnc + '(' + str + '\'.cds-checkbox\'' + strc + ');\n';
+      out += '    ' + kw + 'var' + kwc + ' input = wrapper.' + fn + 'querySelector' + fnc + '(' + str + '\'input[type=\"checkbox\"]\'' + strc + ');\n';
+      out += '    ' + kw + 'var' + kwc + ' isChecked = box.' + fn + 'classList' + fnc + '.' + fn + 'contains' + fnc + '(' + str + '\'config-checked\'' + strc + ');\n';
+      out += '    box.' + fn + 'classList' + fnc + '.' + fn + 'toggle' + fnc + '(' + str + '\'config-checked\'' + strc + ', !isChecked);\n';
+      out += '    box.' + fn + 'classList' + fnc + '.' + fn + 'toggle' + fnc + '(' + str + '\'config-unchecked\'' + strc + ', isChecked);\n';
+      out += '    ' + kw + 'if' + kwc + ' (input) input.' + p + 'checked' + pc + ' = !isChecked;\n';
       out += '  });\n';
       out += '});\n';
 
@@ -1138,26 +1097,18 @@
 
       if (snippetTab === 'js') {
         var lines = [];
-        lines.push('// CDS Checkbox — ripple effect');
-        lines.push('// Requires: position:relative + overflow:hidden on .cds-checkbox');
+        lines.push('// CDS Checkbox — toggle interaction');
+        lines.push('// Toggles checked ↔ unchecked on click');
         lines.push('');
-        lines.push("document.querySelectorAll('.cds-checkbox').forEach(function(box) {");
-        lines.push("  box.addEventListener('mousedown', function(e) {");
-        lines.push("    var wrapper = box.closest('.cds-checkbox-wrapper');");
-        lines.push("    if (wrapper && wrapper.classList.contains('state-disabled')) return;");
-        lines.push('    var rect = box.getBoundingClientRect();');
-        lines.push('    var x    = e.clientX - rect.left;');
-        lines.push('    var y    = e.clientY - rect.top;');
-        lines.push('    var size = Math.max(rect.width, rect.height) * 2.5;');
-        lines.push("    box.style.setProperty('--ripple-x', x + 'px');");
-        lines.push("    box.style.setProperty('--ripple-y', y + 'px');");
-        lines.push("    box.style.setProperty('--ripple-size', size + 'px');");
-        lines.push("    box.classList.remove('is-rippling');");
-        lines.push('    void box.offsetWidth;');
-        lines.push("    box.classList.add('is-rippling');");
-        lines.push('  });');
-        lines.push("  box.addEventListener('animationend', function() {");
-        lines.push("    box.classList.remove('is-rippling');");
+        lines.push("document.querySelectorAll('.cds-checkbox-wrapper').forEach(function(wrapper) {");
+        lines.push("  wrapper.addEventListener('click', function() {");
+        lines.push("    if (wrapper.classList.contains('state-disabled')) return;");
+        lines.push("    var box = wrapper.querySelector('.cds-checkbox');");
+        lines.push("    var input = wrapper.querySelector('input[type=\"checkbox\"]');");
+        lines.push("    var isChecked = box.classList.contains('config-checked');");
+        lines.push("    box.classList.toggle('config-checked', !isChecked);");
+        lines.push("    box.classList.toggle('config-unchecked', isChecked);");
+        lines.push('    if (input) input.checked = !isChecked;');
         lines.push('  });');
         lines.push('});');
         plain = lines.join('\n');
@@ -1278,7 +1229,7 @@
       generateSnippet();
     }
 
-    // Ripple binding
+    // Toggle binding
     function getIconSvgForConfig(cfg) {
       if (cfg === 'checked') {
         return '<svg class="cds-checkbox-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">' + checkboxIcons.tick + '</svg>';
@@ -1328,26 +1279,6 @@
         wrapper.addEventListener('click', function(e) {
           if (wrapper.classList.contains('state-disabled')) return;
           toggleCheckbox(wrapper);
-        });
-      });
-
-      document.querySelectorAll('[data-ripple]').forEach(function(box) {
-        box.addEventListener('mousedown', function(e) {
-          var wrapper = box.closest('.cds-checkbox-wrapper');
-          if (wrapper && wrapper.classList.contains('state-disabled')) return;
-          var rect = box.getBoundingClientRect();
-          var x = e.clientX - rect.left;
-          var y = e.clientY - rect.top;
-          var size = Math.max(rect.width, rect.height) * 2.5;
-          box.style.setProperty('--ripple-x', x + 'px');
-          box.style.setProperty('--ripple-y', y + 'px');
-          box.style.setProperty('--ripple-size', size + 'px');
-          box.classList.remove('is-rippling');
-          void box.offsetWidth;
-          box.classList.add('is-rippling');
-        });
-        box.addEventListener('animationend', function() {
-          box.classList.remove('is-rippling');
         });
       });
     }
