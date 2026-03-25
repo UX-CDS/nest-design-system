@@ -1,0 +1,1359 @@
+
+<!DOCTYPE html>
+<html lang="en" data-brand="wilko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkbox — CDS Configurator</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/nsp1wdf.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Primitive tokens ──────────────────────────────────────── */
+    :root {
+      --primitive-white: #ffffff;
+      --primitive-grey-1: #f4f4f4;
+      --primitive-grey-2: #e6e6e6;
+      --primitive-grey-3: #d9d9d9;
+      --primitive-grey-4: #cccccc;
+      --primitive-grey-5: #888888;
+      --primitive-grey-6: #666666;
+      --font-size-massive: 40px;
+      --font-size-xxl: 32px;
+      --font-size-xl: 28px;
+      --font-size-l: 24px;
+      --font-size-m: 20px;
+      --font-size-s: 16px;
+      --font-size-xs: 14px;
+      --font-size-xxs: 12px;
+      --font-size-tiny: 10px;
+      --radius-xs: 4px;
+      --radius-s: 8px;
+      --radius-m: 12px;
+      --radius-l: 16px;
+      --radius-xl: 24px;
+      --radius-full: 100px;
+      --stroke-thin: 1px;
+      --stroke-normal: 1.5px;
+      --stroke-thick: 2px;
+      --space-m: 32px;
+      --space-s: 24px;
+      --space-xs: 16px;
+      --space-12: 12px;
+      --space-8: 8px;
+      --space-4: 4px;
+      --motion-duration-base: 250ms;
+      --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Wilko semantic tokens ─────────────────────────────────── */
+    [data-brand="wilko"] {
+      --color-brand-primary: #9d2235;
+      --color-brand-secondary: #fdda24;
+      --color-btn-primary-bg: #23854a;
+      --color-btn-primary-bg-hover: #175e40;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: sofia-pro, sans-serif;
+      --font-feature-settings: "ss04" 1;
+      --font-weight-bold: 800;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 500;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #222222;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-focus-ring: #024960;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #222222;
+      --color-semantic-green-3: #23854a;
+      --color-semantic-green-hover: #175e40;
+      --color-focus-green-ring: #c8f3dc;
+    }
+
+    /* ── Homebase semantic tokens ──────────────────────────────── */
+    [data-brand="homebase"] {
+      --color-brand-primary: #1d8634;
+      --color-brand-secondary: #ec7224;
+      --color-btn-primary-bg: #1d8634;
+      --color-btn-primary-bg-hover: #155d25;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: 'Rubik', sans-serif;
+      --font-feature-settings: normal;
+      --font-weight-bold: 600;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 400;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #333333;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-focus-ring: #2b347f;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #333333;
+      --color-semantic-green-3: #1d8634;
+      --color-semantic-green-hover: #155d25;
+      --color-focus-green-ring: #b8e6c8;
+    }
+
+    [data-brand] {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page layout ───────────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    [data-brand] button,
+    [data-brand] input,
+    [data-brand] select,
+    [data-brand] textarea,
+    [data-brand] label {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+      background: var(--color-surface-page);
+      min-height: 100vh;
+      padding: var(--space-m);
+    }
+
+    .page-header {
+      margin-bottom: var(--space-s);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    .page-header h1 {
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .page-header p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+    }
+
+    /* ── Brand switcher pill ───────────────────────────────────── */
+    .brand-switcher {
+      display: flex;
+      gap: var(--space-4);
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+    }
+
+    .brand-btn {
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .brand-btn.active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Layout: preview + configurator ───────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-s);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Preview canvas ────────────────────────────────────────── */
+    .preview-canvas {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-l);
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-m);
+      position: relative;
+    }
+
+    .preview-label {
+      position: absolute;
+      bottom: var(--space-xs);
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+    }
+
+    /* ── Reset button ──────────────────────────────────────────── */
+    .reset-btn {
+      position: absolute;
+      top: var(--space-12);
+      right: var(--space-12);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .reset-btn:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .reset-btn svg {
+      flex-shrink: 0;
+    }
+
+    /* ── CDS Checkbox Component ─────────────────────────────────── */
+    .cds-checkbox-wrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+    }
+
+    .cds-checkbox-wrapper.state-disabled {
+      cursor: not-allowed;
+    }
+
+    .cds-checkbox {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-xs);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition:
+        background-color var(--motion-duration-base) var(--motion-ease-standard),
+        box-shadow var(--motion-duration-base) var(--motion-ease-standard),
+        border-color var(--motion-duration-base) var(--motion-ease-standard);
+      overflow: hidden;
+    }
+
+    /* ── Ripple ──────────────────────────────────────────────────── */
+    .cds-checkbox {
+      --ripple-x: 50%;
+      --ripple-y: 50%;
+      --ripple-size: 0px;
+    }
+
+    .cds-checkbox::after {
+      content: '';
+      position: absolute;
+      top: var(--ripple-y);
+      left: var(--ripple-x);
+      width: var(--ripple-size);
+      height: var(--ripple-size);
+      margin-top: calc(var(--ripple-size) / -2);
+      margin-left: calc(var(--ripple-size) / -2);
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 50%;
+      transform: scale(0);
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-burst {
+      to {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+
+    .cds-checkbox.is-rippling::after {
+      animation: ripple-burst 500ms cubic-bezier(0, 0, 0.2, 1) forwards;
+    }
+
+    /* Unchecked ripple uses a darker colour */
+    .cds-checkbox.config-unchecked::after {
+      background: rgba(0, 0, 0, 0.10);
+    }
+
+    .cds-checkbox-icon {
+      width: 14px;
+      height: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Checked (ticked) ── */
+    .cds-checkbox.config-checked {
+      background-color: var(--color-btn-primary-bg);
+      border: none;
+      box-shadow: none;
+    }
+
+    .cds-checkbox.config-checked .cds-checkbox-icon { color: #ffffff; }
+
+    /* ── Indeterminate ── */
+    .cds-checkbox.config-indeterminate {
+      background-color: var(--color-btn-primary-bg);
+      border: none;
+      box-shadow: none;
+    }
+
+    .cds-checkbox.config-indeterminate .cds-checkbox-icon { color: #ffffff; }
+
+    /* ── Unchecked ── */
+    .cds-checkbox.config-unchecked {
+      background-color: var(--primitive-white);
+      border: 1.5px solid var(--color-neutral-grey-5);
+      box-shadow: none;
+    }
+
+    /* ── Hover state ── */
+    .cds-checkbox.config-checked.state-hover,
+    .cds-checkbox.config-indeterminate.state-hover {
+      background-color: var(--color-btn-primary-bg);
+      box-shadow: 0 0 0 4px var(--color-focus-green-ring);
+    }
+
+    .cds-checkbox.config-unchecked.state-hover {
+      background-color: var(--primitive-white);
+      border-color: var(--color-neutral-grey-5);
+      box-shadow: 0 0 0 4px var(--color-focus-green-ring);
+    }
+
+    /* ── Focus state ── */
+    .cds-checkbox.config-checked.state-focus,
+    .cds-checkbox.config-indeterminate.state-focus {
+      background-color: var(--color-btn-primary-bg);
+      box-shadow: 0 0 0 2px var(--color-neutral-grey-7), 0 0 0 3.5px var(--primitive-white);
+      outline: none;
+    }
+
+    .cds-checkbox.config-checked.state-focus .cds-checkbox-icon,
+    .cds-checkbox.config-indeterminate.state-focus .cds-checkbox-icon {
+      color: var(--primitive-grey-1);
+    }
+
+    .cds-checkbox.config-unchecked.state-focus {
+      background-color: var(--primitive-white);
+      border-color: var(--color-neutral-grey-5);
+      box-shadow: 0 0 0 3.5px var(--color-neutral-grey-7), 0 0 0 5px var(--primitive-white);
+      outline: none;
+    }
+
+    /* ── Disabled state ── */
+    .cds-checkbox.config-checked.state-disabled,
+    .cds-checkbox.config-indeterminate.state-disabled {
+      background-color: var(--color-neutral-grey-3);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .cds-checkbox.config-checked.state-disabled .cds-checkbox-icon,
+    .cds-checkbox.config-indeterminate.state-disabled .cds-checkbox-icon {
+      color: var(--color-neutral-grey-5);
+    }
+
+    .cds-checkbox.config-unchecked.state-disabled {
+      background-color: var(--primitive-white);
+      border-color: var(--color-neutral-grey-3);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* ── Label ──────────────────────────────────────────────────── */
+    .cds-checkbox-label {
+      font-size: var(--font-size-s);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-primary);
+      line-height: 1.4;
+    }
+
+    .cds-checkbox-wrapper.state-disabled .cds-checkbox-label {
+      color: var(--color-text-disabled);
+    }
+
+    /* ── List layout ───────────────────────────────────────────── */
+    .cds-checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Real interactive hover for demo (when not in a forced state) */
+    .cds-checkbox-wrapper:not(.state-hover):not(.state-disabled):not(.state-focus):hover .cds-checkbox.config-checked,
+    .cds-checkbox-wrapper:not(.state-hover):not(.state-disabled):not(.state-focus):hover .cds-checkbox.config-indeterminate {
+      box-shadow: 0 0 0 4px var(--color-focus-green-ring);
+    }
+
+    .cds-checkbox-wrapper:not(.state-hover):not(.state-disabled):not(.state-focus):hover .cds-checkbox.config-unchecked {
+      box-shadow: 0 0 0 4px var(--color-focus-green-ring);
+    }
+
+    /* ── Configurator panel ────────────────────────────────────── */
+    .configurator {
+      background: var(--color-surface-page);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .config-section {
+      padding: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .config-section:last-child { border-bottom: none; }
+
+    .config-section-title {
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-8);
+    }
+
+    /* Segmented control */
+    .seg-control {
+      display: flex;
+      gap: 3px;
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: 3px;
+    }
+
+    .seg-btn {
+      flex: 1;
+      padding: 6px 4px;
+      border-radius: calc(var(--radius-s) - 3px);
+      border: none;
+      background: transparent;
+      font-family: sofia-pro, var(--font-family);
+      font-feature-settings: "ss04" 1, var(--font-feature-settings);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .seg-btn.active {
+      background: var(--color-surface-page);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-bold);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Toggles */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-row + .toggle-row {
+      border-top: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .toggle-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+    }
+
+    .toggle-sub {
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      display: block;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 11px;
+      background: var(--color-neutral-grey-3);
+      cursor: pointer;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-switch input:checked + .toggle-track {
+      background: var(--color-btn-primary-bg);
+    }
+
+    .toggle-switch input:checked + .toggle-track::after {
+      transform: translateX(18px);
+    }
+
+    /* Token readout */
+    .token-readout {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: var(--space-8) var(--space-12);
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      font-family: 'Courier New', monospace;
+    }
+
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0;
+    }
+
+    .token-name { color: var(--color-text-secondary); }
+    .token-value { color: var(--color-brand-primary); font-weight: 600; }
+
+    /* ── Code snippet panel ────────────────────────────────────── */
+    .snippet-panel {
+      margin-top: var(--space-s);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      background: var(--color-surface-subtle);
+    }
+
+    .snippet-tabs {
+      display: flex;
+      gap: 0;
+    }
+
+    .snippet-tab {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .snippet-tab:hover { color: var(--color-text-primary); }
+
+    .snippet-tab.active {
+      color: var(--color-btn-primary-bg);
+      border-bottom-color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+    }
+
+    .snippet-copy-btn:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn.copied {
+      background: var(--color-btn-primary-bg);
+      border-color: var(--color-btn-primary-bg);
+      color: #fff;
+    }
+
+    .snippet-copy-btn svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .snippet-body {
+      padding: var(--space-xs);
+      background: var(--color-surface-page);
+      overflow-x: auto;
+    }
+
+    .snippet-pre {
+      margin: 0;
+      font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--color-text-primary);
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .snip-comment  { color: var(--color-text-secondary); }
+    .snip-tag      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-attr     { color: #6066b0; }
+    .snip-string   { color: #2a7a4f; }
+    .snip-class    { color: var(--color-btn-primary-bg); }
+    .snip-prop     { color: #6066b0; }
+    .snip-val      { color: #2a7a4f; }
+    .snip-sel      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-tok      { color: #b07c2a; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div>
+      <h1>Checkbox</h1>
+      <p style="margin-top:3px;">Nest Design System • v1.0</p>
+    </div>
+    <div class="brand-switcher">
+      <button class="brand-btn active" id="btn-wilko" onclick="setBrand('wilko')">wilko.com</button>
+      <button class="brand-btn" id="btn-homebase" onclick="setBrand('homebase')">homebase.co.uk</button>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- Preview canvas -->
+    <div class="preview-canvas" id="preview-canvas">
+      <button class="reset-btn" id="reset-btn" onclick="resetCheckboxes()" title="Reset to configured state">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.5 3.5V8H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4.93 12.5A7 7 0 1 0 3.78 7.5L3.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Reset</span>
+      </button>
+      <div id="single-view"></div>
+      <p class="preview-label" id="preview-caption">Checked · Enabled</p>
+    </div>
+
+    <!-- Configurator panel -->
+    <div class="configurator">
+
+      <!-- Configuration -->
+      <div class="config-section">
+        <div class="config-section-title">Configuration</div>
+        <div class="seg-control">
+          <button class="seg-btn active" id="config-checked" onclick="setConfig('checked')">Ticked</button>
+          <button class="seg-btn" id="config-unchecked" onclick="setConfig('unchecked')">Unticked</button>
+          <button class="seg-btn" id="config-indeterminate" onclick="setConfig('indeterminate')">Indeterminate</button>
+        </div>
+      </div>
+
+      <!-- State -->
+      <div class="config-section">
+        <div class="config-section-title">State</div>
+        <div class="seg-control">
+          <button class="seg-btn active" id="state-enabled" onclick="setState('enabled')">Enabled</button>
+          <button class="seg-btn" id="state-hover" onclick="setState('hover')">Hover</button>
+          <button class="seg-btn" id="state-focus" onclick="setState('focus')">Focus</button>
+          <button class="seg-btn" id="state-disabled" onclick="setState('disabled')">Disabled</button>
+        </div>
+      </div>
+
+      <!-- Display toggles -->
+      <div class="config-section">
+        <div class="config-section-title">Display</div>
+        <div class="toggle-row">
+          <div>
+            <span class="toggle-label">Show label</span>
+            <span class="toggle-sub">16px regular · 12px gap</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-label" onchange="toggleLabelVis(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <span class="toggle-label">Show list</span>
+            <span class="toggle-sub">6 items · 24px spacing</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-list" onchange="toggleListVis(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Token readout -->
+      <div class="config-section">
+        <div class="config-section-title">Active tokens</div>
+        <div class="token-readout" id="token-readout"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Code snippet panel -->
+  <div class="snippet-panel">
+    <div class="snippet-header">
+      <div class="snippet-tabs">
+        <button class="snippet-tab active" id="tab-html" onclick="setSnippetTab('html')">HTML</button>
+        <button class="snippet-tab" id="tab-css" onclick="setSnippetTab('css')">CSS</button>
+        <button class="snippet-tab" id="tab-js" onclick="setSnippetTab('js')">JS</button>
+      </div>
+      <button class="snippet-copy-btn" id="copy-btn" onclick="copySnippet()">
+        <svg id="copy-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+    <div class="snippet-body">
+      <pre class="snippet-pre" id="snippet-output"></pre>
+    </div>
+  </div>
+
+  <script>
+    var brand = 'wilko';
+    var currentConfig = 'checked';
+    var currentState = 'enabled';
+    var showLabel = false;
+    var showList = false;
+    var snippetTab = 'html';
+
+    // CDS System Icons — tick and minus
+    var checkboxIcons = {
+      tick: '<path d="M6.93924 13.7004L3.62542 10.3866C3.44686 10.208 3.20467 10.1077 2.95215 10.1077C2.69962 10.1077 2.45744 10.208 2.27888 10.3866C2.10031 10.5651 2 10.8073 2 11.0598C2 11.1849 2.02463 11.3087 2.07248 11.4242C2.12033 11.5397 2.19046 11.6447 2.27888 11.7331L6.27075 15.725C6.6432 16.0974 7.24484 16.0974 7.61729 15.725L17.7211 5.62115C17.8997 5.44259 18 5.2004 18 4.94788C18 4.69535 17.8997 4.45317 17.7211 4.27461C17.5426 4.09605 17.3004 3.99573 17.0479 3.99573C16.7953 3.99573 16.5531 4.09605 16.3746 4.27461L6.93924 13.7004Z" fill="currentColor"/>',
+      minus: '<path fill-rule="evenodd" clip-rule="evenodd" d="M16 9.99997C16 10.4734 15.6162 10.8571 15.1429 10.8571L4.85714 10.8571C4.38376 10.8571 4 10.4734 4 9.99997C4 9.52659 4.38376 9.14283 4.85714 9.14283L15.1429 9.14283C15.6162 9.14283 16 9.52659 16 9.99997Z" fill="currentColor"/>'
+    };
+
+    var tokens = {
+      wilko: {
+        '--color-btn-primary-bg': '#23854a',
+        '--color-btn-primary-bg-hover': '#175e40',
+        '--color-btn-primary-label': '#ffffff',
+        '--color-focus-ring': '#024960',
+        '--color-focus-green-ring': '#c8f3dc',
+        '--font-family': 'sofia-pro'
+      },
+      homebase: {
+        '--color-btn-primary-bg': '#1d8634',
+        '--color-btn-primary-bg-hover': '#155d25',
+        '--color-btn-primary-label': '#ffffff',
+        '--color-focus-ring': '#2b347f',
+        '--color-focus-green-ring': '#b8e6c8',
+        '--font-family': 'Rubik'
+      }
+    };
+
+    var listLabels = [
+      'Checkbox label',
+      'Checkbox label',
+      'Checkbox label',
+      'Checkbox label',
+      'Checkbox label',
+      'Checkbox label'
+    ];
+
+    function getStateClass() {
+      if (currentState === 'enabled') return '';
+      return ' state-' + currentState;
+    }
+
+    function getIconSvg() {
+      if (currentConfig === 'checked') {
+        return '<svg class="cds-checkbox-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">' + checkboxIcons.tick + '</svg>';
+      } else if (currentConfig === 'indeterminate') {
+        return '<svg class="cds-checkbox-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">' + checkboxIcons.minus + '</svg>';
+      }
+      return '';
+    }
+
+    function buildSingleCheckbox(labelText, index) {
+      var wrapperClass = 'cds-checkbox-wrapper' + getStateClass();
+      var boxClass = 'cds-checkbox config-' + currentConfig + getStateClass();
+
+      var html = '<div class="' + wrapperClass + '" data-index="' + index + '" data-config="' + currentConfig + '">';
+      html += '<div class="' + boxClass + '" data-ripple>';
+      html += getIconSvg();
+      html += '</div>';
+      if (showLabel && labelText) {
+        html += '<span class="cds-checkbox-label">' + labelText + '</span>';
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function updatePreview() {
+      var container = document.getElementById('single-view');
+
+      if (showList) {
+        var html = '<div class="cds-checkbox-list">';
+        for (var i = 0; i < 6; i++) {
+          html += buildSingleCheckbox(listLabels[i], i);
+        }
+        html += '</div>';
+        container.innerHTML = html;
+      } else {
+        container.innerHTML = buildSingleCheckbox('Checkbox label', 0);
+      }
+
+      // Caption
+      var configNames = { checked: 'Checked', unchecked: 'Unchecked', indeterminate: 'Indeterminate' };
+      var stateNames = { enabled: 'Enabled', hover: 'Hover', focus: 'Focused', disabled: 'Disabled' };
+      var extras = [];
+      if (showLabel) extras.push('Label');
+      if (showList) extras.push('List');
+      var caption = configNames[currentConfig] + ' · ' + stateNames[currentState];
+      if (extras.length) caption += ' · ' + extras.join(' + ');
+      document.getElementById('preview-caption').textContent = caption;
+
+      // Rebind ripple + toggle interactions
+      bindInteractions();
+    }
+
+    function updateTokenReadout() {
+      var t = tokens[brand];
+      var relevant = {};
+
+      if (currentConfig === 'unchecked') {
+        relevant['--color-neutral-grey-5'] = '#888888';
+        relevant['--primitive-white'] = '#ffffff';
+        relevant['--radius-xs'] = '4px';
+      } else {
+        relevant['--color-btn-primary-bg'] = t['--color-btn-primary-bg'];
+        relevant['--color-btn-primary-label'] = '#ffffff';
+        relevant['--radius-xs'] = '4px';
+      }
+
+      if (currentState === 'hover') {
+        relevant['--color-focus-green-ring'] = t['--color-focus-green-ring'];
+      }
+      if (currentState === 'focus') {
+        relevant['--color-neutral-grey-7'] = brand === 'wilko' ? '#222222' : '#333333';
+        relevant['--primitive-white'] = '#ffffff';
+      }
+      if (currentState === 'disabled') {
+        relevant['--color-neutral-grey-3'] = '#d9d9d9';
+        relevant['--color-neutral-grey-5'] = '#888888';
+        // Remove enabled-only tokens
+        delete relevant['--color-btn-primary-bg'];
+        delete relevant['--color-btn-primary-label'];
+      }
+
+      if (showLabel) {
+        relevant['--font-family'] = t['--font-family'];
+        relevant['--font-size-s'] = '16px';
+        relevant['--font-weight-regular'] = brand === 'wilko' ? '400' : '400';
+      }
+
+      var html = '';
+      Object.keys(relevant).forEach(function(k) {
+        html += '<div class="token-row"><span class="token-name">' + k + '</span><span class="token-value">' + relevant[k] + '</span></div>';
+      });
+      document.getElementById('token-readout').innerHTML = html;
+    }
+
+    function generateSnippet() {
+      if (snippetTab === 'css') { generateCssSnippet(); return; }
+      if (snippetTab === 'js')  { generateJsSnippet();  return; }
+      generateHtmlSnippet();
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function generateHtmlSnippet() {
+      var t = '<span class="snip-tag">';      var tc = '</span>';
+      var a = '<span class="snip-attr">';     var ac = '</span>';
+      var s = '<span class="snip-string">';   var sc = '</span>';
+      var c = '<span class="snip-comment">';  var cc = '</span>';
+      var cl = '<span class="snip-class">';   var clc = '</span>';
+
+      var stateStr = currentState === 'enabled' ? '' : ' state-' + currentState;
+      var out = '';
+
+      out += c + '&lt;!-- CDS Checkbox · ' + brand + ' · ' + currentConfig + ' · ' + currentState + ' --&gt;' + cc + '\n';
+      out += c + '&lt;!-- Requires: &lt;html data-brand="' + brand + '"&gt; + cds-tokens.css --&gt;' + cc + '\n\n';
+
+      if (showList) {
+        out += t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + 'cds-checkbox-list' + clc + '"' + sc + t + '&gt;' + tc + '\n';
+        for (var i = 0; i < 6; i++) {
+          out += buildHtmlCheckboxSnippet(stateStr, '  ', t, tc, a, ac, s, sc, cl, clc);
+          if (i < 5) out += '\n';
+        }
+        out += t + '&lt;/div&gt;' + tc;
+      } else {
+        out += buildHtmlCheckboxSnippet(stateStr, '', t, tc, a, ac, s, sc, cl, clc);
+      }
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function buildHtmlCheckboxSnippet(stateStr, indent, t, tc, a, ac, s, sc, cl, clc) {
+      var wrapperClasses = 'cds-checkbox-wrapper' + stateStr;
+      var boxClasses = 'cds-checkbox config-' + currentConfig + stateStr;
+
+      var out = '';
+      out += indent + t + '&lt;label' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + wrapperClasses + clc + '"' + sc + t + '&gt;' + tc + '\n';
+      out += indent + '  ' + t + '&lt;input' + tc + ' ' + a + 'type' + ac + '=' + s + '"checkbox"' + sc;
+      if (currentConfig === 'checked') out += ' ' + a + 'checked' + ac;
+      if (currentState === 'disabled') out += ' ' + a + 'disabled' + ac;
+      out += ' ' + a + 'class' + ac + '=' + s + '"cds-checkbox-input sr-only"' + sc;
+      out += t + '&gt;' + tc + '\n';
+      out += indent + '  ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + boxClasses + clc + '"' + sc + t + '&gt;' + tc + '\n';
+
+      if (currentConfig === 'checked') {
+        out += indent + '    ' + t + '&lt;svg' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-checkbox-icon"' + sc + ' ' + a + 'viewBox' + ac + '=' + s + '"0 0 20 20"' + sc + t + '&gt;' + tc + '\n';
+        out += indent + '      ' + escapeHtml(checkboxIcons.tick) + '\n';
+        out += indent + '    ' + t + '&lt;/svg&gt;' + tc + '\n';
+      } else if (currentConfig === 'indeterminate') {
+        out += indent + '    ' + t + '&lt;svg' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-checkbox-icon"' + sc + ' ' + a + 'viewBox' + ac + '=' + s + '"0 0 20 20"' + sc + t + '&gt;' + tc + '\n';
+        out += indent + '      ' + escapeHtml(checkboxIcons.minus) + '\n';
+        out += indent + '    ' + t + '&lt;/svg&gt;' + tc + '\n';
+      }
+
+      out += indent + '  ' + t + '&lt;/span&gt;' + tc + '\n';
+
+      if (showLabel) {
+        out += indent + '  ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + 'cds-checkbox-label' + clc + '"' + sc + t + '&gt;' + tc + 'Checkbox label' + t + '&lt;/span&gt;' + tc + '\n';
+      }
+
+      out += indent + t + '&lt;/label&gt;' + tc + '\n';
+      return out;
+    }
+
+    function generateCssSnippet() {
+      var t = tokens[brand];
+
+      var c   = '<span class="snip-comment">';  var cc   = '</span>';
+      var sel = '<span class="snip-sel">';       var selc = '</span>';
+      var p   = '<span class="snip-prop">';      var pc   = '</span>';
+      var v   = '<span class="snip-val">';       var vc   = '</span>';
+      var tok = '<span class="snip-tok">';       var tokc = '</span>';
+
+      var out = '';
+      out += c + '/* CDS Checkbox · ' + brand + ' · ' + currentConfig + ' · ' + currentState + ' */' + cc + '\n';
+      out += c + '/* cds-tokens.css must be loaded and data-brand="' + brand + '" set on &lt;html&gt; */' + cc + '\n\n';
+
+      // Base
+      out += sel + '.cds-checkbox' + selc + ' {\n';
+      out += '  ' + p + 'width' + pc + ': ' + v + '24px' + vc + ';\n';
+      out += '  ' + p + 'height' + pc + ': ' + v + '24px' + vc + ';\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + tok + 'var(--radius-xs)' + tokc + '; ' + c + '/* 4px */' + cc + '\n';
+      out += '  ' + p + 'display' + pc + ': ' + v + 'flex' + vc + ';\n';
+      out += '  ' + p + 'align-items' + pc + ': ' + v + 'center' + vc + ';\n';
+      out += '  ' + p + 'justify-content' + pc + ': ' + v + 'center' + vc + ';\n';
+      out += '  ' + p + 'cursor' + pc + ': ' + v + 'pointer' + vc + ';\n';
+      out += '}\n\n';
+
+      if (currentConfig === 'checked' || currentConfig === 'indeterminate') {
+        out += sel + '.cds-checkbox.config-' + currentConfig + selc + ' {\n';
+        out += '  ' + p + 'background-color' + pc + ': ' + tok + 'var(--color-btn-primary-bg)' + tokc + '; ' + c + '/* ' + t['--color-btn-primary-bg'] + ' */' + cc + '\n';
+        out += '}\n\n';
+      } else {
+        out += sel + '.cds-checkbox.config-unchecked' + selc + ' {\n';
+        out += '  ' + p + 'background-color' + pc + ': ' + tok + 'var(--primitive-white)' + tokc + '; ' + c + '/* #ffffff */' + cc + '\n';
+        out += '  ' + p + 'border' + pc + ': ' + v + '1.5px solid var(--color-neutral-grey-5)' + vc + '; ' + c + '/* #888888 */' + cc + '\n';
+        out += '}\n\n';
+      }
+
+      // Hover
+      out += sel + '.cds-checkbox.config-' + currentConfig + ':hover' + selc + ' {\n';
+      out += '  ' + p + 'box-shadow' + pc + ': ' + v + '0 0 0 4px ' + vc + tok + 'var(--color-focus-green-ring)' + tokc + '; ' + c + '/* ' + t['--color-focus-green-ring'] + ' */' + cc + '\n';
+      out += '}\n\n';
+
+      // Focus
+      if (currentConfig === 'unchecked') {
+        out += sel + '.cds-checkbox.config-unchecked:focus-visible' + selc + ' {\n';
+        out += '  ' + p + 'box-shadow' + pc + ': ' + v + '0 0 0 3.5px var(--color-neutral-grey-7), 0 0 0 5px var(--primitive-white)' + vc + ';\n';
+        out += '}\n\n';
+      } else {
+        out += sel + '.cds-checkbox.config-' + currentConfig + ':focus-visible' + selc + ' {\n';
+        out += '  ' + p + 'box-shadow' + pc + ': ' + v + '0 0 0 2px var(--color-neutral-grey-7), 0 0 0 3.5px var(--primitive-white)' + vc + ';\n';
+        out += '}\n\n';
+      }
+
+      // Disabled
+      if (currentConfig === 'unchecked') {
+        out += sel + '.cds-checkbox.config-unchecked.state-disabled' + selc + ' {\n';
+        out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-neutral-grey-3)' + tokc + '; ' + c + '/* #d9d9d9 */' + cc + '\n';
+        out += '  ' + p + 'cursor' + pc + ': ' + v + 'not-allowed' + vc + ';\n';
+        out += '}\n';
+      } else {
+        out += sel + '.cds-checkbox.config-' + currentConfig + '.state-disabled' + selc + ' {\n';
+        out += '  ' + p + 'background-color' + pc + ': ' + tok + 'var(--color-neutral-grey-3)' + tokc + '; ' + c + '/* #d9d9d9 */' + cc + '\n';
+        out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-neutral-grey-5)' + tokc + '; ' + c + '/* #888888 */' + cc + '\n';
+        out += '  ' + p + 'box-shadow' + pc + ': ' + v + 'none' + vc + ';\n';
+        out += '  ' + p + 'cursor' + pc + ': ' + v + 'not-allowed' + vc + ';\n';
+        out += '}\n';
+      }
+
+      if (showLabel) {
+        out += '\n' + sel + '.cds-checkbox-label' + selc + ' {\n';
+        out += '  ' + p + 'font-size' + pc + ': ' + tok + 'var(--font-size-s)' + tokc + '; ' + c + '/* 16px */' + cc + '\n';
+        out += '  ' + p + 'font-weight' + pc + ': ' + tok + 'var(--font-weight-regular)' + tokc + '; ' + c + '/* 400 */' + cc + '\n';
+        out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-text-primary)' + tokc + ';\n';
+        out += '}\n';
+      }
+
+      if (showList) {
+        out += '\n' + sel + '.cds-checkbox-list' + selc + ' {\n';
+        out += '  ' + p + 'display' + pc + ': ' + v + 'flex' + vc + ';\n';
+        out += '  ' + p + 'flex-direction' + pc + ': ' + v + 'column' + vc + ';\n';
+        out += '  ' + p + 'gap' + pc + ': ' + v + '24px' + vc + ';\n';
+        out += '}\n';
+      }
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateJsSnippet() {
+      var kw  = '<span class="snip-attr">';    var kwc = '</span>';
+      var fn  = '<span class="snip-class">';   var fnc = '</span>';
+      var str = '<span class="snip-string">';  var strc = '</span>';
+      var c   = '<span class="snip-comment">'; var cc  = '</span>';
+      var p   = '<span class="snip-prop">';    var pc  = '</span>';
+
+      var out = '';
+      out += c + '// CDS Checkbox — ripple effect' + cc + '\n';
+      out += c + '// Requires: position:relative + overflow:hidden on .cds-checkbox' + cc + '\n\n';
+      out += fn + 'document' + fnc + '.' + fn + 'querySelectorAll' + fnc + '(' + str + '\'.cds-checkbox\'' + strc + ').' + fn + 'forEach' + fnc + '(' + kw + 'function' + kwc + '(box) {\n';
+      out += '  box.' + fn + 'addEventListener' + fnc + '(' + str + '\'mousedown\'' + strc + ', ' + kw + 'function' + kwc + '(e) {\n';
+      out += '    ' + kw + 'var' + kwc + ' wrapper = box.' + p + 'closest' + pc + '(' + str + '\'.cds-checkbox-wrapper\'' + strc + ');\n';
+      out += '    ' + kw + 'if' + kwc + ' (wrapper && wrapper.' + fn + 'classList' + fnc + '.' + fn + 'contains' + fnc + '(' + str + '\'state-disabled\'' + strc + ')) ' + kw + 'return' + kwc + ';\n';
+      out += '    ' + kw + 'var' + kwc + ' rect = box.' + fn + 'getBoundingClientRect' + fnc + '();\n';
+      out += '    ' + kw + 'var' + kwc + ' x    = e.' + p + 'clientX' + pc + ' - rect.' + p + 'left' + pc + ';\n';
+      out += '    ' + kw + 'var' + kwc + ' y    = e.' + p + 'clientY' + pc + ' - rect.' + p + 'top' + pc + ';\n';
+      out += '    ' + kw + 'var' + kwc + ' size = ' + fn + 'Math' + fnc + '.' + fn + 'max' + fnc + '(rect.' + p + 'width' + pc + ', rect.' + p + 'height' + pc + ') * 2.5;\n';
+      out += '    box.' + fn + 'style' + fnc + '.' + fn + 'setProperty' + fnc + '(' + str + '\'--ripple-x\'' + strc + ', x + ' + str + '\'px\'' + strc + ');\n';
+      out += '    box.' + fn + 'style' + fnc + '.' + fn + 'setProperty' + fnc + '(' + str + '\'--ripple-y\'' + strc + ', y + ' + str + '\'px\'' + strc + ');\n';
+      out += '    box.' + fn + 'style' + fnc + '.' + fn + 'setProperty' + fnc + '(' + str + '\'--ripple-size\'' + strc + ', size + ' + str + '\'px\'' + strc + ');\n';
+      out += '    box.' + fn + 'classList' + fnc + '.' + fn + 'remove' + fnc + '(' + str + '\'is-rippling\'' + strc + ');\n';
+      out += '    ' + kw + 'void' + kwc + ' box.' + p + 'offsetWidth' + pc + ';\n';
+      out += '    box.' + fn + 'classList' + fnc + '.' + fn + 'add' + fnc + '(' + str + '\'is-rippling\'' + strc + ');\n';
+      out += '  });\n';
+      out += '  box.' + fn + 'addEventListener' + fnc + '(' + str + '\'animationend\'' + strc + ', ' + kw + 'function' + kwc + '() {\n';
+      out += '    box.' + fn + 'classList' + fnc + '.' + fn + 'remove' + fnc + '(' + str + '\'is-rippling\'' + strc + ');\n';
+      out += '  });\n';
+      out += '});\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function setSnippetTab(tab) {
+      snippetTab = tab;
+      document.getElementById('tab-html').classList.toggle('active', tab === 'html');
+      document.getElementById('tab-css').classList.toggle('active', tab === 'css');
+      document.getElementById('tab-js').classList.toggle('active', tab === 'js');
+      generateSnippet();
+    }
+
+    function copySnippet() {
+      var plain;
+
+      if (snippetTab === 'js') {
+        var lines = [];
+        lines.push('// CDS Checkbox — ripple effect');
+        lines.push('// Requires: position:relative + overflow:hidden on .cds-checkbox');
+        lines.push('');
+        lines.push("document.querySelectorAll('.cds-checkbox').forEach(function(box) {");
+        lines.push("  box.addEventListener('mousedown', function(e) {");
+        lines.push("    var wrapper = box.closest('.cds-checkbox-wrapper');");
+        lines.push("    if (wrapper && wrapper.classList.contains('state-disabled')) return;");
+        lines.push('    var rect = box.getBoundingClientRect();');
+        lines.push('    var x    = e.clientX - rect.left;');
+        lines.push('    var y    = e.clientY - rect.top;');
+        lines.push('    var size = Math.max(rect.width, rect.height) * 2.5;');
+        lines.push("    box.style.setProperty('--ripple-x', x + 'px');");
+        lines.push("    box.style.setProperty('--ripple-y', y + 'px');");
+        lines.push("    box.style.setProperty('--ripple-size', size + 'px');");
+        lines.push("    box.classList.remove('is-rippling');");
+        lines.push('    void box.offsetWidth;');
+        lines.push("    box.classList.add('is-rippling');");
+        lines.push('  });');
+        lines.push("  box.addEventListener('animationend', function() {");
+        lines.push("    box.classList.remove('is-rippling');");
+        lines.push('  });');
+        lines.push('});');
+        plain = lines.join('\n');
+      } else if (snippetTab === 'css') {
+        var t = tokens[brand];
+        var lines = [];
+        lines.push('/* CDS Checkbox · ' + brand + ' · ' + currentConfig + ' · ' + currentState + ' */');
+        lines.push('.cds-checkbox {');
+        lines.push('  width: 24px;');
+        lines.push('  height: 24px;');
+        lines.push('  border-radius: var(--radius-xs); /* 4px */');
+        lines.push('  display: flex;');
+        lines.push('  align-items: center;');
+        lines.push('  justify-content: center;');
+        lines.push('  cursor: pointer;');
+        lines.push('}');
+        lines.push('');
+        if (currentConfig === 'unchecked') {
+          lines.push('.cds-checkbox.config-unchecked {');
+          lines.push('  background-color: var(--primitive-white);');
+          lines.push('  border: 1.5px solid var(--color-neutral-grey-5); /* #888888 */');
+          lines.push('}');
+        } else {
+          lines.push('.cds-checkbox.config-' + currentConfig + ' {');
+          lines.push('  background-color: var(--color-btn-primary-bg); /* ' + t['--color-btn-primary-bg'] + ' */');
+          lines.push('}');
+        }
+        lines.push('');
+        lines.push('.cds-checkbox:hover {');
+        lines.push('  box-shadow: 0 0 0 4px var(--color-focus-green-ring); /* ' + t['--color-focus-green-ring'] + ' */');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-checkbox:focus-visible {');
+        lines.push('  box-shadow: 0 0 0 2px var(--color-neutral-grey-7), 0 0 0 3.5px var(--primitive-white);');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-checkbox.state-disabled {');
+        lines.push('  background-color: var(--color-neutral-grey-3); /* #d9d9d9 */');
+        lines.push('  color: var(--color-neutral-grey-5); /* #888888 */');
+        lines.push('  cursor: not-allowed;');
+        lines.push('}');
+        plain = lines.join('\n');
+      } else {
+        var stateStr = currentState === 'enabled' ? '' : ' state-' + currentState;
+        var wrapperClasses = 'cds-checkbox-wrapper' + stateStr;
+        var boxClasses = 'cds-checkbox config-' + currentConfig + stateStr;
+        var lines = [];
+        lines.push('<label class="' + wrapperClasses + '">');
+        lines.push('  <input type="checkbox"' + (currentConfig === 'checked' ? ' checked' : '') + (currentState === 'disabled' ? ' disabled' : '') + ' class="cds-checkbox-input sr-only">');
+        lines.push('  <span class="' + boxClasses + '">');
+        if (currentConfig === 'checked') {
+          lines.push('    <svg class="cds-checkbox-icon" viewBox="0 0 20 20">');
+          lines.push('      ' + checkboxIcons.tick.replace(/</g, '<').replace(/>/g, '>'));
+          lines.push('    </svg>');
+        } else if (currentConfig === 'indeterminate') {
+          lines.push('    <svg class="cds-checkbox-icon" viewBox="0 0 20 20">');
+          lines.push('      ' + checkboxIcons.minus.replace(/</g, '<').replace(/>/g, '>'));
+          lines.push('    </svg>');
+        }
+        lines.push('  </span>');
+        if (showLabel) lines.push('  <span class="cds-checkbox-label">Checkbox label</span>');
+        lines.push('</label>');
+        plain = lines.join('\n');
+      }
+
+      navigator.clipboard.writeText(plain).then(function() {
+        var btn = document.getElementById('copy-btn');
+        var lbl = document.getElementById('copy-label');
+        var ico = document.getElementById('copy-icon');
+        btn.classList.add('copied');
+        lbl.textContent = 'Copied!';
+        ico.innerHTML = '<path d="M2.5 8L6 11.5L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          lbl.textContent = 'Copy';
+          ico.innerHTML = '<rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        }, 2000);
+      });
+    }
+
+    function setBrand(b) {
+      brand = b;
+      document.documentElement.setAttribute('data-brand', b);
+      document.getElementById('btn-wilko').classList.toggle('active', b === 'wilko');
+      document.getElementById('btn-homebase').classList.toggle('active', b === 'homebase');
+      updateAll();
+    }
+
+    function setConfig(cfg) {
+      currentConfig = cfg;
+      document.querySelectorAll('[id^="config-"]').forEach(function(el) {
+        el.classList.toggle('active', el.id === 'config-' + cfg);
+      });
+      updateAll();
+    }
+
+    function setState(s) {
+      currentState = s;
+      document.querySelectorAll('[id^="state-"]').forEach(function(el) {
+        el.classList.toggle('active', el.id === 'state-' + s);
+      });
+      updateAll();
+    }
+
+    function toggleLabelVis(v) {
+      showLabel = v;
+      updateAll();
+    }
+
+    function toggleListVis(v) {
+      showList = v;
+      updateAll();
+    }
+
+    function updateAll() {
+      updatePreview();
+      updateTokenReadout();
+      generateSnippet();
+    }
+
+    // Ripple binding
+    function getIconSvgForConfig(cfg) {
+      if (cfg === 'checked') {
+        return '<svg class="cds-checkbox-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">' + checkboxIcons.tick + '</svg>';
+      } else if (cfg === 'indeterminate') {
+        return '<svg class="cds-checkbox-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">' + checkboxIcons.minus + '</svg>';
+      }
+      return '';
+    }
+
+    function toggleCheckbox(wrapper) {
+      var currentCfg = wrapper.getAttribute('data-config');
+      var newCfg;
+
+      // Toggle: checked/indeterminate → unchecked, unchecked → checked
+      if (currentCfg === 'unchecked') {
+        newCfg = 'checked';
+      } else {
+        newCfg = 'unchecked';
+      }
+
+      wrapper.setAttribute('data-config', newCfg);
+      var box = wrapper.querySelector('.cds-checkbox');
+
+      // Swap config class
+      box.classList.remove('config-checked', 'config-unchecked', 'config-indeterminate');
+      box.classList.add('config-' + newCfg);
+
+      // Swap icon
+      box.innerHTML = getIconSvgForConfig(newCfg);
+    }
+
+    function resetCheckboxes() {
+      var wrappers = document.querySelectorAll('.cds-checkbox-wrapper');
+      wrappers.forEach(function(wrapper) {
+        wrapper.setAttribute('data-config', currentConfig);
+        var box = wrapper.querySelector('.cds-checkbox');
+        box.classList.remove('config-checked', 'config-unchecked', 'config-indeterminate');
+        box.classList.add('config-' + currentConfig);
+        box.innerHTML = getIconSvgForConfig(currentConfig);
+      });
+    }
+
+    function bindInteractions() {
+      document.querySelectorAll('.cds-checkbox-wrapper').forEach(function(wrapper) {
+        wrapper.style.cursor = wrapper.classList.contains('state-disabled') ? 'not-allowed' : 'pointer';
+
+        wrapper.addEventListener('click', function(e) {
+          if (wrapper.classList.contains('state-disabled')) return;
+          toggleCheckbox(wrapper);
+        });
+      });
+
+      document.querySelectorAll('[data-ripple]').forEach(function(box) {
+        box.addEventListener('mousedown', function(e) {
+          var wrapper = box.closest('.cds-checkbox-wrapper');
+          if (wrapper && wrapper.classList.contains('state-disabled')) return;
+          var rect = box.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var y = e.clientY - rect.top;
+          var size = Math.max(rect.width, rect.height) * 2.5;
+          box.style.setProperty('--ripple-x', x + 'px');
+          box.style.setProperty('--ripple-y', y + 'px');
+          box.style.setProperty('--ripple-size', size + 'px');
+          box.classList.remove('is-rippling');
+          void box.offsetWidth;
+          box.classList.add('is-rippling');
+        });
+        box.addEventListener('animationend', function() {
+          box.classList.remove('is-rippling');
+        });
+      });
+    }
+
+    // Initial render
+    updateAll();
+  </script>
+</body>
+</html>
