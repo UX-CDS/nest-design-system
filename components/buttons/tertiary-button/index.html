@@ -251,9 +251,8 @@
         background-color var(--motion-duration-base) var(--motion-ease-standard),
         color var(--motion-duration-base) var(--motion-ease-standard),
         border-color var(--motion-duration-base) var(--motion-ease-standard),
-        border-width var(--motion-duration-base) var(--motion-ease-standard),
-        outline var(--motion-duration-base) var(--motion-ease-standard),
-        box-shadow var(--motion-duration-base) var(--motion-ease-standard);
+        box-shadow var(--motion-duration-base) var(--motion-ease-standard),
+        outline var(--motion-duration-base) var(--motion-ease-standard);
       white-space: nowrap;
       -webkit-font-smoothing: antialiased;
       outline: none;
@@ -316,7 +315,7 @@
       background-color: var(--color-btn-secondary-bg-hover);
       color: var(--color-btn-secondary-label-hover);
       border-color: var(--color-btn-secondary-stroke-hover);
-      border-width: var(--stroke-thick);
+      box-shadow: inset 0 0 0 1px var(--color-btn-secondary-stroke-hover);
     }
 
     .cds-btn-secondary.state-disabled {
@@ -341,7 +340,7 @@
       background-color: var(--color-btn-secondary-bg-hover);
       color: var(--color-btn-secondary-label-hover);
       border-color: var(--color-btn-secondary-stroke-hover);
-      border-width: var(--stroke-thick);
+      box-shadow: inset 0 0 0 1px var(--color-btn-secondary-stroke-hover);
     }
 
     .cds-btn-secondary:not(.state-disabled):focus-visible {
@@ -1169,7 +1168,7 @@
       out += '  ' + p + 'background-color' + pc + ': ' + tok + 'var(--color-btn-secondary-bg-hover)' + tokc + '; ' + c + '/* ' + t['--color-btn-secondary-bg-hover'] + ' */' + cc + '\n';
       out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-btn-secondary-label-hover)' + tokc + '; ' + c + '/* ' + t['--color-btn-secondary-label-hover'] + ' */' + cc + '\n';
       out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-btn-secondary-stroke-hover)' + tokc + '; ' + c + '/* ' + t['--color-btn-secondary-stroke-hover'] + ' */' + cc + '\n';
-      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'box-shadow' + pc + ': ' + v + 'inset 0 0 0 1px ' + vc + tok + 'var(--color-btn-secondary-stroke-hover)' + tokc + ';\n';
       out += '}\n\n';
 
       // Focus
@@ -1224,7 +1223,7 @@
         lines.push('  background-color: var(--color-btn-secondary-bg-hover); /* ' + t['--color-btn-secondary-bg-hover'] + ' */');
         lines.push('  color: var(--color-btn-secondary-label-hover); /* ' + t['--color-btn-secondary-label-hover'] + ' */');
         lines.push('  border-color: var(--color-btn-secondary-stroke-hover); /* ' + t['--color-btn-secondary-stroke-hover'] + ' */');
-        lines.push('  border-width: 2px;');
+        lines.push('  box-shadow: inset 0 0 0 1px var(--color-btn-secondary-stroke-hover); /* ' + t['--color-btn-secondary-stroke-hover'] + ' */');
         lines.push('}');
         lines.push('');
         lines.push('.cds-btn-secondary:focus-visible {');
