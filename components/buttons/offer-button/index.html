@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="wilko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offer Button — CDS Configurator</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/nsp1wdf.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Primitive tokens ──────────────────────────────────────── */
+    :root {
+      --primitive-white: #ffffff;
+      --primitive-grey-1: #f4f4f4;
+      --primitive-grey-2: #e6e6e6;
+      --primitive-grey-3: #d9d9d9;
+      --primitive-grey-4: #cccccc;
+      --primitive-grey-5: #888888;
+      --primitive-grey-6: #666666;
+      --font-size-massive: 40px;
+      --font-size-xxl: 32px;
+      --font-size-xl: 28px;
+      --font-size-l: 24px;
+      --font-size-m: 20px;
+      --font-size-s: 16px;
+      --font-size-xs: 14px;
+      --font-size-xxs: 12px;
+      --font-size-tiny: 10px;
+      --radius-xs: 4px;
+      --radius-s: 8px;
+      --radius-m: 12px;
+      --radius-l: 16px;
+      --radius-xl: 24px;
+      --radius-full: 100px;
+      --stroke-thin: 1px;
+      --stroke-normal: 1.5px;
+      --stroke-thick: 2px;
+      --space-m: 32px;
+      --space-s: 24px;
+      --space-xs: 16px;
+      --space-12: 12px;
+      --space-8: 8px;
+      --space-4: 4px;
+      --motion-duration-base: 250ms;
+      --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Wilko semantic tokens ─────────────────────────────────── */
+    [data-brand="wilko"] {
+      --color-brand-primary: #9d2235;
+      --color-brand-secondary: #fdda24;
+      --color-btn-primary-bg: #23854a;
+      --color-btn-primary-bg-hover: #175e40;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-offer-bg: #fdda24;
+      --color-btn-offer-bg-hover: #ffffff;
+      --color-btn-offer-stroke: #fdda24;
+      --color-btn-offer-stroke-hover: #222222;
+      --color-btn-offer-label: #222222;
+      --color-btn-offer-label-hover: #222222;
+      --color-btn-radius: 100px;
+      --font-family: sofia-pro, sans-serif;
+      --font-feature-settings: "ss04" 1;
+      --font-weight-bold: 800;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 500;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #222222;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #024960;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #222222;
+    }
+
+    /* ── Homebase semantic tokens ──────────────────────────────── */
+    [data-brand="homebase"] {
+      --color-brand-primary: #1d8634;
+      --color-brand-secondary: #ec7224;
+      --color-brand-sale: #ee0000;
+      --color-btn-primary-bg: #1d8634;
+      --color-btn-primary-bg-hover: #155d25;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-offer-bg: #ee0000;
+      --color-btn-offer-bg-hover: #ffffff;
+      --color-btn-offer-stroke: #ee0000;
+      --color-btn-offer-stroke-hover: #ee0000;
+      --color-btn-offer-label: #ffffff;
+      --color-btn-offer-label-hover: #ee0000;
+      --color-btn-radius: 100px;
+      --font-family: 'Rubik', sans-serif;
+      --font-feature-settings: normal;
+      --font-weight-bold: 600;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 400;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #333333;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #2b347f;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #333333;
+    }
+
+    [data-brand] {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page layout ───────────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Force font inheritance on elements browsers exempt by default */
+    [data-brand] button,
+    [data-brand] input,
+    [data-brand] select,
+    [data-brand] textarea,
+    [data-brand] label {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+      background: var(--color-surface-page);
+      min-height: 100vh;
+      padding: var(--space-m);
+    }
+
+    .page-header {
+      margin-bottom: var(--space-s);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    .page-header h1 {
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .page-header p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+    }
+
+    /* ── Brand switcher pill ───────────────────────────────────── */
+    .brand-switcher {
+      display: flex;
+      gap: var(--space-4);
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+    }
+
+    .brand-btn {
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .brand-btn.active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Layout: preview + configurator ───────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-s);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Preview canvas ────────────────────────────────────────── */
+    .preview-canvas {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-l);
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-l);
+      position: relative;
+    }
+
+    .preview-label {
+      position: absolute;
+      bottom: var(--space-xs);
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+    }
+
+    /* ── The actual CDS Offer Button ───────────────────────────── */
+    .cds-btn-offer {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--color-btn-offer-bg);
+      color: var(--color-btn-offer-label);
+      border-radius: var(--color-btn-radius, var(--radius-full));
+      border: var(--stroke-thick) solid var(--color-btn-offer-stroke);
+      font-family: var(--font-family);
+      font-weight: var(--font-weight-bold);
+      font-feature-settings: var(--font-feature-settings);
+      cursor: pointer;
+      transition:
+        background-color var(--motion-duration-base) var(--motion-ease-standard),
+        color var(--motion-duration-base) var(--motion-ease-standard),
+        border-color var(--motion-duration-base) var(--motion-ease-standard),
+        outline var(--motion-duration-base) var(--motion-ease-standard),
+        box-shadow var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+      -webkit-font-smoothing: antialiased;
+      outline: none;
+      overflow: hidden;
+      position: relative;
+      --ripple-x: 50%;
+      --ripple-y: 50%;
+      --ripple-size: 0px;
+    }
+
+    /* Ripple via ::after — lives outside the flex flow, never causes layout shift */
+    .cds-btn-offer::after {
+      content: '';
+      position: absolute;
+      top: var(--ripple-y);
+      left: var(--ripple-x);
+      width: var(--ripple-size);
+      height: var(--ripple-size);
+      margin-top: calc(var(--ripple-size) / -2);
+      margin-left: calc(var(--ripple-size) / -2);
+      background: rgba(0, 0, 0, 0.10);
+      border-radius: 50%;
+      transform: scale(0);
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    /* Homebase offer button uses white ripple on red bg */
+    [data-brand="homebase"] .cds-btn-offer::after {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    @keyframes ripple-burst {
+      to {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+
+    .cds-btn-offer.is-rippling::after {
+      animation: ripple-burst 650ms cubic-bezier(0, 0, 0.2, 1) forwards;
+    }
+
+    /* Sizes */
+    .cds-btn-offer.size-small    { font-size: 14px;               padding: 0 16px; height: 36px; }
+    .cds-btn-offer.size-standard { font-size: var(--font-size-s);  padding: 0 24px; height: 44px; }
+    .cds-btn-offer.size-large    { font-size: var(--font-size-s);  padding: 0 32px; height: 52px; }
+
+    /* Icon sizes per button size */
+    .cds-btn-offer.size-small    .btn-icon { width: 14px; height: 14px; }
+    .cds-btn-offer.size-standard .btn-icon { width: 16px; height: 16px; }
+    .cds-btn-offer.size-large    .btn-icon { width: 16px; height: 16px; }
+
+    /* States */
+    .cds-btn-offer.state-hover {
+      background-color: var(--color-btn-offer-bg-hover);
+      color: var(--color-btn-offer-label-hover);
+      border-color: var(--color-btn-offer-stroke-hover);
+    }
+
+    .cds-btn-offer.state-disabled {
+      background-color: var(--color-neutral-grey-3);
+      color: var(--color-neutral-grey-5);
+      border-color: var(--color-neutral-grey-3);
+      cursor: not-allowed;
+    }
+
+    .cds-btn-offer.state-focus {
+      outline: var(--stroke-thick) solid var(--color-neutral-grey-7);
+      outline-offset: 2px;
+    }
+
+    .cds-btn-offer.state-loading {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    /* Real hover (for interactive demo) */
+    .cds-btn-offer:not(.state-hover):not(.state-disabled):not(.state-focus):not(.state-loading):hover {
+      background-color: var(--color-btn-offer-bg-hover);
+      color: var(--color-btn-offer-label-hover);
+      border-color: var(--color-btn-offer-stroke-hover);
+    }
+
+    .cds-btn-offer:not(.state-disabled):focus-visible {
+      outline: var(--stroke-thick) solid var(--color-neutral-grey-7);
+      outline-offset: 2px;
+    }
+
+    .btn-icon {
+      flex-shrink: 0;
+      display: block;
+      fill: currentColor;
+    }
+
+    /* Sofia Pro carries more internal leading above the cap-height than
+       below the baseline — a small upward nudge corrects the optical offset.
+       Scoped to wilko only so Rubik on Homebase is unaffected. */
+    [data-brand="wilko"] .cds-btn-offer span {
+      transform: translateY(-2px);
+    }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      animation: spin 0.75s linear infinite;
+    }
+    .cds-btn-offer.size-small .btn-spinner { width: 14px; height: 14px; }
+    .state-loading .btn-spinner { display: block; }
+
+    /* ── Configurator panel ────────────────────────────────────── */
+    .configurator {
+      background: var(--color-surface-page);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .config-section {
+      padding: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .config-section:last-child { border-bottom: none; }
+
+    .config-section-title {
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-8);
+    }
+
+    /* Segmented control */
+    .seg-control {
+      display: flex;
+      gap: 3px;
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: 3px;
+    }
+
+    .seg-btn {
+      flex: 1;
+      padding: 6px 4px;
+      border-radius: calc(var(--radius-s) - 3px);
+      border: none;
+      background: transparent;
+      font-family: sofia-pro, var(--font-family);
+      font-feature-settings: "ss04" 1, var(--font-feature-settings);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .seg-btn.active {
+      background: var(--color-surface-page);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-bold);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Toggles */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-row + .toggle-row {
+      border-top: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .toggle-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+    }
+
+    .toggle-sub {
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      display: block;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 11px;
+      background: var(--color-neutral-grey-3);
+      cursor: pointer;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-switch input:checked + .toggle-track {
+      background: var(--color-btn-primary-bg);
+    }
+
+    .toggle-switch input:checked + .toggle-track::after {
+      transform: translateX(18px);
+    }
+
+    /* Text input */
+    .config-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      border-radius: var(--radius-s);
+      font-family: sofia-pro, var(--font-family);
+      font-feature-settings: "ss04" 1;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .config-input:focus {
+      outline: none;
+      border-color: var(--color-focus-ring);
+    }
+
+    /* Icon dropdown */
+    .icon-dropdown {
+      position: relative;
+    }
+
+    .icon-dropdown-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: var(--radius-s);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      text-align: left;
+      transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .icon-dropdown-trigger:focus { outline: none; border-color: var(--color-focus-ring); }
+    .icon-dropdown-trigger:hover { border-color: var(--color-border-input); }
+
+    .icon-dropdown-trigger .trigger-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--color-text-primary);
+    }
+
+    .icon-dropdown-trigger .trigger-name {
+      flex: 1;
+      font-size: var(--font-size-xs);
+    }
+
+    .trigger-caret {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      color: var(--color-text-secondary);
+      transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .icon-dropdown.open .trigger-caret { transform: rotate(180deg); }
+    .icon-dropdown.open .icon-dropdown-trigger { border-color: var(--color-focus-ring); }
+
+    .icon-dropdown-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--color-surface-page);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      border-radius: var(--radius-s);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .icon-dropdown.open .icon-dropdown-panel { display: block; }
+
+    .icon-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .icon-option:hover { background: var(--color-surface-subtle); }
+
+    .icon-option.selected {
+      background: var(--color-surface-subtle);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .icon-option svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--color-text-primary);
+    }
+
+    .icon-option + .icon-option {
+      border-top: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    /* Token readout */
+    .token-readout {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: var(--space-8) var(--space-12);
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      font-family: 'Courier New', monospace;
+    }
+
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0;
+    }
+
+    .token-name { color: var(--color-text-secondary); }
+    .token-value { color: var(--color-brand-primary); font-weight: 600; }
+    /* ── Code snippet panel ────────────────────────────────────── */
+    .snippet-panel {
+      margin-top: var(--space-s);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      background: var(--color-surface-subtle);
+    }
+
+    .snippet-tabs {
+      display: flex;
+      gap: 0;
+    }
+
+    .snippet-tab {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .snippet-tab:hover { color: var(--color-text-primary); }
+
+    .snippet-tab.active {
+      color: var(--color-btn-primary-bg);
+      border-bottom-color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+    }
+
+    .snippet-copy-btn:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn.copied {
+      background: var(--color-btn-primary-bg);
+      border-color: var(--color-btn-primary-bg);
+      color: #fff;
+    }
+
+    .snippet-copy-btn svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .snippet-body {
+      padding: var(--space-xs);
+      background: var(--color-surface-page);
+      overflow-x: auto;
+    }
+
+    .snippet-pre {
+      margin: 0;
+      font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--color-text-primary);
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .snip-comment  { color: var(--color-text-secondary); }
+    .snip-tag      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-attr     { color: #6066b0; }
+    .snip-string   { color: #2a7a4f; }
+    .snip-class    { color: var(--color-btn-primary-bg); }
+    .snip-prop     { color: #6066b0; }
+    .snip-val      { color: #2a7a4f; }
+    .snip-sel      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-tok      { color: #b07c2a; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div>
+      <h1>Offer Button</h1>
+      <p style="margin-top:3px;">Nest Design System • v1.0</p>
+    </div>
+    <div class="brand-switcher">
+      <button class="brand-btn active" id="btn-wilko" onclick="setBrand('wilko')">wilko.com</button>
+      <button class="brand-btn" id="btn-homebase" onclick="setBrand('homebase')">homebase.co.uk</button>
+    </div>
+  </div>
+
+
+
+  <div class="layout">
+
+    <!-- Preview canvas -->
+    <div class="preview-canvas" id="preview-canvas">
+      <div id="single-view">
+        <button class="cds-btn-offer size-standard state-default" id="demo-button">
+          <svg class="btn-icon" id="left-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"></svg>
+          <span id="btn-label-text">Button label</span>
+          <svg class="btn-icon" id="right-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"></svg>
+          <svg class="btn-spinner" id="btn-spinner" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-opacity="0.3" stroke-width="2"/>
+            <path d="M10 3a7 7 0 0 1 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <p class="preview-label" id="preview-caption">Standard · Default</p>
+
+
+    </div>
+
+    <!-- Configurator panel -->
+    <div class="configurator">
+
+      <!-- Size -->
+      <div class="config-section">
+        <div class="config-section-title">Size</div>
+        <div class="seg-control">
+          <button class="seg-btn" id="size-small" onclick="setSize('small')">Small</button>
+          <button class="seg-btn active" id="size-standard" onclick="setSize('standard')">Standard</button>
+          <button class="seg-btn" id="size-large" onclick="setSize('large')">Large</button>
+        </div>
+      </div>
+
+      <!-- State -->
+      <div class="config-section">
+        <div class="config-section-title">State</div>
+        <div class="seg-control">
+          <button class="seg-btn active" id="state-default" onclick="setState('default')">Default</button>
+          <button class="seg-btn" id="state-hover" onclick="setState('hover')">Hover</button>
+          <button class="seg-btn" id="state-disabled" onclick="setState('disabled')">Disabled</button>
+          <button class="seg-btn" id="state-focus" onclick="setState('focus')">Focus</button>
+          <button class="seg-btn" id="state-loading" onclick="setState('loading')">Loading</button>
+        </div>
+      </div>
+
+      <!-- Label -->
+      <div class="config-section">
+        <div class="config-section-title">Button label</div>
+        <input class="config-input" id="label-input" type="text" value="Button label" oninput="setLabel(this.value)" />
+      </div>
+
+      <!-- Icons -->
+      <div class="config-section">
+        <div class="config-section-title">Left icon type</div>
+        <div class="icon-dropdown" id="left-icon-dropdown">
+          <button class="icon-dropdown-trigger" onclick="toggleDropdown('left')" type="button">
+            <svg class="trigger-icon" id="left-trigger-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"></svg>
+            <span class="trigger-name" id="left-trigger-name">heart</span>
+            <svg class="trigger-caret" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15 7.5L10 12.5L5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </button>
+          <div class="icon-dropdown-panel" id="left-icon-panel"></div>
+        </div>
+      </div>
+
+      <div class="config-section">
+        <div class="config-section-title">Right icon type</div>
+        <div class="icon-dropdown" id="right-icon-dropdown">
+          <button class="icon-dropdown-trigger" onclick="toggleDropdown('right')" type="button">
+            <svg class="trigger-icon" id="right-trigger-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"></svg>
+            <span class="trigger-name" id="right-trigger-name">chevron-right</span>
+            <svg class="trigger-caret" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15 7.5L10 12.5L5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </button>
+          <div class="icon-dropdown-panel" id="right-icon-panel"></div>
+        </div>
+      </div>
+
+      <!-- Toggles -->
+      <div class="config-section">
+        <div class="config-section-title">Visibility</div>
+        <div class="toggle-row">
+          <div>
+            <span class="toggle-label">Show left icon</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-left-icon" checked onchange="toggleLeftIcon(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <span class="toggle-label">Show right icon</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-right-icon" checked onchange="toggleRightIcon(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <span class="toggle-label">Show label</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-label" checked onchange="toggleLabel(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Token readout -->
+      <div class="config-section">
+        <div class="config-section-title">Active tokens</div>
+        <div class="token-readout" id="token-readout"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Code snippet panel -->
+  <div class="snippet-panel">
+    <div class="snippet-header">
+      <div class="snippet-tabs">
+        <button class="snippet-tab active" id="tab-html" onclick="setSnippetTab('html')">HTML</button>
+        <button class="snippet-tab" id="tab-css" onclick="setSnippetTab('css')">CSS</button>
+        <button class="snippet-tab" id="tab-js" onclick="setSnippetTab('js')">JS</button>
+      </div>
+      <button class="snippet-copy-btn" id="copy-btn" onclick="copySnippet()">
+        <svg id="copy-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+    <div class="snippet-body">
+      <pre class="snippet-pre" id="snippet-output"></pre>
+    </div>
+  </div>
+
+  <script>
+    var brand = 'wilko';
+    var currentSize = 'standard';
+    var currentState = 'default';
+    var currentLabel = 'Button label';
+    var showLeftIcon = true;
+    var showRightIcon = true;
+    var showLabel = true;
+    var leftIconType = 'heart';
+    var rightIconType = 'chevron-right';
+    var snippetTab = 'html';
+
+    // Nest System Icons — fill="currentColor" for filled, stroke for chevrons/heart
+    var icons = {
+      'heart':            { inner: '<path d="M10 16.25C10 16.25 2.5 12 2.5 7.25C2.5 4.9 4.4 3 6.75 3C8.25 3 9.55 3.78 10 4.92C10.45 3.78 11.75 3 13.25 3C15.6 3 17.5 4.9 17.5 7.25C17.5 12 10 16.25 10 16.25Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
+      'arrow-down':       { inner: '<path d="M4.21782 9.61384C4.36304 9.46863 4.54786 9.39259 4.77228 9.38572C4.9967 9.37939 5.18152 9.44883 5.32673 9.59404L9.20792 13.4752L9.20792 4.62374C9.20792 4.39932 9.28396 4.21107 9.43604 4.05899C9.58759 3.90744 9.77558 3.83166 10 3.83166C10.2244 3.83166 10.4127 3.90744 10.5648 4.05899C10.7163 4.21107 10.7921 4.39932 10.7921 4.62374L10.7921 13.4752L14.6733 9.59404C14.8185 9.44883 15.0033 9.37939 15.2277 9.38572C15.4521 9.39259 15.637 9.46863 15.7822 9.61384C15.9274 9.75906 16 9.94388 16 10.1683C16 10.3927 15.9274 10.5775 15.7822 10.7228L10.5545 15.9505C10.4884 16.0297 10.4061 16.0859 10.3073 16.1192C10.2081 16.1519 10.1056 16.1683 10 16.1683C9.89439 16.1683 9.79538 16.1519 9.70297 16.1192C9.61056 16.0859 9.52475 16.0297 9.44554 15.9505L4.21782 10.7228C4.07261 10.5775 4 10.3927 4 10.1683C4 9.94388 4.07261 9.75906 4.21782 9.61384Z" fill="currentColor"/>' },
+      'arrow-down-left':  { inner: '<path d="M13.6328 14.515C13.6685 14.3127 13.6248 14.1177 13.5017 13.9299C13.3781 13.7425 13.2152 13.6309 13.013 13.5952L7.60756 12.6421L14.8583 7.56512C15.0421 7.4364 15.1527 7.26613 15.19 7.05433C15.2273 6.84326 15.1815 6.64581 15.0528 6.46197C14.9241 6.27813 14.754 6.16739 14.5426 6.12974C14.3311 6.09283 14.1335 6.13873 13.9496 6.26745L6.69892 11.3445L7.65205 5.93902C7.68771 5.73677 7.63858 5.54555 7.50467 5.36535C7.37032 5.18545 7.20203 5.07767 6.99978 5.04201C6.79754 5.00635 6.6045 5.05288 6.42066 5.1816C6.23683 5.31033 6.12708 5.47581 6.09142 5.67805L4.80762 12.9589C4.78059 13.0584 4.78177 13.1581 4.81116 13.2581C4.84128 13.3582 4.88663 13.4515 4.94721 13.538C5.00778 13.6245 5.07798 13.6962 5.1578 13.7531C5.23806 13.8097 5.33335 13.8478 5.44366 13.8672L12.7245 15.151C12.9267 15.1867 13.1197 15.1401 13.3036 15.0114C13.4874 14.8827 13.5972 14.7172 13.6328 14.515Z" fill="currentColor"/>' },
+      'arrow-down-right': { inner: '<path d="M6.36718 14.515C6.33151 14.3127 6.37523 14.1177 6.49833 13.9299C6.62187 13.7425 6.78476 13.6309 6.987 13.5952L12.3924 12.6421L5.14173 7.56512C4.95789 7.4364 4.8473 7.26613 4.80995 7.05433C4.77274 6.84326 4.81849 6.64581 4.94721 6.46197C5.07594 6.27813 5.24599 6.16739 5.45736 6.12974C5.66886 6.09283 5.86653 6.13873 6.05036 6.26745L13.3011 11.3445L12.348 5.93902C12.3123 5.73677 12.3614 5.54555 12.4953 5.36535C12.6297 5.18545 12.798 5.07767 13.0002 5.04201C13.2025 5.00635 13.3955 5.05288 13.5793 5.1816C13.7632 5.31033 13.8729 5.47581 13.9086 5.67805L15.1924 12.9589C15.2194 13.0584 15.2182 13.1581 15.1888 13.2581C15.1587 13.3582 15.1134 13.4515 15.0528 13.538C14.9922 13.6245 14.922 13.6962 14.8422 13.7531C14.7619 13.8097 14.6667 13.8478 14.5563 13.8672L7.27554 15.151C7.0733 15.1867 6.88026 15.1401 6.69642 15.0114C6.51258 14.8827 6.40284 14.7172 6.36718 14.515Z" fill="currentColor"/>' },
+      'arrow-left':       { inner: '<path d="M10.3858 4.21782C10.531 4.36304 10.607 4.54785 10.6139 4.77228C10.6202 4.9967 10.5508 5.18152 10.4056 5.32673L6.52441 9.20792L15.3759 9.20792C15.6003 9.20792 15.7886 9.28396 15.9406 9.43604C16.0922 9.58759 16.168 9.77558 16.168 10C16.168 10.2244 16.0922 10.4127 15.9406 10.5648C15.7886 10.7163 15.6003 10.7921 15.3759 10.7921L6.52441 10.7921L10.4056 14.6733C10.5508 14.8185 10.6202 15.0033 10.6139 15.2277C10.607 15.4521 10.531 15.637 10.3858 15.7822C10.2406 15.9274 10.0558 16 9.83134 16C9.60691 16 9.42209 15.9274 9.27688 15.7822L4.04916 10.5545C3.96995 10.4884 3.91371 10.4061 3.88045 10.3073C3.84771 10.2081 3.83134 10.1056 3.83134 10C3.83134 9.89439 3.84771 9.79538 3.88045 9.70297C3.91371 9.61056 3.96995 9.52475 4.04916 9.44554L9.27688 4.21782C9.4221 4.07261 9.60691 4 9.83134 4C10.0558 4 10.2406 4.07261 10.3858 4.21782Z" fill="currentColor"/>' },
+      'arrow-right':      { inner: '<path d="M9.61421 15.7822C9.46899 15.637 9.39295 15.4521 9.38609 15.2277C9.37975 15.0033 9.44919 14.8185 9.59441 14.6733L13.4756 10.7921H4.62411C4.39969 10.7921 4.21144 10.716 4.05936 10.564C3.90781 10.4124 3.83203 10.2244 3.83203 10C3.83203 9.77558 3.90781 9.58733 4.05936 9.43525C4.21144 9.2837 4.39969 9.20792 4.62411 9.20792H13.4756L9.59441 5.32673C9.44919 5.18152 9.37975 4.9967 9.38609 4.77228C9.39295 4.54785 9.46899 4.36304 9.61421 4.21782C9.75942 4.07261 9.94424 4 10.1687 4C10.3931 4 10.5779 4.07261 10.7231 4.21782L15.9508 9.44554C16.03 9.51155 16.0863 9.59393 16.1196 9.69267C16.1523 9.79195 16.1687 9.89439 16.1687 10C16.1687 10.1056 16.1523 10.2046 16.1196 10.297C16.0863 10.3894 16.03 10.4752 15.9508 10.5545L10.7231 15.7822C10.5779 15.9274 10.3931 16 10.1687 16C9.94424 16 9.75942 15.9274 9.61421 15.7822Z" fill="currentColor"/>' },
+      'arrow-up':         { inner: '<path d="M15.7822 10.3862C15.637 10.5314 15.4521 10.6074 15.2277 10.6143C15.0033 10.6206 14.8185 10.5512 14.6733 10.406L10.7921 6.52477L10.7921 15.3763C10.7921 15.6007 10.716 15.7889 10.564 15.941C10.4124 16.0926 10.2244 16.1683 10 16.1683C9.77558 16.1683 9.58733 16.0926 9.43525 15.941C9.2837 15.7889 9.20792 15.6007 9.20792 15.3763L9.20792 6.52477L5.32673 10.406C5.18152 10.5512 4.9967 10.6206 4.77228 10.6143C4.54785 10.6074 4.36304 10.5314 4.21782 10.3862C4.07261 10.2409 4 10.0561 4 9.8317C4 9.60728 4.07261 9.42246 4.21782 9.27725L9.44554 4.04952C9.51155 3.97032 9.59393 3.91408 9.69267 3.88081C9.79195 3.84807 9.89439 3.8317 10 3.8317C10.1056 3.8317 10.2046 3.84807 10.297 3.88081C10.3894 3.91408 10.4752 3.97032 10.5545 4.04952L15.7822 9.27725C15.9274 9.42246 16 9.60728 16 9.8317C16 10.0561 15.9274 10.2409 15.7822 10.3862Z" fill="currentColor"/>' },
+      'arrow-up-left':    { inner: '<path d="M13.6328 5.48503C13.6685 5.68727 13.6248 5.88228 13.5017 6.07005C13.3781 6.25752 13.2152 6.36909 13.013 6.40475L7.60756 7.35788L14.8583 12.4349C15.0421 12.5636 15.1527 12.7339 15.19 12.9457C15.2273 13.1567 15.1815 13.3542 15.0528 13.538C14.9241 13.7219 14.754 13.8326 14.5426 13.8703C14.3311 13.9072 14.1335 13.8613 13.9496 13.7325L6.69892 8.65554L7.65205 14.061C7.68771 14.2632 7.63858 14.4545 7.50467 14.6347C7.37032 14.8146 7.20203 14.9223 6.99978 14.958C6.79754 14.9937 6.6045 14.9471 6.42066 14.8184C6.23683 14.6897 6.12708 14.5242 6.09142 14.3219L4.80762 7.04115C4.78059 6.94165 4.78177 6.84191 4.81116 6.74194C4.84128 6.64184 4.88663 6.54854 4.94721 6.46203C5.00778 6.37552 5.07798 6.3038 5.1578 6.24688C5.23806 6.19027 5.33335 6.15223 5.44366 6.13278L12.7245 4.84898C12.9267 4.81332 13.1197 4.85985 13.3036 4.98857C13.4874 5.1173 13.5972 5.28278 13.6328 5.48503Z" fill="currentColor"/>' },
+      'arrow-up-right':   { inner: '<path d="M6.36718 5.48503C6.33151 5.68727 6.37523 5.88228 6.49833 6.07005C6.62187 6.25752 6.78476 6.36909 6.987 6.40475L12.3924 7.35788L5.14173 12.4349C4.95789 12.5636 4.8473 12.7339 4.80995 12.9457C4.77274 13.1567 4.81849 13.3542 4.94721 13.538C5.07594 13.7219 5.24599 13.8326 5.45736 13.8703C5.66886 13.9072 5.86653 13.8613 6.05036 13.7325L13.3011 8.65554L12.348 14.061C12.3123 14.2632 12.3614 14.4545 12.4953 14.6347C12.6297 14.8146 12.798 14.9223 13.0002 14.958C13.2025 14.9937 13.3955 14.9471 13.5793 14.8184C13.7632 14.6897 13.8729 14.5242 13.9086 14.3219L15.1924 7.04115C15.2194 6.94165 15.2182 6.84191 15.1888 6.74194C15.1587 6.64184 15.1134 6.54854 15.0528 6.46203C14.9922 6.37552 14.922 6.3038 14.8422 6.24688C14.7619 6.19027 14.6667 6.15223 14.5563 6.13278L7.27554 4.84898C7.0733 4.81332 6.88026 4.85985 6.69642 4.98857C6.51258 5.1173 6.40284 5.28278 6.36718 5.48503Z" fill="currentColor"/>' },
+      'carat-down':       { inner: '<path d="M4.03916 7.05895C4.0809 6.95965 4.1511 6.87493 4.24092 6.81545C4.33073 6.75598 4.43614 6.72443 4.54386 6.72476L15.4561 6.72477C15.5639 6.72443 15.6693 6.75598 15.7591 6.81546C15.8489 6.87493 15.9191 6.95965 15.9608 7.05895C16.0001 7.15973 16.0101 7.26959 15.9896 7.3758C15.9691 7.48201 15.9189 7.58024 15.8449 7.65913L10.3887 13.1153C10.2853 13.2177 10.1456 13.2752 10 13.2752C9.8544 13.2752 9.71469 13.2177 9.61125 13.1153L4.15511 7.65913C4.08109 7.58024 4.03092 7.48201 4.0104 7.3758C3.98988 7.26958 3.99985 7.15973 4.03916 7.05895Z" fill="currentColor"/>' },
+      'carat-left':       { inner: '<path d="M12.9409 4.03916C13.0402 4.0809 13.1249 4.1511 13.1844 4.24092C13.2438 4.33073 13.2754 4.43614 13.2751 4.54386L13.2751 15.4561C13.2754 15.5639 13.2438 15.6693 13.1844 15.7591C13.1249 15.8489 13.0402 15.9191 12.9409 15.9608C12.8401 16.0001 12.7302 16.0101 12.624 15.9896C12.5178 15.9691 12.4196 15.9189 12.3407 15.8449L6.88454 10.3887C6.78209 10.2853 6.72461 10.1456 6.72461 10C6.72461 9.8544 6.78209 9.71469 6.88454 9.61125L12.3407 4.15511C12.4196 4.08109 12.5178 4.03092 12.624 4.0104C12.7302 3.98988 12.8401 3.99985 12.9409 4.03916Z" fill="currentColor"/>' },
+      'carat-right':      { inner: '<path d="M7.05914 15.9608C6.95983 15.9191 6.87511 15.8489 6.81564 15.7591C6.75617 15.6693 6.72461 15.5639 6.72495 15.4561L6.72495 4.54386C6.72461 4.43614 6.75617 4.33073 6.81564 4.24092C6.87511 4.1511 6.95983 4.0809 7.05914 4.03916C7.15992 3.99985 7.26977 3.98988 7.37598 4.0104C7.48219 4.03092 7.58043 4.08109 7.65931 4.15511L13.1155 9.61125C13.2179 9.71469 13.2754 9.8544 13.2754 10C13.2754 10.1456 13.2179 10.2853 13.1155 10.3888L7.65931 15.8449C7.58042 15.9189 7.48219 15.9691 7.37598 15.9896C7.26977 16.0101 7.15992 16.0001 7.05914 15.9608Z" fill="currentColor"/>' },
+      'chevron-down':     { inner: '<path d="M15 7.5L10 12.5L5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
+      'chevron-left':     { inner: '<path d="M12.5 5L7.5 10L12.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
+      'chevron-right':    { inner: '<path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
+      'chevron-up':       { inner: '<path d="M15 12.5L10 7.5L5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
+      'close':            { inner: '<path fill-rule="evenodd" clip-rule="evenodd" d="M14.2532 15.6665C14.6437 16.0571 15.2769 16.0571 15.6674 15.6665C16.058 15.276 16.058 14.6429 15.6674 14.2523L11.4151 10L15.6674 5.74767C16.058 5.35714 16.058 4.72398 15.6674 4.33345C15.2769 3.94293 14.6437 3.94293 14.2532 4.33345L10.0009 8.58579L5.74857 4.33347C5.35804 3.94294 4.72488 3.94294 4.33436 4.33347C3.94383 4.72399 3.94383 5.35716 4.33436 5.74768L8.58668 10L4.33436 14.2523C3.94383 14.6428 3.94383 15.276 4.33436 15.6665C4.72488 16.0571 5.35805 16.0571 5.74857 15.6665L10.0009 11.4142L14.2532 15.6665Z" fill="currentColor"/>' },
+      'minus':            { inner: '<path fill-rule="evenodd" clip-rule="evenodd" d="M16 9.99997C16 10.4734 15.6162 10.8571 15.1429 10.8571L4.85714 10.8571C4.38376 10.8571 4 10.4734 4 9.99997C4 9.52659 4.38376 9.14283 4.85714 9.14283L15.1429 9.14283C15.6162 9.14283 16 9.52659 16 9.99997Z" fill="currentColor"/>' },
+      'plus':             { inner: '<path fill-rule="evenodd" clip-rule="evenodd" d="M9.2513 15.2513C9.2513 15.6648 9.58651 16 10 16C10.4135 16 10.7487 15.6648 10.7487 15.2513L10.7487 10.7487L15.2513 10.7487C15.6648 10.7487 16 10.4135 16 10C16 9.58649 15.6648 9.25128 15.2513 9.25128L10.7487 9.25128L10.7487 4.74872C10.7487 4.33521 10.4135 4 10 4C9.58651 4 9.2513 4.33521 9.2513 4.74872L9.2513 9.25128L4.74872 9.25128C4.33521 9.25128 4 9.58649 4 10C4 10.4135 4.33521 10.7487 4.74872 10.7487L9.2513 10.7487L9.2513 15.2513Z" fill="currentColor"/>' },
+      'tick':             { inner: '<path d="M6.93924 13.7004L3.62542 10.3866C3.44686 10.208 3.20467 10.1077 2.95215 10.1077C2.69962 10.1077 2.45744 10.208 2.27888 10.3866C2.10031 10.5651 2 10.8073 2 11.0598C2 11.1849 2.02463 11.3087 2.07248 11.4242C2.12033 11.5397 2.19046 11.6447 2.27888 11.7331L6.27075 15.725C6.6432 16.0974 7.24484 16.0974 7.61729 15.725L17.7211 5.62115C17.8997 5.44259 18 5.2004 18 4.94788C18 4.69535 17.8997 4.45317 17.7211 4.27461C17.5426 4.09605 17.3004 3.99573 17.0479 3.99573C16.7953 3.99573 16.5531 4.09605 16.3746 4.27461L6.93924 13.7004Z" fill="currentColor"/>' }
+    };
+
+    var iconKeys = Object.keys(icons);
+
+    var tokens = {
+      wilko: {
+        '--color-btn-offer-bg': '#fdda24',
+        '--color-btn-offer-bg-hover': '#ffffff',
+        '--color-btn-offer-stroke': '#fdda24',
+        '--color-btn-offer-stroke-hover': '#222222',
+        '--color-btn-offer-label': '#222222',
+        '--color-btn-offer-label-hover': '#222222',
+        '--color-btn-radius': '100px',
+        '--color-neutral-grey-7': '#222222',
+        '--font-family': 'sofia-pro',
+        'source-token': '--color-brand-secondary'
+      },
+      homebase: {
+        '--color-btn-offer-bg': '#ee0000',
+        '--color-btn-offer-bg-hover': '#ffffff',
+        '--color-btn-offer-stroke': '#ee0000',
+        '--color-btn-offer-stroke-hover': '#ee0000',
+        '--color-btn-offer-label': '#ffffff',
+        '--color-btn-offer-label-hover': '#ee0000',
+        '--color-btn-radius': '100px',
+        '--color-neutral-grey-7': '#333333',
+        '--font-family': 'Rubik',
+        'source-token': '--color-brand-sale'
+      }
+    };
+
+    function iconSvgInner(key) {
+      return icons[key] ? icons[key].inner : '';
+    }
+
+    function buildDropdownPanels() {
+      ['left', 'right'].forEach(function(side) {
+        var panel = document.getElementById(side + '-icon-panel');
+        var current = side === 'left' ? leftIconType : rightIconType;
+        var html = '';
+        iconKeys.forEach(function(key) {
+          var sel = key === current ? ' selected' : '';
+          html += '<button class="icon-option' + sel + '" onclick="selectIcon(\'' + side + '\',\'' + key + '\')">';
+          html += '<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">' + iconSvgInner(key) + '</svg>';
+          html += key;
+          html += '</button>';
+        });
+        panel.innerHTML = html;
+      });
+    }
+
+    function updateTrigger(side) {
+      var key = side === 'left' ? leftIconType : rightIconType;
+      document.getElementById(side + '-trigger-icon').innerHTML = iconSvgInner(key);
+      document.getElementById(side + '-trigger-name').textContent = key;
+    }
+
+    function toggleDropdown(side) {
+      var dd = document.getElementById(side + '-icon-dropdown');
+      var other = side === 'left' ? 'right' : 'left';
+      document.getElementById(other + '-icon-dropdown').classList.remove('open');
+      dd.classList.toggle('open');
+      if (dd.classList.contains('open')) buildDropdownPanels();
+    }
+
+    function selectIcon(side, key) {
+      if (side === 'left') leftIconType = key;
+      else rightIconType = key;
+      document.getElementById(side + '-icon-dropdown').classList.remove('open');
+      updateTrigger(side);
+      updateAll();
+    }
+
+    document.addEventListener('click', function(e) {
+      ['left','right'].forEach(function(side) {
+        var dd = document.getElementById(side + '-icon-dropdown');
+        if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+      });
+    });
+
+    function setBrand(b) {
+      brand = b;
+      document.documentElement.setAttribute('data-brand', b);
+      document.getElementById('btn-wilko').classList.toggle('active', b === 'wilko');
+      document.getElementById('btn-homebase').classList.toggle('active', b === 'homebase');
+      updateAll();
+    }
+
+    function setSize(s) {
+      currentSize = s;
+      document.querySelectorAll('[id^="size-"]').forEach(function(el) {
+        el.classList.toggle('active', el.id === 'size-' + s);
+      });
+      updateAll();
+    }
+
+    function setState(s) {
+      currentState = s;
+      document.querySelectorAll('[id^="state-"]').forEach(function(el) {
+        el.classList.toggle('active', el.id === 'state-' + s);
+      });
+      updateAll();
+    }
+
+    function setLabel(v) { currentLabel = v; updateAll(); }
+    function toggleLeftIcon(v) { showLeftIcon = v; updateAll(); }
+    function toggleRightIcon(v) { showRightIcon = v; updateAll(); }
+    function toggleLabel(v) { showLabel = v; updateAll(); }
+
+    function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    function updateSingleButton() {
+      var isLoading = currentState === 'loading';
+      var btn = document.getElementById('demo-button');
+      btn.className = 'cds-btn-offer size-' + currentSize + ' state-' + currentState;
+      btn.disabled = currentState === 'disabled';
+
+      var li = document.getElementById('left-icon');
+      li.innerHTML = iconSvgInner(leftIconType);
+      li.style.display = (showLeftIcon && !isLoading) ? '' : 'none';
+
+      var lt = document.getElementById('btn-label-text');
+      lt.textContent = isLoading ? 'Adding to basket' : currentLabel;
+      lt.style.display = showLabel ? '' : 'none';
+
+      var ri = document.getElementById('right-icon');
+      ri.innerHTML = iconSvgInner(rightIconType);
+      ri.style.display = (showRightIcon && !isLoading) ? '' : 'none';
+
+      document.getElementById('preview-caption').textContent = cap(currentSize) + ' · ' + cap(currentState);
+    }
+
+    function updateTokenReadout() {
+      var t = tokens[brand];
+      var relevant = {
+        '--color-btn-offer-bg': t['--color-btn-offer-bg'],
+        '--color-btn-offer-bg-hover': t['--color-btn-offer-bg-hover'],
+        '--color-btn-offer-stroke': t['--color-btn-offer-stroke'],
+        '--color-btn-offer-stroke-hover': t['--color-btn-offer-stroke-hover'],
+        '--color-btn-offer-label': t['--color-btn-offer-label'],
+        '--color-btn-offer-label-hover': t['--color-btn-offer-label-hover'],
+        '--color-neutral-grey-7': t['--color-neutral-grey-7'],
+        '--color-btn-radius': t['--color-btn-radius'],
+        '--font-family': t['--font-family']
+      };
+      if (currentState === 'disabled') {
+        relevant = {
+          '--color-neutral-grey-3': '#d9d9d9',
+          '--color-neutral-grey-5': '#888888',
+          '--color-btn-radius': t['--color-btn-radius'],
+          '--font-family': t['--font-family']
+        };
+      } else if (currentState === 'hover') {
+        relevant = {
+          '--color-btn-offer-bg-hover': t['--color-btn-offer-bg-hover'],
+          '--color-btn-offer-stroke-hover': t['--color-btn-offer-stroke-hover'],
+          '--color-btn-offer-label-hover': t['--color-btn-offer-label-hover'],
+          '--color-neutral-grey-7': t['--color-neutral-grey-7'],
+          '--color-btn-radius': t['--color-btn-radius'],
+          '--font-family': t['--font-family']
+        };
+      } else if (currentState === 'focus') {
+        relevant = {
+          '--color-btn-offer-bg': t['--color-btn-offer-bg'],
+          '--color-btn-offer-stroke': t['--color-btn-offer-stroke'],
+          '--color-btn-offer-label': t['--color-btn-offer-label'],
+          '--color-neutral-grey-7': t['--color-neutral-grey-7'],
+          '--color-btn-radius': t['--color-btn-radius'],
+          '--font-family': t['--font-family']
+        };
+      } else {
+        relevant = {
+          '--color-btn-offer-bg': t['--color-btn-offer-bg'],
+          '--color-btn-offer-stroke': t['--color-btn-offer-stroke'],
+          '--color-btn-offer-label': t['--color-btn-offer-label'],
+          '--color-neutral-grey-7': t['--color-neutral-grey-7'],
+          '--color-btn-radius': t['--color-btn-radius'],
+          '--font-family': t['--font-family']
+        };
+      }
+      var html = '';
+      Object.keys(relevant).forEach(function(k) {
+        html += '<div class="token-row"><span class="token-name">' + k + '</span><span class="token-value">' + relevant[k] + '</span></div>';
+      });
+      document.getElementById('token-readout').innerHTML = html;
+    }
+
+    function setSnippetTab(tab) {
+      snippetTab = tab;
+      document.getElementById('tab-html').classList.toggle('active', tab === 'html');
+      document.getElementById('tab-css').classList.toggle('active', tab === 'css');
+      document.getElementById('tab-js').classList.toggle('active', tab === 'js');
+      generateSnippet();
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function generateSnippet() {
+      if (snippetTab === 'css') { generateCssSnippet(); return; }
+      if (snippetTab === 'js')  { generateJsSnippet();  return; }
+
+      var isLoading = currentState === 'loading';
+      var labelText = isLoading ? 'Adding to basket' : currentLabel;
+      var classes = ['cds-btn-offer', 'size-' + currentSize, 'state-' + currentState];
+
+      var parts = [];
+      if (showLeftIcon && !isLoading) parts.push({ type: 'icon', side: 'left', key: leftIconType });
+      if (showLabel) parts.push({ type: 'label', text: labelText });
+      if (!isLoading && showRightIcon) parts.push({ type: 'icon', side: 'right', key: rightIconType });
+      if (isLoading) parts.push({ type: 'spinner' });
+
+      var t = '<span class="snip-tag">'; var tc = '</span>';
+      var a = '<span class="snip-attr">'; var ac = '</span>';
+      var s = '<span class="snip-string">'; var sc = '</span>';
+      var c = '<span class="snip-comment">'; var cc = '</span>';
+      var cl = '<span class="snip-class">'; var clc = '</span>';
+
+      var classStr = classes.join(' ');
+      var out = '';
+
+      out += c + '&lt;!-- CDS Offer Button · ' + brand + ' · ' + currentSize + ' · ' + currentState + ' --&gt;' + cc + '\n';
+      out += c + '&lt;!-- Requires: &lt;html data-brand="' + brand + '"&gt; + cds-tokens.css --&gt;' + cc + '\n\n';
+      out += t + '&lt;button' + tc;
+      out += ' ' + a + 'class' + ac + '=' + s + '"' + cl + classStr + clc + '"' + sc;
+      if (currentState === 'disabled') out += ' ' + a + 'disabled' + ac;
+      out += t + '&gt;' + tc + '\n';
+
+      parts.forEach(function(p) {
+        if (p.type === 'icon') {
+          var inner = iconSvgInner(p.key);
+          out += '  ' + t + '&lt;svg' + tc + ' ' + a + 'class' + ac + '=' + s + '"btn-icon"' + sc + ' ' + a + 'viewBox' + ac + '=' + s + '"0 0 20 20"' + sc + ' ' + a + 'xmlns' + ac + '=' + s + '"http://www.w3.org/2000/svg"' + sc + t + '&gt;' + tc + '\n';
+          out += '    ' + escapeHtml(inner) + '\n';
+          out += '  ' + t + '&lt;/svg&gt;' + tc + '\n';
+        } else if (p.type === 'label') {
+          out += '  ' + t + '&lt;span&gt;' + tc + escapeHtml(p.text) + t + '&lt;/span&gt;' + tc + '\n';
+        } else if (p.type === 'spinner') {
+          out += '  ' + t + '&lt;svg' + tc + ' ' + a + 'class' + ac + '=' + s + '"btn-spinner"' + sc + ' ' + a + 'viewBox' + ac + '=' + s + '"0 0 20 20"' + sc + ' ' + a + 'fill' + ac + '=' + s + '"none"' + sc + t + '&gt;' + tc + '\n';
+          out += '    &lt;circle cx="10" cy="10" r="7" stroke="currentColor" stroke-opacity="0.3" stroke-width="2"/&gt;\n';
+          out += '    &lt;path d="M10 3a7 7 0 0 1 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/&gt;\n';
+          out += '  ' + t + '&lt;/svg&gt;' + tc + '\n';
+        }
+      });
+
+      out += t + '&lt;/button&gt;' + tc;
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateCssSnippet() {
+      var t = tokens[brand];
+
+      var c   = '<span class="snip-comment">';  var cc  = '</span>';
+      var sel = '<span class="snip-sel">';       var selc = '</span>';
+      var p   = '<span class="snip-prop">';      var pc  = '</span>';
+      var v   = '<span class="snip-val">';       var vc  = '</span>';
+      var tok = '<span class="snip-tok">';       var tokc = '</span>';
+
+      var sizeProps = {
+        small:    { height: '36px', padding: '0 16px', fontSize: '14px' },
+        standard: { height: '44px', padding: '0 24px', fontSize: '16px' },
+        large:    { height: '52px', padding: '0 32px', fontSize: '16px' }
+      };
+      var sp = sizeProps[currentSize];
+
+      var out = '';
+      out += c + '/* CDS Offer Button · ' + brand + ' · ' + currentSize + ' · ' + currentState + ' */' + cc + '\n';
+      out += c + '/* cds-tokens.css must be loaded and data-brand="' + brand + '" set on &lt;html&gt; */' + cc + '\n\n';
+
+      // Base
+      out += sel + '.cds-btn-offer' + selc + ' {\n';
+      out += '  ' + p + 'display' + pc + ': ' + v + 'inline-flex' + vc + ';\n';
+      out += '  ' + p + 'align-items' + pc + ': ' + v + 'center' + vc + ';\n';
+      out += '  ' + p + 'gap' + pc + ': ' + v + '8px' + vc + ';\n';
+      out += '  ' + p + 'border' + pc + ': ' + v + '2px solid ' + vc + tok + 'var(--color-btn-offer-stroke)' + tokc + '; ' + c + '/* ' + t['--color-btn-offer-stroke'] + ' */' + cc + '\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + tok + 'var(--color-btn-radius)' + tokc + '; ' + c + '/* ' + t['--color-btn-radius'] + ' */' + cc + '\n';
+      out += '  ' + p + 'background-color' + pc + ': ' + tok + 'var(--color-btn-offer-bg)' + tokc + '; ' + c + '/* ' + t['--color-btn-offer-bg'] + ' */' + cc + '\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-btn-offer-label)' + tokc + '; ' + c + '/* ' + t['--color-btn-offer-label'] + ' */' + cc + '\n';
+      out += '  ' + p + 'font-family' + pc + ': ' + tok + 'var(--font-family)' + tokc + '; ' + c + '/* ' + t['--font-family'] + ' */' + cc + '\n';
+      out += '  ' + p + 'font-weight' + pc + ': ' + tok + 'var(--font-weight-bold)' + tokc + ';\n';
+      out += '  ' + p + 'cursor' + pc + ': ' + v + 'pointer' + vc + ';\n';
+      out += '  ' + p + 'white-space' + pc + ': ' + v + 'nowrap' + vc + ';\n';
+      out += '}\n\n';
+
+      // Size
+      out += sel + '.cds-btn-offer.size-' + currentSize + selc + ' {\n';
+      out += '  ' + p + 'height' + pc + ': ' + v + sp.height + vc + ';\n';
+      out += '  ' + p + 'padding' + pc + ': ' + v + sp.padding + vc + ';\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + v + sp.fontSize + vc + ';\n';
+      out += '}\n\n';
+
+      // Hover
+      out += sel + '.cds-btn-offer:hover' + selc + ' {\n';
+      out += '  ' + p + 'background-color' + pc + ': ' + tok + 'var(--color-btn-offer-bg-hover)' + tokc + '; ' + c + '/* ' + t['--color-btn-offer-bg-hover'] + ' */' + cc + '\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-btn-offer-label-hover)' + tokc + '; ' + c + '/* ' + t['--color-btn-offer-label-hover'] + ' */' + cc + '\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-btn-offer-stroke-hover)' + tokc + '; ' + c + '/* ' + t['--color-btn-offer-stroke-hover'] + ' */' + cc + '\n';
+      out += '}\n\n';
+
+      // Focus
+      out += sel + '.cds-btn-offer:focus-visible' + selc + ' {\n';
+      out += '  ' + p + 'outline' + pc + ': ' + v + '2px solid ' + vc + tok + 'var(--color-neutral-grey-7)' + tokc + '; ' + c + '/* ' + t['--color-neutral-grey-7'] + ' */' + cc + '\n';
+      out += '  ' + p + 'outline-offset' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '}\n\n';
+
+      // Disabled
+      out += sel + '.cds-btn-offer.state-disabled' + selc + ' {\n';
+      out += '  ' + p + 'background-color' + pc + ': ' + tok + 'var(--color-neutral-grey-3)' + tokc + '; ' + c + '/* #d9d9d9 */' + cc + '\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-neutral-grey-5)' + tokc + '; ' + c + '/* #888888 */' + cc + '\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-neutral-grey-3)' + tokc + '; ' + c + '/* #d9d9d9 */' + cc + '\n';
+      out += '  ' + p + 'cursor' + pc + ': ' + v + 'not-allowed' + vc + ';\n';
+      out += '}\n\n';
+
+      // Loading
+      out += sel + '.cds-btn-offer.state-loading' + selc + ' {\n';
+      out += '  ' + p + 'opacity' + pc + ': ' + v + '0.7' + vc + ';\n';
+      out += '  ' + p + 'cursor' + pc + ': ' + v + 'wait' + vc + ';\n';
+      out += '}\n\n';
+
+      // Spinner
+      out += c + '/* Spinner animation */' + cc + '\n';
+      out += sel + '@keyframes spin' + selc + ' {\n';
+      out += '  ' + p + 'to' + pc + ' { ' + p + 'transform' + pc + ': ' + v + 'rotate(360deg)' + vc + '; }\n';
+      out += '}\n\n';
+      out += sel + '.btn-spinner' + selc + ' {\n';
+      out += '  ' + p + 'animation' + pc + ': ' + v + 'spin 0.75s linear infinite' + vc + ';\n';
+      out += '}\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateJsSnippet() {
+      var kw  = '<span class="snip-attr">';   var kwc = '</span>';
+      var fn  = '<span class="snip-class">';  var fnc = '</span>';
+      var str = '<span class="snip-string">'; var strc = '</span>';
+      var c   = '<span class="snip-comment">'; var cc = '</span>';
+      var p   = '<span class="snip-prop">';   var pc  = '</span>';
+
+      var out = '';
+      out += c + '// CDS Offer Button — ripple effect' + cc + '\n';
+      out += c + '// Requires: position:relative + overflow:hidden on .cds-btn-offer' + cc + '\n\n';
+      out += fn + 'document' + fnc + '.' + fn + 'querySelectorAll' + fnc + '(' + str + '\'.cds-btn-offer\'' + strc + ').' + fn + 'forEach' + fnc + '(' + kw + 'function' + kwc + '(btn) {\n';
+      out += '  btn.' + fn + 'addEventListener' + fnc + '(' + str + '\'mousedown\'' + strc + ', ' + kw + 'function' + kwc + '(e) {\n';
+      out += '    ' + kw + 'if' + kwc + ' (btn.' + p + 'disabled' + pc + ' || btn.' + fn + 'classList' + fnc + '.' + fn + 'contains' + fnc + '(' + str + '\'state-loading\'' + strc + ')) ' + kw + 'return' + kwc + ';\n';
+      out += '    ' + kw + 'var' + kwc + ' rect = btn.' + fn + 'getBoundingClientRect' + fnc + '();\n';
+      out += '    ' + kw + 'var' + kwc + ' x    = e.' + p + 'clientX' + pc + ' - rect.' + p + 'left' + pc + ';\n';
+      out += '    ' + kw + 'var' + kwc + ' y    = e.' + p + 'clientY' + pc + ' - rect.' + p + 'top' + pc + ';\n';
+      out += '    ' + kw + 'var' + kwc + ' size = ' + fn + 'Math' + fnc + '.' + fn + 'max' + fnc + '(rect.' + p + 'width' + pc + ', rect.' + p + 'height' + pc + ') * 2.2;\n';
+      out += '    btn.' + fn + 'style' + fnc + '.' + fn + 'setProperty' + fnc + '(' + str + '\'--ripple-x\'' + strc + ', x + ' + str + '\'px\'' + strc + ');\n';
+      out += '    btn.' + fn + 'style' + fnc + '.' + fn + 'setProperty' + fnc + '(' + str + '\'--ripple-y\'' + strc + ', y + ' + str + '\'px\'' + strc + ');\n';
+      out += '    btn.' + fn + 'style' + fnc + '.' + fn + 'setProperty' + fnc + '(' + str + '\'--ripple-size\'' + strc + ', size + ' + str + '\'px\'' + strc + ');\n';
+      out += '    btn.' + fn + 'classList' + fnc + '.' + fn + 'remove' + fnc + '(' + str + '\'is-rippling\'' + strc + ');\n';
+      out += '    ' + kw + 'void' + kwc + ' btn.' + p + 'offsetWidth' + pc + ';\n';
+      out += '    btn.' + fn + 'classList' + fnc + '.' + fn + 'add' + fnc + '(' + str + '\'is-rippling\'' + strc + ');\n';
+      out += '  });\n';
+      out += '  btn.' + fn + 'addEventListener' + fnc + '(' + str + '\'animationend\'' + strc + ', ' + kw + 'function' + kwc + '() {\n';
+      out += '    btn.' + fn + 'classList' + fnc + '.' + fn + 'remove' + fnc + '(' + str + '\'is-rippling\'' + strc + ');\n';
+      out += '  });\n';
+      out += '});\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function copySnippet() {
+      var plain;
+
+      if (snippetTab === 'js') {
+        var lines = [];
+        lines.push('// CDS Offer Button — ripple effect');
+        lines.push('// Requires: position:relative + overflow:hidden on .cds-btn-offer');
+        lines.push('');
+        lines.push("document.querySelectorAll('.cds-btn-offer').forEach(function(btn) {");
+        lines.push("  btn.addEventListener('mousedown', function(e) {");
+        lines.push("    if (btn.disabled || btn.classList.contains('state-loading')) return;");
+        lines.push('    var rect = btn.getBoundingClientRect();');
+        lines.push('    var x    = e.clientX - rect.left;');
+        lines.push('    var y    = e.clientY - rect.top;');
+        lines.push('    var size = Math.max(rect.width, rect.height) * 2.2;');
+        lines.push("    btn.style.setProperty('--ripple-x', x + 'px');");
+        lines.push("    btn.style.setProperty('--ripple-y', y + 'px');");
+        lines.push("    btn.style.setProperty('--ripple-size', size + 'px');");
+        lines.push("    btn.classList.remove('is-rippling');");
+        lines.push('    void btn.offsetWidth;');
+        lines.push("    btn.classList.add('is-rippling');");
+        lines.push('  });');
+        lines.push("  btn.addEventListener('animationend', function() {");
+        lines.push("    btn.classList.remove('is-rippling');");
+        lines.push('  });');
+        lines.push('});');
+        plain = lines.join('\n');
+      } else if (snippetTab === 'css') {
+        var t = tokens[brand];
+        var sp = { small: { height: '36px', padding: '0 16px', fontSize: '14px' }, standard: { height: '44px', padding: '0 24px', fontSize: '16px' }, large: { height: '52px', padding: '0 32px', fontSize: '16px' } }[currentSize];
+        var lines = [];
+        lines.push('/* CDS Offer Button · ' + brand + ' · ' + currentSize + ' · ' + currentState + ' */');
+        lines.push('.cds-btn-offer {');
+        lines.push('  display: inline-flex;');
+        lines.push('  align-items: center;');
+        lines.push('  gap: 8px;');
+        lines.push('  border: 2px solid var(--color-btn-offer-stroke); /* ' + t['--color-btn-offer-stroke'] + ' */');
+        lines.push('  border-radius: var(--color-btn-radius); /* ' + t['--color-btn-radius'] + ' */');
+        lines.push('  background-color: var(--color-btn-offer-bg); /* ' + t['--color-btn-offer-bg'] + ' */');
+        lines.push('  color: var(--color-btn-offer-label); /* ' + t['--color-btn-offer-label'] + ' */');
+        lines.push('  font-family: var(--font-family); /* ' + t['--font-family'] + ' */');
+        lines.push('  font-weight: var(--font-weight-bold);');
+        lines.push('  cursor: pointer;');
+        lines.push('  white-space: nowrap;');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-btn-offer.size-' + currentSize + ' {');
+        lines.push('  height: ' + sp.height + ';');
+        lines.push('  padding: ' + sp.padding + ';');
+        lines.push('  font-size: ' + sp.fontSize + ';');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-btn-offer:hover {');
+        lines.push('  background-color: var(--color-btn-offer-bg-hover); /* ' + t['--color-btn-offer-bg-hover'] + ' */');
+        lines.push('  color: var(--color-btn-offer-label-hover); /* ' + t['--color-btn-offer-label-hover'] + ' */');
+        lines.push('  border-color: var(--color-btn-offer-stroke-hover); /* ' + t['--color-btn-offer-stroke-hover'] + ' */');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-btn-offer:focus-visible {');
+        lines.push('  outline: 2px solid var(--color-neutral-grey-7); /* ' + t['--color-neutral-grey-7'] + ' */');
+        lines.push('  outline-offset: 2px;');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-btn-offer.state-disabled {');
+        lines.push('  background-color: var(--color-neutral-grey-3); /* #d9d9d9 */');
+        lines.push('  color: var(--color-neutral-grey-5); /* #888888 */');
+        lines.push('  border-color: var(--color-neutral-grey-3); /* #d9d9d9 */');
+        lines.push('  cursor: not-allowed;');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-btn-offer.state-loading { opacity: 0.7; cursor: wait; }');
+        lines.push('');
+        lines.push('@keyframes spin { to { transform: rotate(360deg); } }');
+        lines.push('.btn-spinner { animation: spin 0.75s linear infinite; }');
+        plain = lines.join('\n');
+      } else {
+        var isLoading = currentState === 'loading';
+        var labelText = isLoading ? 'Adding to basket' : currentLabel;
+        var classes = ['cds-btn-offer', 'size-' + currentSize, 'state-' + currentState].join(' ');
+        var lines = [];
+        lines.push('<button class="' + classes + '"' + (currentState === 'disabled' ? ' disabled' : '') + '>');
+        if (showLeftIcon && !isLoading) {
+          lines.push('  <svg class="btn-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">');
+          lines.push('    ' + iconSvgInner(leftIconType));
+          lines.push('  </svg>');
+        }
+        if (showLabel) lines.push('  <span>' + labelText + '</span>');
+        if (!isLoading && showRightIcon) {
+          lines.push('  <svg class="btn-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">');
+          lines.push('    ' + iconSvgInner(rightIconType));
+          lines.push('  </svg>');
+        }
+        if (isLoading) {
+          lines.push('  <svg class="btn-spinner" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">');
+          lines.push('    <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-opacity="0.3" stroke-width="2"/>');
+          lines.push('    <path d="M10 3a7 7 0 0 1 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>');
+          lines.push('  </svg>');
+        }
+        lines.push('</button>');
+        plain = lines.join('\n');
+      }
+
+      navigator.clipboard.writeText(plain).then(function() {
+        var btn = document.getElementById('copy-btn');
+        var lbl = document.getElementById('copy-label');
+        var ico = document.getElementById('copy-icon');
+        btn.classList.add('copied');
+        lbl.textContent = 'Copied!';
+        ico.innerHTML = '<path d="M2.5 8L6 11.5L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          lbl.textContent = 'Copy';
+          ico.innerHTML = '<rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        }, 2000);
+      });
+    }
+
+    function updateAll() {
+      updateSingleButton();
+      updateTokenReadout();
+      generateSnippet();
+    }
+
+    updateTrigger('left');
+    updateTrigger('right');
+    updateAll();
+
+    // Ripple via CSS custom properties + ::after pseudo-element.
+    // Nothing is appended to the button so flex layout is never disturbed.
+    (function() {
+      var btn = document.getElementById('demo-button');
+      btn.addEventListener('mousedown', function(e) {
+        if (currentState === 'disabled' || currentState === 'loading') return;
+        var rect = btn.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        // Size the ripple to cover the whole button from the click point
+        var size = Math.max(rect.width, rect.height) * 2.2;
+        btn.style.setProperty('--ripple-x', x + 'px');
+        btn.style.setProperty('--ripple-y', y + 'px');
+        btn.style.setProperty('--ripple-size', size + 'px');
+        // Force animation restart by removing class, triggering reflow, re-adding
+        btn.classList.remove('is-rippling');
+        void btn.offsetWidth;
+        btn.classList.add('is-rippling');
+      });
+      btn.addEventListener('animationend', function() {
+        btn.classList.remove('is-rippling');
+      });
+    }());
+  </script>
+</body>
+</html>
