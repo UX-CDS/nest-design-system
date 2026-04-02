@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="wilko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification — CDS Configurator</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/nsp1wdf.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Primitive tokens ──────────────────────────────────────── */
+    :root {
+      --primitive-white: #ffffff;
+      --primitive-grey-1: #f4f4f4;
+      --primitive-grey-2: #e6e6e6;
+      --primitive-grey-3: #d9d9d9;
+      --primitive-grey-4: #cccccc;
+      --primitive-grey-5: #888888;
+      --primitive-grey-6: #666666;
+      --font-size-massive: 40px;
+      --font-size-xxl: 32px;
+      --font-size-xl: 28px;
+      --font-size-l: 24px;
+      --font-size-m: 20px;
+      --font-size-s: 16px;
+      --font-size-xs: 14px;
+      --font-size-xxs: 12px;
+      --font-size-tiny: 10px;
+      --radius-xs: 4px;
+      --radius-s: 8px;
+      --radius-m: 12px;
+      --radius-l: 16px;
+      --radius-xl: 24px;
+      --radius-full: 100px;
+      --stroke-thin: 1px;
+      --stroke-normal: 1.5px;
+      --stroke-thick: 2px;
+      --space-m: 32px;
+      --space-s: 24px;
+      --space-xs: 16px;
+      --space-12: 12px;
+      --space-8: 8px;
+      --space-4: 4px;
+      --motion-duration-base: 250ms;
+      --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Wilko semantic tokens ─────────────────────────────────── */
+    [data-brand="wilko"] {
+      --color-brand-primary: #9d2235;
+      --color-brand-secondary: #fdda24;
+      --color-btn-primary-bg: #23854a;
+      --color-btn-primary-bg-hover: #175e40;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: sofia-pro, sans-serif;
+      --font-feature-settings: "ss04" 1;
+      --font-weight-bold: 700;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 500;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #222222;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #024960;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #222222;
+
+      /* Info */
+      --color-info-bg: #f0fcff;
+      --color-info-border: #c2e8f0;
+      --color-info-utility: #407793;
+      --color-info-text: #024960;
+
+      /* Success */
+      --color-success-bg: #e4feec;
+      --color-success-border: #c8f3dc;
+      --color-success-utility: #23854a;
+      --color-success-text: #175e40;
+
+      /* Warning */
+      --color-warning-bg: #fffadf;
+      --color-warning-border: #f6ebb2;
+      --color-warning-utility: #874d23;
+      --color-warning-text: #652e26;
+
+      /* Error */
+      --color-error-bg: #ffeef1;
+      --color-error-border: #fcd3da;
+      --color-error-utility: #9d2235;
+      --color-error-text: #6f1827;
+    }
+
+    /* ── Homebase semantic tokens ──────────────────────────────── */
+    [data-brand="homebase"] {
+      --color-brand-primary: #1d8634;
+      --color-brand-secondary: #ec7224;
+      --color-btn-primary-bg: #1d8634;
+      --color-btn-primary-bg-hover: #155d25;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: 'Rubik', sans-serif;
+      --font-feature-settings: normal;
+      --font-weight-bold: 600;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 400;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #333333;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #2b347f;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #333333;
+
+      /* Info */
+      --color-info-bg: #f3f4ff;
+      --color-info-border: #d9e1f4;
+      --color-info-utility: #5d67b6;
+      --color-info-text: #2b347f;
+
+      /* Success */
+      --color-success-bg: #d4ffd6;
+      --color-success-border: #adf7bd;
+      --color-success-utility: #1d8634;
+      --color-success-text: #155d25;
+
+      /* Warning */
+      --color-warning-bg: #fffadf;
+      --color-warning-border: #f6ebb2;
+      --color-warning-utility: #874d23;
+      --color-warning-text: #652e26;
+
+      /* Error */
+      --color-error-bg: #ffeef1;
+      --color-error-border: #ffbebe;
+      --color-error-utility: #b90d0d;
+      --color-error-text: #810808;
+    }
+
+    [data-brand] {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page layout ───────────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    [data-brand] button,
+    [data-brand] input,
+    [data-brand] select,
+    [data-brand] textarea,
+    [data-brand] label {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+      background: var(--color-surface-page);
+      min-height: 100vh;
+      padding: var(--space-m);
+    }
+
+    .page-header {
+      margin-bottom: var(--space-s);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    .page-header h1 {
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .page-header p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+    }
+
+    /* ── Brand switcher pill ───────────────────────────────────── */
+    .brand-switcher {
+      display: flex;
+      gap: var(--space-4);
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+    }
+
+    .brand-btn {
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .brand-btn.active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Layout: preview + configurator ───────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-s);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Preview canvas ────────────────────────────────────────── */
+    .preview-canvas {
+      background: #ffffff;
+      border: var(--stroke-thin) solid var(--primitive-grey-2);
+      border-radius: var(--radius-l);
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-m);
+      position: relative;
+    }
+
+    .preview-label {
+      position: absolute;
+      bottom: var(--space-xs);
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+    }
+
+    /* ── The actual CDS Notification ───────────────────────────── */
+    .cds-notification {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-12);
+      padding: var(--space-xs);
+      border-radius: var(--radius-s);
+      background: var(--color-info-bg);
+      color: var(--color-info-text);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+      width: 100%;
+      max-width: 520px;
+      position: relative;
+    }
+
+    /* Purpose variants */
+    .cds-notification.purpose-info {
+      background: var(--color-info-bg);
+      color: var(--color-info-text);
+    }
+
+    .cds-notification.purpose-success {
+      background: var(--color-success-bg);
+      color: var(--color-success-text);
+    }
+
+    .cds-notification.purpose-warning {
+      background: var(--color-warning-bg);
+      color: var(--color-warning-text);
+    }
+
+    .cds-notification.purpose-error {
+      background: var(--color-error-bg);
+      color: var(--color-error-text);
+    }
+
+    /* Icon */
+    .notification-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 1px;
+    }
+
+    .notification-icon svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .purpose-info .notification-icon { color: var(--color-info-utility); }
+    .purpose-success .notification-icon { color: var(--color-success-utility); }
+    .purpose-warning .notification-icon { color: var(--color-warning-utility); }
+    .purpose-error .notification-icon { color: var(--color-error-utility); }
+
+    /* Content */
+    .notification-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .notification-title {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.4;
+      margin-bottom: var(--space-4);
+    }
+
+    .notification-body {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-regular);
+      line-height: 1.5;
+    }
+
+    /* Sofia Pro vertical alignment fix — wilko only */
+    [data-brand="wilko"] .notification-title {
+      transform: translateY(-2px);
+    }
+
+    /* Dismiss button */
+    .notification-dismiss {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      margin: -8px -8px -8px 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-xs);
+      transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .notification-dismiss svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .purpose-info .notification-dismiss { color: var(--color-info-text); }
+    .purpose-success .notification-dismiss { color: var(--color-success-text); }
+    .purpose-warning .notification-dismiss { color: var(--color-warning-text); }
+    .purpose-error .notification-dismiss { color: var(--color-error-text); }
+
+    .purpose-info .notification-dismiss:hover { background-color: var(--color-info-border); }
+    .purpose-success .notification-dismiss:hover { background-color: var(--color-success-border); }
+    .purpose-warning .notification-dismiss:hover { background-color: var(--color-warning-border); }
+    .purpose-error .notification-dismiss:hover { background-color: var(--color-error-border); }
+
+    .notification-dismiss:focus-visible {
+      outline: var(--stroke-thick) solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+
+    /* ── Configurator panel ────────────────────────────────────── */
+    .configurator {
+      background: var(--color-surface-page);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .config-section {
+      padding: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .config-section:last-child { border-bottom: none; }
+
+    .config-section-title {
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-8);
+    }
+
+    /* Segmented control */
+    .seg-control {
+      display: flex;
+      gap: 3px;
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: 3px;
+    }
+
+    .seg-btn {
+      flex: 1;
+      padding: 6px 4px;
+      border-radius: calc(var(--radius-s) - 3px);
+      border: none;
+      background: transparent;
+      font-family: sofia-pro, var(--font-family);
+      font-feature-settings: "ss04" 1, var(--font-feature-settings);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .seg-btn.active {
+      background: var(--color-surface-page);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-bold);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Toggles */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-row + .toggle-row {
+      border-top: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .toggle-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 11px;
+      background: var(--color-neutral-grey-3);
+      cursor: pointer;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-switch input:checked + .toggle-track {
+      background: var(--color-btn-primary-bg);
+    }
+
+    .toggle-switch input:checked + .toggle-track::after {
+      transform: translateX(18px);
+    }
+
+    /* Text input */
+    .config-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      border-radius: var(--radius-s);
+      font-family: sofia-pro, var(--font-family);
+      font-feature-settings: "ss04" 1;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .config-input:focus {
+      outline: none;
+      border-color: var(--color-focus-ring);
+    }
+
+    .config-input + .config-input {
+      margin-top: var(--space-8);
+    }
+
+    .config-input-label {
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-4);
+      display: block;
+    }
+
+    .config-input-label + .config-input-label {
+      margin-top: var(--space-8);
+    }
+
+    /* Token readout */
+    .token-readout {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: var(--space-8) var(--space-12);
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      font-family: 'Courier New', monospace;
+    }
+
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0;
+    }
+
+    .token-name { color: var(--color-text-secondary); }
+    .token-value { color: var(--color-brand-primary); font-weight: 600; }
+
+    /* ── Code snippet panel ────────────────────────────────────── */
+    .snippet-panel {
+      margin-top: var(--space-s);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      background: var(--color-surface-subtle);
+    }
+
+    .snippet-tabs {
+      display: flex;
+      gap: 0;
+    }
+
+    .snippet-tab {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .snippet-tab:hover { color: var(--color-text-primary); }
+
+    .snippet-tab.active {
+      color: var(--color-btn-primary-bg);
+      border-bottom-color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+    }
+
+    .snippet-copy-btn:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn.copied {
+      background: var(--color-btn-primary-bg);
+      border-color: var(--color-btn-primary-bg);
+      color: #fff;
+    }
+
+    .snippet-copy-btn svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .snippet-body {
+      padding: var(--space-xs);
+      background: var(--color-surface-page);
+      overflow-x: auto;
+    }
+
+    .snippet-pre {
+      margin: 0;
+      font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--color-text-primary);
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .snip-comment  { color: var(--color-text-secondary); }
+    .snip-tag      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-attr     { color: #6066b0; }
+    .snip-string   { color: #2a7a4f; }
+    .snip-class    { color: var(--color-btn-primary-bg); }
+    .snip-prop     { color: #6066b0; }
+    .snip-val      { color: #2a7a4f; }
+    .snip-sel      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-tok      { color: #b07c2a; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div>
+      <h1>Notification</h1>
+      <p style="margin-top:3px;">Nest Design System • v1.0</p>
+    </div>
+    <div class="brand-switcher">
+      <button class="brand-btn active" id="btn-wilko" onclick="setBrand('wilko')">wilko.com</button>
+      <button class="brand-btn" id="btn-homebase" onclick="setBrand('homebase')">homebase.co.uk</button>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- Preview canvas -->
+    <div class="preview-canvas" id="preview-canvas">
+      <div id="preview-wrapper" style="width:100%;max-width:520px;">
+        <div class="cds-notification purpose-info" id="demo-notification" role="alert">
+          <div class="notification-icon" id="notif-icon"></div>
+          <div class="notification-content">
+            <div class="notification-title" id="notif-title">Notification title</div>
+            <div class="notification-body" id="notif-body">This is the notification body text providing useful context and information.</div>
+          </div>
+          <button class="notification-dismiss" id="notif-dismiss" aria-label="Dismiss notification">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2532 15.6665C14.6437 16.0571 15.2769 16.0571 15.6674 15.6665C16.058 15.276 16.058 14.6429 15.6674 14.2523L11.4151 10L15.6674 5.74767C16.058 5.35714 16.058 4.72398 15.6674 4.33345C15.2769 3.94293 14.6437 3.94293 14.2532 4.33345L10.0009 8.58579L5.74857 4.33347C5.35804 3.94294 4.72488 3.94294 4.33436 4.33347C3.94383 4.72399 3.94383 5.35716 4.33436 5.74768L8.58668 10L4.33436 14.2523C3.94383 14.6428 3.94383 15.276 4.33436 15.6665C4.72488 16.0571 5.35805 16.0571 5.74857 15.6665L10.0009 11.4142L14.2532 15.6665Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <p class="preview-label" id="preview-caption">Information</p>
+    </div>
+
+    <!-- Configurator panel -->
+    <div class="configurator">
+
+      <!-- Purpose -->
+      <div class="config-section">
+        <div class="config-section-title">Purpose</div>
+        <div class="seg-control">
+          <button class="seg-btn active" id="purpose-info" onclick="setPurpose('info')">Info</button>
+          <button class="seg-btn" id="purpose-success" onclick="setPurpose('success')">Success</button>
+          <button class="seg-btn" id="purpose-warning" onclick="setPurpose('warning')">Warning</button>
+          <button class="seg-btn" id="purpose-error" onclick="setPurpose('error')">Error</button>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="config-section">
+        <div class="config-section-title">Title</div>
+        <input class="config-input" id="title-input" type="text" value="Notification title" oninput="setTitle(this.value)" />
+      </div>
+
+      <!-- Body -->
+      <div class="config-section">
+        <div class="config-section-title">Body</div>
+        <input class="config-input" id="body-input" type="text" value="This is the notification body text providing useful context and information." oninput="setBody(this.value)" />
+      </div>
+
+      <!-- Visibility toggles -->
+      <div class="config-section">
+        <div class="config-section-title">Visibility</div>
+        <div class="toggle-row">
+          <div>
+            <span class="toggle-label">Show icon</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-icon" checked onchange="toggleIcon(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <span class="toggle-label">Show title</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-title" checked onchange="toggleTitle(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <span class="toggle-label">Show dismiss</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-dismiss" checked onchange="toggleDismiss(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Token readout -->
+      <div class="config-section">
+        <div class="config-section-title">Active tokens</div>
+        <div class="token-readout" id="token-readout"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Code snippet panel -->
+  <div class="snippet-panel">
+    <div class="snippet-header">
+      <div class="snippet-tabs">
+        <button class="snippet-tab active" id="tab-html" onclick="setSnippetTab('html')">HTML</button>
+        <button class="snippet-tab" id="tab-css" onclick="setSnippetTab('css')">CSS</button>
+      </div>
+      <button class="snippet-copy-btn" id="copy-btn" onclick="copySnippet()">
+        <svg id="copy-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+    <div class="snippet-body">
+      <pre class="snippet-pre" id="snippet-output"></pre>
+    </div>
+  </div>
+
+  <script>
+    var brand = 'wilko';
+    var currentPurpose = 'info';
+    var currentTitle = 'Notification title';
+    var currentBody = 'This is the notification body text providing useful context and information.';
+    var showIcon = true;
+    var showTitle = true;
+    var showDismiss = true;
+    var snippetTab = 'html';
+
+    // Purpose icons — SVG inner content
+    var purposeIcons = {
+      info: '<circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="10" y1="9" x2="10" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="6.5" r="1" fill="currentColor"/>',
+      success: '<circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M6.5 10L9 12.5L13.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
+      warning: '<path d="M10 2.5L18.5 17.5H1.5L10 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/><line x1="10" y1="8" x2="10" y2="12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="15" r="1" fill="currentColor"/>',
+      error: '<circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="10" y1="6" x2="10" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="13.5" r="1" fill="currentColor"/>'
+    };
+
+    var dismissIconSvg = '<path fill-rule="evenodd" clip-rule="evenodd" d="M14.2532 15.6665C14.6437 16.0571 15.2769 16.0571 15.6674 15.6665C16.058 15.276 16.058 14.6429 15.6674 14.2523L11.4151 10L15.6674 5.74767C16.058 5.35714 16.058 4.72398 15.6674 4.33345C15.2769 3.94293 14.6437 3.94293 14.2532 4.33345L10.0009 8.58579L5.74857 4.33347C5.35804 3.94294 4.72488 3.94294 4.33436 4.33347C3.94383 4.72399 3.94383 5.35716 4.33436 5.74768L8.58668 10L4.33436 14.2523C3.94383 14.6428 3.94383 15.276 4.33436 15.6665C4.72488 16.0571 5.35805 16.0571 5.74857 15.6665L10.0009 11.4142L14.2532 15.6665Z" fill="currentColor"/>';
+
+    var purposeLabels = {
+      info: 'Information',
+      success: 'Success',
+      warning: 'Warning',
+      error: 'Error'
+    };
+
+    // Token mappings per brand per purpose
+    var tokens = {
+      wilko: {
+        info:    { '--color-info-bg': '#f0fcff', '--color-info-border': '#c2e8f0', '--color-info-utility': '#407793', '--color-info-text': '#024960' },
+        success: { '--color-success-bg': '#e4feec', '--color-success-border': '#c8f3dc', '--color-success-utility': '#23854a', '--color-success-text': '#175e40' },
+        warning: { '--color-warning-bg': '#fffadf', '--color-warning-border': '#f6ebb2', '--color-warning-utility': '#874d23', '--color-warning-text': '#652e26' },
+        error:   { '--color-error-bg': '#ffeef1', '--color-error-border': '#fcd3da', '--color-error-utility': '#9d2235', '--color-error-text': '#6f1827' }
+      },
+      homebase: {
+        info:    { '--color-info-bg': '#f3f4ff', '--color-info-border': '#d9e1f4', '--color-info-utility': '#5d67b6', '--color-info-text': '#2b347f' },
+        success: { '--color-success-bg': '#d4ffd6', '--color-success-border': '#adf7bd', '--color-success-utility': '#1d8634', '--color-success-text': '#155d25' },
+        warning: { '--color-warning-bg': '#fffadf', '--color-warning-border': '#f6ebb2', '--color-warning-utility': '#874d23', '--color-warning-text': '#652e26' },
+        error:   { '--color-error-bg': '#ffeef1', '--color-error-border': '#ffbebe', '--color-error-utility': '#b90d0d', '--color-error-text': '#810808' }
+      }
+    };
+
+    function setBrand(b) {
+      brand = b;
+      document.documentElement.setAttribute('data-brand', b);
+      document.getElementById('btn-wilko').classList.toggle('active', b === 'wilko');
+      document.getElementById('btn-homebase').classList.toggle('active', b === 'homebase');
+      updateAll();
+    }
+
+    function setPurpose(p) {
+      currentPurpose = p;
+      document.querySelectorAll('[id^="purpose-"]').forEach(function(el) {
+        el.classList.toggle('active', el.id === 'purpose-' + p);
+      });
+      updateAll();
+    }
+
+    function setTitle(v) { currentTitle = v; updateAll(); }
+    function setBody(v) { currentBody = v; updateAll(); }
+    function toggleIcon(v) { showIcon = v; updateAll(); }
+    function toggleTitle(v) { showTitle = v; updateAll(); }
+    function toggleDismiss(v) { showDismiss = v; updateAll(); }
+
+    function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    function updatePreview() {
+      var notif = document.getElementById('demo-notification');
+      notif.className = 'cds-notification purpose-' + currentPurpose;
+
+      // Icon
+      var iconEl = document.getElementById('notif-icon');
+      iconEl.innerHTML = '<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">' + purposeIcons[currentPurpose] + '</svg>';
+      iconEl.style.display = showIcon ? '' : 'none';
+
+      // Title
+      var titleEl = document.getElementById('notif-title');
+      titleEl.textContent = currentTitle;
+      titleEl.style.display = showTitle ? '' : 'none';
+
+      // Body
+      document.getElementById('notif-body').textContent = currentBody;
+
+      // Dismiss
+      document.getElementById('notif-dismiss').style.display = showDismiss ? '' : 'none';
+
+      // Caption
+      document.getElementById('preview-caption').textContent = purposeLabels[currentPurpose];
+    }
+
+    function updateTokenReadout() {
+      var t = tokens[brand][currentPurpose];
+      var extra = { '--font-family': brand === 'wilko' ? 'sofia-pro' : 'Rubik', '--radius-s': '8px' };
+      var all = Object.assign({}, t, extra);
+      var html = '';
+      Object.keys(all).forEach(function(k) {
+        html += '<div class="token-row"><span class="token-name">' + k + '</span><span class="token-value">' + all[k] + '</span></div>';
+      });
+      document.getElementById('token-readout').innerHTML = html;
+    }
+
+    function setSnippetTab(tab) {
+      snippetTab = tab;
+      document.getElementById('tab-html').classList.toggle('active', tab === 'html');
+      document.getElementById('tab-css').classList.toggle('active', tab === 'css');
+      generateSnippet();
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function generateSnippet() {
+      if (snippetTab === 'css') { generateCssSnippet(); return; }
+
+      var t = '<span class="snip-tag">'; var tc = '</span>';
+      var a = '<span class="snip-attr">'; var ac = '</span>';
+      var s = '<span class="snip-string">'; var sc = '</span>';
+      var c = '<span class="snip-comment">'; var cc = '</span>';
+      var cl = '<span class="snip-class">'; var clc = '</span>';
+
+      var classStr = 'cds-notification purpose-' + currentPurpose;
+      var out = '';
+
+      out += c + '&lt;!-- CDS Notification · ' + brand + ' · ' + currentPurpose + ' --&gt;' + cc + '\n';
+      out += c + '&lt;!-- Requires: &lt;html data-brand="' + brand + '"&gt; + cds-tokens.css --&gt;' + cc + '\n\n';
+
+      out += t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + classStr + clc + '"' + sc + ' ' + a + 'role' + ac + '=' + s + '"alert"' + sc + t + '&gt;' + tc + '\n';
+
+      // Icon
+      if (showIcon) {
+        out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"notification-icon"' + sc + t + '&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;svg' + tc + ' ' + a + 'viewBox' + ac + '=' + s + '"0 0 20 20"' + sc + ' ' + a + 'xmlns' + ac + '=' + s + '"http://www.w3.org/2000/svg"' + sc + t + '&gt;' + tc + '\n';
+        out += '      ' + escapeHtml(purposeIcons[currentPurpose]) + '\n';
+        out += '    ' + t + '&lt;/svg&gt;' + tc + '\n';
+        out += '  ' + t + '&lt;/div&gt;' + tc + '\n';
+      }
+
+      // Content
+      out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"notification-content"' + sc + t + '&gt;' + tc + '\n';
+      if (showTitle) {
+        out += '    ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"notification-title"' + sc + t + '&gt;' + tc + escapeHtml(currentTitle) + t + '&lt;/div&gt;' + tc + '\n';
+      }
+      out += '    ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"notification-body"' + sc + t + '&gt;' + tc + escapeHtml(currentBody) + t + '&lt;/div&gt;' + tc + '\n';
+      out += '  ' + t + '&lt;/div&gt;' + tc + '\n';
+
+      // Dismiss
+      if (showDismiss) {
+        out += '  ' + t + '&lt;button' + tc + ' ' + a + 'class' + ac + '=' + s + '"notification-dismiss"' + sc + ' ' + a + 'aria-label' + ac + '=' + s + '"Dismiss notification"' + sc + t + '&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;svg' + tc + ' ' + a + 'viewBox' + ac + '=' + s + '"0 0 20 20"' + sc + ' ' + a + 'xmlns' + ac + '=' + s + '"http://www.w3.org/2000/svg"' + sc + t + '&gt;' + tc + '\n';
+        out += '      ' + escapeHtml(dismissIconSvg) + '\n';
+        out += '    ' + t + '&lt;/svg&gt;' + tc + '\n';
+        out += '  ' + t + '&lt;/button&gt;' + tc + '\n';
+      }
+
+      out += t + '&lt;/div&gt;' + tc;
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateCssSnippet() {
+      var t = tokens[brand][currentPurpose];
+      var prefix = currentPurpose;
+
+      var c   = '<span class="snip-comment">';  var cc  = '</span>';
+      var sel = '<span class="snip-sel">';       var selc = '</span>';
+      var p   = '<span class="snip-prop">';      var pc  = '</span>';
+      var v   = '<span class="snip-val">';       var vc  = '</span>';
+      var tok = '<span class="snip-tok">';       var tokc = '</span>';
+
+      var bgKey = '--color-' + prefix + '-bg';
+      var borderKey = '--color-' + prefix + '-border';
+      var utilityKey = '--color-' + prefix + '-utility';
+      var textKey = '--color-' + prefix + '-text';
+
+      var out = '';
+      out += c + '/* CDS Notification · ' + brand + ' · ' + currentPurpose + ' */' + cc + '\n';
+      out += c + '/* cds-tokens.css must be loaded and data-brand="' + brand + '" set on &lt;html&gt; */' + cc + '\n\n';
+
+      // Base
+      out += sel + '.cds-notification' + selc + ' {\n';
+      out += '  ' + p + 'display' + pc + ': ' + v + 'flex' + vc + ';\n';
+      out += '  ' + p + 'align-items' + pc + ': ' + v + 'flex-start' + vc + ';\n';
+      out += '  ' + p + 'gap' + pc + ': ' + tok + 'var(--space-12)' + tokc + '; ' + c + '/* 12px */' + cc + '\n';
+      out += '  ' + p + 'padding' + pc + ': ' + tok + 'var(--space-xs)' + tokc + '; ' + c + '/* 16px */' + cc + '\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + tok + 'var(--radius-s)' + tokc + '; ' + c + '/* 8px */' + cc + '\n';
+      out += '  ' + p + 'font-family' + pc + ': ' + tok + 'var(--font-family)' + tokc + ';\n';
+      out += '}\n\n';
+
+      // Purpose variant
+      out += sel + '.cds-notification.purpose-' + prefix + selc + ' {\n';
+      out += '  ' + p + 'background' + pc + ': ' + tok + 'var(' + bgKey + ')' + tokc + '; ' + c + '/* ' + t[bgKey] + ' */' + cc + '\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(' + textKey + ')' + tokc + '; ' + c + '/* ' + t[textKey] + ' */' + cc + '\n';
+      out += '}\n\n';
+
+      // Icon colour
+      out += sel + '.purpose-' + prefix + ' .notification-icon' + selc + ' {\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(' + utilityKey + ')' + tokc + '; ' + c + '/* ' + t[utilityKey] + ' */' + cc + '\n';
+      out += '}\n\n';
+
+      // Title
+      out += sel + '.notification-title' + selc + ' {\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + tok + 'var(--font-size-xs)' + tokc + '; ' + c + '/* 14px */' + cc + '\n';
+      out += '  ' + p + 'font-weight' + pc + ': ' + tok + 'var(--font-weight-bold)' + tokc + ';\n';
+      out += '  ' + p + 'margin-bottom' + pc + ': ' + tok + 'var(--space-4)' + tokc + '; ' + c + '/* 4px */' + cc + '\n';
+      out += '}\n\n';
+
+      // Body
+      out += sel + '.notification-body' + selc + ' {\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + tok + 'var(--font-size-xs)' + tokc + '; ' + c + '/* 14px */' + cc + '\n';
+      out += '  ' + p + 'font-weight' + pc + ': ' + tok + 'var(--font-weight-regular)' + tokc + ';\n';
+      out += '  ' + p + 'line-height' + pc + ': ' + v + '1.5' + vc + ';\n';
+      out += '}\n\n';
+
+      // Dismiss
+      out += sel + '.notification-dismiss' + selc + ' {\n';
+      out += '  ' + p + 'width' + pc + ': ' + v + '36px' + vc + ';\n';
+      out += '  ' + p + 'height' + pc + ': ' + v + '36px' + vc + ';\n';
+      out += '  ' + p + 'border' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '  ' + p + 'background' + pc + ': ' + v + 'transparent' + vc + ';\n';
+      out += '  ' + p + 'cursor' + pc + ': ' + v + 'pointer' + vc + ';\n';
+      out += '  ' + p + 'color' + pc + ': ' + v + 'inherit' + vc + ';\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + tok + 'var(--radius-xs)' + tokc + '; ' + c + '/* 4px */' + cc + '\n';
+      out += '}\n\n';
+
+      out += sel + '.notification-dismiss svg' + selc + ' {\n';
+      out += '  ' + p + 'width' + pc + ': ' + v + '16px' + vc + ';\n';
+      out += '  ' + p + 'height' + pc + ': ' + v + '16px' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.purpose-' + prefix + ' .notification-dismiss:hover' + selc + ' {\n';
+      out += '  ' + p + 'background-color' + pc + ': ' + tok + 'var(' + borderKey + ')' + tokc + '; ' + c + '/* ' + t[borderKey] + ' */' + cc + '\n';
+      out += '}\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function copySnippet() {
+      var plain;
+
+      if (snippetTab === 'css') {
+        var t = tokens[brand][currentPurpose];
+        var prefix = currentPurpose;
+        var bgKey = '--color-' + prefix + '-bg';
+        var borderKey = '--color-' + prefix + '-border';
+        var utilityKey = '--color-' + prefix + '-utility';
+        var textKey = '--color-' + prefix + '-text';
+
+        var lines = [];
+        lines.push('/* CDS Notification · ' + brand + ' · ' + currentPurpose + ' */');
+        lines.push('');
+        lines.push('.cds-notification {');
+        lines.push('  display: flex;');
+        lines.push('  align-items: flex-start;');
+        lines.push('  gap: var(--space-12); /* 12px */');
+        lines.push('  padding: var(--space-xs); /* 16px */');
+        lines.push('  border-radius: var(--radius-s); /* 8px */');
+        lines.push('  font-family: var(--font-family);');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-notification.purpose-' + prefix + ' {');
+        lines.push('  background: var(' + bgKey + '); /* ' + t[bgKey] + ' */');
+        lines.push('  color: var(' + textKey + '); /* ' + t[textKey] + ' */');
+        lines.push('}');
+        lines.push('');
+        lines.push('.purpose-' + prefix + ' .notification-icon {');
+        lines.push('  color: var(' + utilityKey + '); /* ' + t[utilityKey] + ' */');
+        lines.push('}');
+        lines.push('');
+        lines.push('.notification-title {');
+        lines.push('  font-size: var(--font-size-xs); /* 14px */');
+        lines.push('  font-weight: var(--font-weight-bold);');
+        lines.push('  margin-bottom: var(--space-4); /* 4px */');
+        lines.push('}');
+        lines.push('');
+        lines.push('.notification-body {');
+        lines.push('  font-size: var(--font-size-xs); /* 14px */');
+        lines.push('  font-weight: var(--font-weight-regular);');
+        lines.push('  line-height: 1.5;');
+        lines.push('}');
+        lines.push('');
+        lines.push('.notification-dismiss {');
+        lines.push('  width: 36px;');
+        lines.push('  height: 36px;');
+        lines.push('  border: none;');
+        lines.push('  background: transparent;');
+        lines.push('  cursor: pointer;');
+        lines.push('  color: inherit;');
+        lines.push('  border-radius: var(--radius-xs); /* 4px */');
+        lines.push('}');
+        lines.push('');
+        lines.push('.notification-dismiss svg {');
+        lines.push('  width: 16px;');
+        lines.push('  height: 16px;');
+        lines.push('}');
+        lines.push('');
+        lines.push('.purpose-' + prefix + ' .notification-dismiss:hover {');
+        lines.push('  background-color: var(' + borderKey + '); /* ' + t[borderKey] + ' */');
+        lines.push('}');
+        plain = lines.join('\n');
+      } else {
+        var lines = [];
+        lines.push('<div class="cds-notification purpose-' + currentPurpose + '" role="alert">');
+
+        if (showIcon) {
+          lines.push('  <div class="notification-icon">');
+          lines.push('    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">');
+          lines.push('      ' + purposeIcons[currentPurpose]);
+          lines.push('    </svg>');
+          lines.push('  </div>');
+        }
+
+        lines.push('  <div class="notification-content">');
+        if (showTitle) {
+          lines.push('    <div class="notification-title">' + currentTitle + '</div>');
+        }
+        lines.push('    <div class="notification-body">' + currentBody + '</div>');
+        lines.push('  </div>');
+
+        if (showDismiss) {
+          lines.push('  <button class="notification-dismiss" aria-label="Dismiss notification">');
+          lines.push('    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">');
+          lines.push('      ' + dismissIconSvg);
+          lines.push('    </svg>');
+          lines.push('  </button>');
+        }
+
+        lines.push('</div>');
+        plain = lines.join('\n');
+      }
+
+      navigator.clipboard.writeText(plain).then(function() {
+        var btn = document.getElementById('copy-btn');
+        var lbl = document.getElementById('copy-label');
+        var ico = document.getElementById('copy-icon');
+        btn.classList.add('copied');
+        lbl.textContent = 'Copied!';
+        ico.innerHTML = '<path d="M2.5 8L6 11.5L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          lbl.textContent = 'Copy';
+          ico.innerHTML = '<rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        }, 2000);
+      });
+    }
+
+    function updateAll() {
+      updatePreview();
+      updateTokenReadout();
+      generateSnippet();
+    }
+
+    updateAll();
+  </script>
+</body>
+</html>
