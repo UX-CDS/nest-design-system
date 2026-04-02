@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="wilko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Input — CDS Configurator</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/nsp1wdf.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Primitive tokens ──────────────────────────────────────── */
+    :root {
+      --primitive-white: #ffffff;
+      --primitive-grey-1: #f4f4f4;
+      --primitive-grey-2: #e6e6e6;
+      --primitive-grey-3: #d9d9d9;
+      --primitive-grey-4: #cccccc;
+      --primitive-grey-5: #888888;
+      --primitive-grey-6: #666666;
+      --font-size-s: 16px;
+      --font-size-xs: 14px;
+      --font-size-xxs: 12px;
+      --font-size-tiny: 10px;
+      --radius-xs: 4px;
+      --radius-s: 8px;
+      --radius-m: 12px;
+      --radius-l: 16px;
+      --radius-full: 100px;
+      --stroke-thin: 1px;
+      --stroke-normal: 1.5px;
+      --stroke-thick: 2px;
+      --space-m: 32px;
+      --space-s: 24px;
+      --space-xs: 16px;
+      --space-12: 12px;
+      --space-8: 8px;
+      --space-4: 4px;
+      --motion-duration-base: 250ms;
+      --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Wilko semantic tokens ─────────────────────────────────── */
+    [data-brand="wilko"] {
+      --color-brand-primary: #9d2235;
+      --color-brand-secondary: #fdda24;
+      --color-brand-new: #67a239;
+      --color-btn-primary-bg: #23854a;
+      --color-btn-primary-bg-hover: #175e40;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: sofia-pro, sans-serif;
+      --font-feature-settings: "ss04" 1;
+      --font-weight-bold: 700;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 500;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #222222;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #024960;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #222222;
+      --color-success-bg: #e4feec;
+      --color-success-border: #c8f3dc;
+      --color-success-utility: #23854a;
+      --color-error-bg: #ffeef1;
+      --color-error-border: #fcd3da;
+      --color-error-utility: #9d2235;
+      /* Input-specific focus glow — Green 2 */
+      --color-input-focus-glow: #c8f3dc;
+      --color-input-focus-border: #222222;
+    }
+
+    /* ── Homebase semantic tokens ──────────────────────────────── */
+    [data-brand="homebase"] {
+      --color-brand-primary: #1d8634;
+      --color-brand-secondary: #ec7224;
+      --color-brand-new: #fb610b;
+      --color-btn-primary-bg: #1d8634;
+      --color-btn-primary-bg-hover: #155d25;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: 'Rubik', sans-serif;
+      --font-feature-settings: normal;
+      --font-weight-bold: 600;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 400;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #333333;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #2b347f;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #333333;
+      --color-success-bg: #d4ffd6;
+      --color-success-border: #adf7bd;
+      --color-success-utility: #1d8634;
+      --color-error-bg: #ffeef1;
+      --color-error-border: #ffbebe;
+      --color-error-utility: #b90d0d;
+      /* Input-specific focus glow — Green 2 (shared) */
+      --color-input-focus-glow: #c8f3dc;
+      --color-input-focus-border: #333333;
+    }
+
+    [data-brand] {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Global reset ──────────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    [data-brand] button,
+    [data-brand] input,
+    [data-brand] select,
+    [data-brand] textarea,
+    [data-brand] label {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+      background: var(--color-surface-page);
+      min-height: 100vh;
+      padding: var(--space-m);
+    }
+
+    /* ── Page header ───────────────────────────────────────────── */
+    .page-header {
+      margin-bottom: var(--space-s);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    .page-header h1 {
+      font-size: var(--font-size-s);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .page-header p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+      margin-top: 3px;
+    }
+
+    /* ── Brand switcher pill ───────────────────────────────────── */
+    .brand-switcher {
+      display: flex;
+      gap: var(--space-4);
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+    }
+
+    .brand-btn {
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .brand-btn.active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Layout ────────────────────────────────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-s);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Preview canvas ────────────────────────────────────────── */
+    .preview-canvas {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-l);
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-m);
+      position: relative;
+    }
+
+    .preview-label {
+      position: absolute;
+      bottom: var(--space-xs);
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+    }
+
+    /* ── CDS Text Input Component ──────────────────────────────── */
+    .cds-field {
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Label row */
+    .cds-field-label-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .cds-field-label {
+      font-size: 16px;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-grey-7);
+      line-height: 1;
+      cursor: default;
+    }
+
+    [data-brand="wilko"] .cds-field-label {
+      transform: translateY(-2px);
+    }
+
+    .cds-field-hint-inline {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1;
+      white-space: nowrap;
+      padding-top: 1px;
+    }
+
+    [data-brand="wilko"] .cds-field-hint-inline {
+      transform: translateY(-2px);
+    }
+
+    /* Info icon button */
+    .cds-field-info-btn {
+      width: 18px;
+      height: 18px;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      position: relative;
+      flex-shrink: 0;
+      transition: color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .cds-field-info-btn:hover {
+      color: var(--color-text-primary);
+    }
+
+    .cds-field-info-btn svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    /* Tooltip popover */
+    .cds-tooltip {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      background: var(--color-neutral-grey-7);
+      color: #ffffff;
+      font-size: 12px;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-weight: var(--font-weight-regular);
+      line-height: 1.5;
+      padding: 8px 10px;
+      border-radius: var(--radius-s);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+      z-index: 200;
+      text-align: left;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .cds-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--color-neutral-grey-7);
+    }
+
+    .cds-field-info-btn:hover .cds-tooltip,
+    .cds-field-info-btn.tooltip-open .cds-tooltip {
+      opacity: 1;
+    }
+
+    /* Input wrapper */
+    .cds-input-wrap {
+      position: relative;
+      width: 320px;
+    }
+
+    /* The actual input */
+    .cds-input {
+      width: 320px;
+      height: 48px;
+      padding: 0 14px;
+      border: 1px solid var(--color-border-input); /* Grey 5 = #888888 */
+      border-radius: var(--radius-s); /* 8px */
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-s); /* 16px */
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-primary);
+      outline: none;
+      -webkit-font-smoothing: antialiased;
+      transition:
+        border-color var(--motion-duration-base) var(--motion-ease-standard),
+        border-width var(--motion-duration-base) var(--motion-ease-standard),
+        box-shadow var(--motion-duration-base) var(--motion-ease-standard),
+        padding var(--motion-duration-base) var(--motion-ease-standard);
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .cds-input::placeholder {
+      color: var(--color-text-disabled);
+    }
+
+    /* ── Input states applied via class on wrapper ─────────────── */
+
+    /* Hover — 2px Grey 7 border */
+    .cds-input-wrap.state-hover .cds-input {
+      border-width: 2px;
+      border-color: var(--color-neutral-grey-7);
+      padding: 0 13px; /* compensate 1px border growth each side */
+    }
+
+    /* Active — 2px Grey 7 border */
+    .cds-input-wrap.state-active .cds-input {
+      border-width: 2px;
+      border-color: var(--color-neutral-grey-7);
+      padding: 0 13px;
+    }
+
+    /* Focus — 2px Grey 7 border + Green 2 glow */
+    .cds-input-wrap.state-focus .cds-input {
+      border-width: 2px;
+      border-color: var(--color-input-focus-border);
+      padding: 0 13px;
+      box-shadow: 0 0 0 4px var(--color-input-focus-glow);
+    }
+
+    /* Filled */
+    .cds-input-wrap.state-filled .cds-input {
+      border-color: var(--color-neutral-grey-7);
+      border-width: 1px;
+      color: var(--color-text-primary);
+    }
+
+    /* Disabled */
+    .cds-input-wrap.state-disabled .cds-input {
+      border-color: var(--color-neutral-grey-3);
+      background: var(--color-surface-subtle);
+      color: var(--color-text-disabled);
+      cursor: not-allowed;
+    }
+
+    /* Read-only */
+    .cds-input-wrap.state-readonly .cds-input {
+      border-color: var(--color-border-strong);
+      background: var(--color-surface-subtle);
+      color: var(--color-text-secondary);
+      cursor: default;
+    }
+
+    /* Error */
+    .cds-input-wrap.state-error .cds-input {
+      border-width: 2px;
+      border-color: var(--color-error-utility);
+      padding: 0 13px;
+    }
+
+    /* Success */
+    .cds-input-wrap.state-success .cds-input {
+      border-width: 2px;
+      border-color: var(--color-success-utility);
+      padding: 0 13px;
+    }
+
+    /* Validation row — sits between label row and input */
+    .cds-field-validation {
+      display: none;
+      align-items: flex-start;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+
+    .cds-field-validation.visible {
+      display: flex;
+    }
+
+    .cds-field-validation-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      margin-top: 1px; /* optical alignment with 12px text cap height */
+    }
+
+    .cds-field-validation-text {
+      font-size: 12px;
+      line-height: 1.4;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+    }
+
+    .cds-field-validation.state-error .cds-field-validation-icon,
+    .cds-field-validation.state-error .cds-field-validation-text {
+      color: var(--color-error-utility);
+    }
+
+    .cds-field-validation.state-success .cds-field-validation-icon,
+    .cds-field-validation.state-success .cds-field-validation-text {
+      color: var(--color-success-utility);
+    }
+
+    /* ── Configurator panel ────────────────────────────────────── */
+    .configurator {
+      background: var(--color-surface-page);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .config-section {
+      padding: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .config-section:last-child { border-bottom: none; }
+
+    .config-section-title {
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-8);
+    }
+
+    /* State dropdown */
+    .state-select {
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      border-radius: var(--radius-s);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M15 7.5L10 12.5L5 7.5' stroke='%23666666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 16px;
+      padding-right: 32px;
+      transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .state-select:focus {
+      border-color: var(--color-focus-ring);
+    }
+
+    /* Text input in configurator */
+    .config-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      border-radius: var(--radius-s);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      outline: none;
+      transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .config-input:focus {
+      border-color: var(--color-focus-ring);
+    }
+
+    /* Toggles */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-row + .toggle-row {
+      border-top: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .toggle-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 11px;
+      background: var(--color-neutral-grey-3);
+      cursor: pointer;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-switch input:checked + .toggle-track {
+      background: var(--color-btn-primary-bg);
+    }
+
+    .toggle-switch input:checked + .toggle-track::after {
+      transform: translateX(18px);
+    }
+
+    /* Token readout */
+    .token-readout {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: var(--space-8) var(--space-12);
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      font-family: 'Courier New', monospace;
+    }
+
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0;
+      flex-wrap: wrap;
+    }
+
+    .token-name { color: var(--color-text-secondary); }
+    .token-value { color: var(--color-brand-primary); font-weight: 600; }
+
+    /* ── Code snippet panel ────────────────────────────────────── */
+    .snippet-panel {
+      margin-top: var(--space-s);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      background: var(--color-surface-subtle);
+    }
+
+    .snippet-tabs {
+      display: flex;
+      gap: 0;
+    }
+
+    .snippet-tab {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .snippet-tab:hover { color: var(--color-text-primary); }
+
+    .snippet-tab.active {
+      color: var(--color-btn-primary-bg);
+      border-bottom-color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+    }
+
+    .snippet-copy-btn:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn.copied {
+      background: var(--color-btn-primary-bg);
+      border-color: var(--color-btn-primary-bg);
+      color: #fff;
+    }
+
+    .snippet-copy-btn svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .snippet-body {
+      padding: var(--space-xs);
+      background: var(--color-surface-page);
+      overflow-x: auto;
+    }
+
+    .snippet-pre {
+      margin: 0;
+      font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--color-text-primary);
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .snip-comment  { color: var(--color-text-secondary); }
+    .snip-tag      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-attr     { color: #6066b0; }
+    .snip-string   { color: #2a7a4f; }
+    .snip-class    { color: var(--color-btn-primary-bg); }
+    .snip-prop     { color: #6066b0; }
+    .snip-val      { color: #2a7a4f; }
+    .snip-sel      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-tok      { color: #b07c2a; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div>
+      <h1>Text Input</h1>
+      <p>Nest Design System • v1.0</p>
+    </div>
+    <div class="brand-switcher">
+      <button class="brand-btn active" id="btn-wilko" onclick="setBrand('wilko')">wilko.com</button>
+      <button class="brand-btn" id="btn-homebase" onclick="setBrand('homebase')">homebase.co.uk</button>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- Preview canvas -->
+    <div class="preview-canvas" id="preview-canvas">
+
+      <div class="cds-field" id="cds-field">
+
+        <!-- Label row -->
+        <div class="cds-field-label-row">
+          <label class="cds-field-label" id="demo-label" for="demo-input">Field label</label>
+          <span class="cds-field-hint-inline" id="demo-hint-inline">(optional)</span>
+          <button
+            class="cds-field-info-btn"
+            id="info-btn"
+            type="button"
+            aria-label="More information"
+            onclick="toggleTooltip()"
+          >
+            <!-- Info icon -->
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.25"/>
+              <rect x="9.25" y="8.75" width="1.5" height="5.5" rx="0.75" fill="currentColor"/>
+              <circle cx="10" cy="6.5" r="0.85" fill="currentColor"/>
+            </svg>
+            <div class="cds-tooltip" id="demo-tooltip" role="tooltip">
+              This is the long hint text that explains this field in more detail. It appears in a tooltip on hover or tap.
+            </div>
+          </button>
+        </div>
+
+        <!-- Validation row (error / success) — between label and input -->
+        <div class="cds-field-validation" id="validation-row">
+          <svg class="cds-field-validation-icon" id="validation-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+          <span class="cds-field-validation-text" id="helper-text">Helper or validation message</span>
+        </div>
+
+        <!-- Input -->
+        <div class="cds-input-wrap" id="input-wrap">
+          <input
+            class="cds-input"
+            id="demo-input"
+            type="text"
+            placeholder=""
+            autocomplete="off"
+          />
+        </div>
+
+      </div>
+
+      <p class="preview-label" id="preview-caption">Default</p>
+    </div>
+
+    <!-- Configurator panel -->
+    <div class="configurator">
+
+      <!-- State -->
+      <div class="config-section">
+        <div class="config-section-title">State</div>
+        <select class="state-select" id="state-select" onchange="setState(this.value)">
+          <option value="default">Default</option>
+          <option value="hover">Hover</option>
+          <option value="focus">Focus</option>
+          <option value="active">Active</option>
+          <option value="filled">Filled</option>
+          <option value="disabled">Disabled</option>
+          <option value="readonly">Read-only</option>
+          <option value="error">Error</option>
+          <option value="success">Success</option>
+        </select>
+      </div>
+
+      <!-- Label text -->
+      <div class="config-section">
+        <div class="config-section-title">Field label</div>
+        <input class="config-input" id="label-input" type="text" value="Field label" oninput="setLabelText(this.value)" />
+      </div>
+
+      <!-- Placeholder -->
+      <div class="config-section">
+        <div class="config-section-title">Placeholder text</div>
+        <input class="config-input" id="placeholder-input" type="text" value="Placeholder text" oninput="setPlaceholder(this.value)" />
+      </div>
+
+      <!-- Short hint -->
+      <div class="config-section">
+        <div class="config-section-title">Short hint text</div>
+        <input class="config-input" id="hint-inline-input" type="text" value="optional" oninput="setHintInline(this.value)" />
+      </div>
+
+      <!-- Long hint -->
+      <div class="config-section">
+        <div class="config-section-title">Long hint text (tooltip)</div>
+        <input class="config-input" id="hint-long-input" type="text" value="This is the long hint text that explains this field in more detail. It appears in a tooltip on hover or tap." oninput="setHintLong(this.value)" />
+      </div>
+
+      <!-- Helper / validation text -->
+      <div class="config-section">
+        <div class="config-section-title">Helper / validation text</div>
+        <input class="config-input" id="helper-input" type="text" value="Helper or validation message" oninput="setHelperText(this.value)" />
+      </div>
+
+      <!-- Visibility toggles -->
+      <div class="config-section">
+        <div class="config-section-title">Visibility</div>
+        <div class="toggle-row">
+          <span class="toggle-label">Show placeholder</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-placeholder" onchange="togglePlaceholder(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Show short hint</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-hint-inline" onchange="toggleHintInline(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Show info icon</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-info-icon" onchange="toggleInfoIcon(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Token readout -->
+      <div class="config-section">
+        <div class="config-section-title">Active tokens</div>
+        <div class="token-readout" id="token-readout"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Code snippet panel -->
+  <div class="snippet-panel">
+    <div class="snippet-header">
+      <div class="snippet-tabs">
+        <button class="snippet-tab active" id="tab-html" onclick="setSnippetTab('html')">HTML</button>
+        <button class="snippet-tab" id="tab-css" onclick="setSnippetTab('css')">CSS</button>
+      </div>
+      <button class="snippet-copy-btn" id="copy-btn" onclick="copySnippet()">
+        <svg id="copy-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+    <div class="snippet-body">
+      <pre class="snippet-pre" id="snippet-output"></pre>
+    </div>
+  </div>
+
+  <script>
+    var brand = 'wilko';
+    var currentState = 'default';
+    var labelText = 'Field label';
+    var placeholderText = 'Placeholder text';
+    var hintInlineText = 'optional';
+    var hintLongText = 'This is the long hint text that explains this field in more detail. It appears in a tooltip on hover or tap.';
+    var helperTextContent = 'Helper or validation message';
+    var showHintInline = false;
+    var showInfoIcon = false;
+    var showPlaceholder = false;
+    var snippetTab = 'html';
+
+    /* ── Icon SVGs ─────────────────────────────────────────────── */
+    var iconError = '<path fill-rule="evenodd" clip-rule="evenodd" d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5ZM9.25 6.5C9.25 6.08579 9.58579 5.75 10 5.75C10.4142 5.75 10.75 6.08579 10.75 6.5V10.5C10.75 10.9142 10.4142 11.25 10 11.25C9.58579 11.25 9.25 10.9142 9.25 10.5V6.5ZM10 14.25C10.4832 14.25 10.875 13.8582 10.875 13.375C10.875 12.8918 10.4832 12.5 10 12.5C9.51675 12.5 9.125 12.8918 9.125 13.375C9.125 13.8582 9.51675 14.25 10 14.25Z" fill="currentColor"/>';
+    var iconSuccess = '<path d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M6.5 10L8.75 12.25L13.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+
+    var stateTokenMap = {
+      wilko: {
+        default:  { '--color-border-input': '#888888', 'border-width': '1px', '--color-surface-page (bg)': '#ffffff' },
+        hover:    { '--color-neutral-grey-7 (border)': '#222222', 'border-width': '2px' },
+        focus:    { '--color-neutral-grey-7 (border)': '#222222', 'border-width': '2px', '--color-input-focus-glow': '#c8f3dc (Green 2)', 'box-shadow': '0 0 0 4px' },
+        active:   { '--color-neutral-grey-7 (border)': '#222222', 'border-width': '2px' },
+        filled:   { '--color-neutral-grey-7 (border)': '#222222', 'border-width': '1px' },
+        disabled: { '--color-neutral-grey-3 (border)': '#d9d9d9', '--color-surface-subtle (bg)': '#f4f4f4', '--color-text-disabled': '#888888' },
+        readonly: { '--color-border-strong': '#cccccc', '--color-surface-subtle (bg)': '#f4f4f4' },
+        error:    { '--color-error-utility (border)': '#9d2235', 'border-width': '2px' },
+        success:  { '--color-success-utility (border)': '#23854a', 'border-width': '2px' }
+      },
+      homebase: {
+        default:  { '--color-border-input': '#888888', 'border-width': '1px', '--color-surface-page (bg)': '#ffffff' },
+        hover:    { '--color-neutral-grey-7 (border)': '#333333', 'border-width': '2px' },
+        focus:    { '--color-neutral-grey-7 (border)': '#333333', 'border-width': '2px', '--color-input-focus-glow': '#c8f3dc (Green 2)', 'box-shadow': '0 0 0 4px' },
+        active:   { '--color-neutral-grey-7 (border)': '#333333', 'border-width': '2px' },
+        filled:   { '--color-neutral-grey-7 (border)': '#333333', 'border-width': '1px' },
+        disabled: { '--color-neutral-grey-3 (border)': '#d9d9d9', '--color-surface-subtle (bg)': '#f4f4f4', '--color-text-disabled': '#888888' },
+        readonly: { '--color-border-strong': '#cccccc', '--color-surface-subtle (bg)': '#f4f4f4' },
+        error:    { '--color-error-utility (border)': '#b90d0d', 'border-width': '2px' },
+        success:  { '--color-success-utility (border)': '#1d8634', 'border-width': '2px' }
+      }
+    };
+
+    /* ── Brand ─────────────────────────────────────────────────── */
+    function setBrand(b) {
+      brand = b;
+      document.documentElement.setAttribute('data-brand', b);
+      document.getElementById('btn-wilko').classList.toggle('active', b === 'wilko');
+      document.getElementById('btn-homebase').classList.toggle('active', b === 'homebase');
+      updateAll();
+    }
+
+    /* ── State ─────────────────────────────────────────────────── */
+    function setState(s) {
+      currentState = s;
+      updateAll();
+    }
+
+    /* ── Label ─────────────────────────────────────────────────── */
+    function setLabelText(v) {
+      labelText = v;
+      document.getElementById('demo-label').textContent = v;
+      generateSnippet();
+    }
+
+    /* ── Placeholder ───────────────────────────────────────────── */
+    function setPlaceholder(v) {
+      placeholderText = v;
+      document.getElementById('demo-input').placeholder = showPlaceholder ? v : '';
+      generateSnippet();
+    }
+
+    /* ── Short hint ────────────────────────────────────────────── */
+    function setHintInline(v) {
+      hintInlineText = v;
+      document.getElementById('demo-hint-inline').textContent = '(' + v + ')';
+      generateSnippet();
+    }
+
+    /* ── Long hint ─────────────────────────────────────────────── */
+    function setHintLong(v) {
+      hintLongText = v;
+      document.getElementById('demo-tooltip').textContent = v;
+      generateSnippet();
+    }
+
+    /* ── Helper text ───────────────────────────────────────────── */
+    function setHelperText(v) {
+      helperTextContent = v;
+      document.getElementById('helper-text').textContent = v;
+      generateSnippet();
+    }
+
+    /* ── Placeholder visibility ────────────────────────────────── */
+    function togglePlaceholder(v) {
+      showPlaceholder = v;
+      document.getElementById('demo-input').placeholder = v ? placeholderText : '';
+      generateSnippet();
+    }
+
+    /* ── Hint inline visibility ────────────────────────────────── */
+    function toggleHintInline(v) {
+      showHintInline = v;
+      document.getElementById('demo-hint-inline').style.display = v ? '' : 'none';
+      generateSnippet();
+    }
+
+    /* ── Info icon visibility ──────────────────────────────────── */
+    function toggleInfoIcon(v) {
+      showInfoIcon = v;
+      document.getElementById('info-btn').style.display = v ? '' : 'none';
+      generateSnippet();
+    }
+
+    /* ── Tooltip toggle (tap on mobile) ───────────────────────── */
+    function toggleTooltip() {
+      var btn = document.getElementById('info-btn');
+      btn.classList.toggle('tooltip-open');
+    }
+
+    document.addEventListener('click', function(e) {
+      var btn = document.getElementById('info-btn');
+      if (btn && !btn.contains(e.target)) {
+        btn.classList.remove('tooltip-open');
+      }
+    });
+
+    /* ── Apply state class to input wrap ───────────────────────── */
+    function applyState() {
+      var wrap = document.getElementById('input-wrap');
+      var input = document.getElementById('demo-input');
+      var validationRow = document.getElementById('validation-row');
+      var validationIcon = document.getElementById('validation-icon');
+      var caption = document.getElementById('preview-caption');
+      var helperEl = document.getElementById('helper-text');
+
+      // Clear all state classes
+      wrap.className = 'cds-input-wrap';
+      validationRow.className = 'cds-field-validation';
+
+      if (currentState !== 'default') {
+        wrap.classList.add('state-' + currentState);
+      }
+
+      // Disabled / readonly
+      input.disabled = currentState === 'disabled';
+      input.readOnly = currentState === 'readonly';
+
+      // Validation row
+      validationIcon.innerHTML = '';
+      if (currentState === 'error') {
+        validationRow.classList.add('visible', 'state-error');
+        validationIcon.innerHTML = iconError;
+      } else if (currentState === 'success') {
+        validationRow.classList.add('visible', 'state-success');
+        validationIcon.innerHTML = iconSuccess;
+      }
+
+      // Filled — show value in input
+      if (currentState === 'filled') {
+        input.value = 'User entered value';
+      } else if (currentState === 'readonly') {
+        input.value = 'Read-only value';
+      } else {
+        input.value = '';
+      }
+
+      caption.textContent = currentState.charAt(0).toUpperCase() + currentState.slice(1);
+    }
+
+    /* ── Token readout ─────────────────────────────────────────── */
+    function updateTokenReadout() {
+      var map = stateTokenMap[brand][currentState] || {};
+      var html = '';
+      Object.keys(map).forEach(function(k) {
+        html += '<div class="token-row"><span class="token-name">' + k + '</span><span class="token-value">' + map[k] + '</span></div>';
+      });
+      document.getElementById('token-readout').innerHTML = html;
+    }
+
+    /* ── Snippet tab ───────────────────────────────────────────── */
+    function setSnippetTab(tab) {
+      snippetTab = tab;
+      document.getElementById('tab-html').classList.toggle('active', tab === 'html');
+      document.getElementById('tab-css').classList.toggle('active', tab === 'css');
+      generateSnippet();
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    /* ── Snippet generation ────────────────────────────────────── */
+    function generateSnippet() {
+      if (snippetTab === 'css') { generateCssSnippet(); return; }
+
+      var t = '<span class="snip-tag">'; var tc = '</span>';
+      var a = '<span class="snip-attr">'; var ac = '</span>';
+      var s = '<span class="snip-string">'; var sc = '</span>';
+      var c = '<span class="snip-comment">'; var cc = '</span>';
+      var cl = '<span class="snip-class">'; var clc = '</span>';
+
+      var wrapClass = 'cds-input-wrap' + (currentState !== 'default' ? ' state-' + currentState : '');
+      var out = '';
+      out += c + '&lt;!-- CDS Text Input · ' + brand + ' · ' + currentState + ' --&gt;' + cc + '\n';
+      out += c + '&lt;!-- Requires: &lt;html data-brand="' + brand + '"&gt; + cds-tokens.css --&gt;' + cc + '\n\n';
+
+      out += t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field"' + sc + t + '&gt;' + tc + '\n\n';
+
+      out += '  ' + c + '&lt;!-- Label row --&gt;' + cc + '\n';
+      out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-label-row"' + sc + t + '&gt;' + tc + '\n';
+      out += '    ' + t + '&lt;label' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-label"' + sc + ' ' + a + 'for' + ac + '=' + s + '"my-input"' + sc + t + '&gt;' + tc + escapeHtml(labelText) + t + '&lt;/label&gt;' + tc + '\n';
+
+      if (showHintInline) {
+        out += '    ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-hint-inline"' + sc + t + '&gt;' + tc + '(' + escapeHtml(hintInlineText) + ')' + t + '&lt;/span&gt;' + tc + '\n';
+      }
+
+      if (showInfoIcon) {
+        out += '    ' + t + '&lt;button' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-info-btn"' + sc + ' ' + a + 'type' + ac + '=' + s + '"button"' + sc + ' ' + a + 'aria-label' + ac + '=' + s + '"More information"' + sc + t + '&gt;' + tc + '\n';
+        out += '      ' + c + '&lt;!-- info svg icon --&gt;' + cc + '\n';
+        out += '      ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-tooltip"' + sc + ' ' + a + 'role' + ac + '=' + s + '"tooltip"' + sc + t + '&gt;' + tc + escapeHtml(hintLongText) + t + '&lt;/div&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;/button&gt;' + tc + '\n';
+      }
+
+      out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+
+      if (currentState === 'error' || currentState === 'success') {
+        var valClass = 'cds-field-validation visible state-' + currentState;
+        out += '  ' + c + '&lt;!-- Validation row --&gt;' + cc + '\n';
+        out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + valClass + clc + '"' + sc + t + '&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;svg' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-validation-icon"' + sc + ' ' + a + 'viewBox' + ac + '=' + s + '"0 0 20 20"' + sc + ' ' + a + 'fill' + ac + '=' + s + '"none"' + sc + t + '&gt;' + tc + c + '&lt;!-- icon --&gt;' + cc + t + '&lt;/svg&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-validation-text"' + sc + t + '&gt;' + tc + escapeHtml(helperTextContent) + t + '&lt;/span&gt;' + tc + '\n';
+        out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+      }
+
+      out += '  ' + c + '&lt;!-- Input --&gt;' + cc + '\n';
+      out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + wrapClass + clc + '"' + sc + t + '&gt;' + tc + '\n';
+      out += '    ' + t + '&lt;input' + tc + '\n';
+      out += '      ' + a + 'class' + ac + '=' + s + '"cds-input"' + sc + '\n';
+      out += '      ' + a + 'id' + ac + '=' + s + '"my-input"' + sc + '\n';
+      out += '      ' + a + 'type' + ac + '=' + s + '"text"' + sc + '\n';
+      out += '      ' + a + 'placeholder' + ac + '=' + s + '"' + escapeHtml(showPlaceholder ? placeholderText : '') + '"' + sc + '\n';
+      if (currentState === 'disabled') out += '      ' + a + 'disabled' + ac + '\n';
+      if (currentState === 'readonly') out += '      ' + a + 'readonly' + ac + '\n';
+      out += '    ' + t + '/&gt;' + tc + '\n';
+      out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+
+      out += t + '&lt;/div&gt;' + tc;
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateCssSnippet() {
+      var c   = '<span class="snip-comment">'; var cc  = '</span>';
+      var sel = '<span class="snip-sel">';      var selc = '</span>';
+      var p   = '<span class="snip-prop">';     var pc  = '</span>';
+      var v   = '<span class="snip-val">';      var vc  = '</span>';
+      var tok = '<span class="snip-tok">';      var tokc = '</span>';
+
+      var grey7 = brand === 'wilko' ? '#222222' : '#333333';
+
+      var out = '';
+      out += c + '/* CDS Text Input · ' + brand + ' · ' + currentState + ' */' + cc + '\n';
+      out += c + '/* cds-tokens.css must be loaded and data-brand="' + brand + '" on &lt;html&gt; */' + cc + '\n\n';
+
+      out += sel + '.cds-input' + selc + ' {\n';
+      out += '  ' + p + 'width' + pc + ': ' + v + '320px' + vc + ';\n';
+      out += '  ' + p + 'height' + pc + ': ' + v + '48px' + vc + ';\n';
+      out += '  ' + p + 'padding' + pc + ': ' + v + '0 14px' + vc + ';\n';
+      out += '  ' + p + 'border' + pc + ': ' + v + '1px solid ' + vc + tok + 'var(--color-border-input)' + tokc + '; ' + c + '/* #888888 Grey 5 */' + cc + '\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + tok + 'var(--radius-s)' + tokc + '; ' + c + '/* 8px */' + cc + '\n';
+      out += '  ' + p + 'background' + pc + ': ' + tok + 'var(--color-surface-page)' + tokc + ';\n';
+      out += '  ' + p + 'font-family' + pc + ': ' + tok + 'var(--font-family)' + tokc + ';\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + tok + 'var(--font-size-s)' + tokc + '; ' + c + '/* 16px */' + cc + '\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-text-primary)' + tokc + ';\n';
+      out += '  ' + p + 'outline' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-hover .cds-input,' + selc + '\n';
+      out += sel + '.cds-input-wrap.state-active .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-neutral-grey-7)' + tokc + '; ' + c + '/* ' + grey7 + ' */' + cc + '\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-focus .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-neutral-grey-7)' + tokc + '; ' + c + '/* ' + grey7 + ' */' + cc + '\n';
+      out += '  ' + p + 'box-shadow' + pc + ': ' + v + '0 0 0 4px ' + vc + tok + 'var(--color-input-focus-glow)' + tokc + '; ' + c + '/* #c8f3dc Green 2 */' + cc + '\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-disabled .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-neutral-grey-3)' + tokc + '; ' + c + '/* #d9d9d9 */' + cc + '\n';
+      out += '  ' + p + 'background' + pc + ': ' + tok + 'var(--color-surface-subtle)' + tokc + ';\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-text-disabled)' + tokc + ';\n';
+      out += '  ' + p + 'cursor' + pc + ': ' + v + 'not-allowed' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-error .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-error-utility)' + tokc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-success .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-success-utility)' + tokc + ';\n';
+      out += '}\n\n';
+
+      out += c + '/* Field label */' + cc + '\n';
+      out += sel + '.cds-field-label' + selc + ' {\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + v + '16px' + vc + ';\n';
+      out += '  ' + p + 'font-weight' + pc + ': ' + tok + 'var(--font-weight-semibold)' + tokc + ';\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-neutral-grey-7)' + tokc + '; ' + c + '/* ' + grey7 + ' */' + cc + '\n';
+      out += '  ' + p + 'margin-bottom' + pc + ': ' + v + '8px' + vc + ';\n';
+      out += '}\n\n';
+
+      out += c + '/* Inline hint text (brackets) */' + cc + '\n';
+      out += sel + '.cds-field-hint-inline' + selc + ' {\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + v + '12px' + vc + ';\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-text-secondary)' + tokc + '; ' + c + '/* #666666 Grey 6 */' + cc + '\n';
+      out += '}\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    /* ── Copy ──────────────────────────────────────────────────── */
+    function copySnippet() {
+      var grey7 = brand === 'wilko' ? '#222222' : '#333333';
+      var lines = [];
+
+      if (snippetTab === 'css') {
+        lines.push('/* CDS Text Input · ' + brand + ' · ' + currentState + ' */');
+        lines.push('.cds-input {');
+        lines.push('  width: 320px;');
+        lines.push('  height: 48px;');
+        lines.push('  padding: 0 14px;');
+        lines.push('  border: 1px solid var(--color-border-input); /* #888888 Grey 5 */');
+        lines.push('  border-radius: var(--radius-s); /* 8px */');
+        lines.push('  background: var(--color-surface-page);');
+        lines.push('  font-family: var(--font-family);');
+        lines.push('  font-size: var(--font-size-s); /* 16px */');
+        lines.push('  color: var(--color-text-primary);');
+        lines.push('  outline: none;');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-input-wrap.state-hover .cds-input,');
+        lines.push('.cds-input-wrap.state-active .cds-input {');
+        lines.push('  border-width: 2px;');
+        lines.push('  border-color: var(--color-neutral-grey-7); /* ' + grey7 + ' */');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-input-wrap.state-focus .cds-input {');
+        lines.push('  border-width: 2px;');
+        lines.push('  border-color: var(--color-neutral-grey-7); /* ' + grey7 + ' */');
+        lines.push('  box-shadow: 0 0 0 4px var(--color-input-focus-glow); /* #c8f3dc Green 2 */');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-input-wrap.state-disabled .cds-input {');
+        lines.push('  border-color: var(--color-neutral-grey-3);');
+        lines.push('  background: var(--color-surface-subtle);');
+        lines.push('  color: var(--color-text-disabled);');
+        lines.push('  cursor: not-allowed;');
+        lines.push('}');
+        lines.push('');
+        lines.push('.cds-input-wrap.state-error .cds-input { border-width: 2px; border-color: var(--color-error-utility); }');
+        lines.push('.cds-input-wrap.state-success .cds-input { border-width: 2px; border-color: var(--color-success-utility); }');
+        lines.push('');
+        lines.push('.cds-field-label { font-size: 16px; font-weight: var(--font-weight-semibold); color: var(--color-neutral-grey-7); margin-bottom: 8px; }');
+        lines.push('.cds-field-hint-inline { font-size: 12px; color: var(--color-text-secondary); }');
+      } else {
+        var wrapClass = 'cds-input-wrap' + (currentState !== 'default' ? ' state-' + currentState : '');
+        lines.push('<!-- CDS Text Input · ' + brand + ' · ' + currentState + ' -->');
+        lines.push('<div class="cds-field">');
+        lines.push('');
+        lines.push('  <!-- Label row -->');
+        lines.push('  <div class="cds-field-label-row">');
+        lines.push('    <label class="cds-field-label" for="my-input">' + labelText + '</label>');
+        if (showHintInline) lines.push('    <span class="cds-field-hint-inline">(' + hintInlineText + ')</span>');
+        if (showInfoIcon) {
+          lines.push('    <button class="cds-field-info-btn" type="button" aria-label="More information">');
+          lines.push('      <!-- info svg icon -->');
+          lines.push('      <div class="cds-tooltip" role="tooltip">' + hintLongText + '</div>');
+          lines.push('    </button>');
+        }
+        lines.push('  </div>');
+        lines.push('');
+        if (currentState === 'error' || currentState === 'success') {
+          lines.push('  <!-- Validation row -->');
+          lines.push('  <div class="cds-field-validation visible state-' + currentState + '">');
+          lines.push('    <svg class="cds-field-validation-icon" viewBox="0 0 20 20" fill="none"><!-- icon --></svg>');
+          lines.push('    <span class="cds-field-validation-text">' + helperTextContent + '</span>');
+          lines.push('  </div>');
+          lines.push('');
+        }
+        lines.push('  <!-- Input -->');
+        lines.push('  <div class="' + wrapClass + '">');
+        lines.push('    <input');
+        lines.push('      class="cds-input"');
+        lines.push('      id="my-input"');
+        lines.push('      type="text"');
+        lines.push('      placeholder="' + (showPlaceholder ? placeholderText : '') + '"');
+        if (currentState === 'disabled') lines.push('      disabled');
+        if (currentState === 'readonly') lines.push('      readonly');
+        lines.push('    />');
+        lines.push('  </div>');
+        lines.push('');
+        lines.push('</div>');
+      }
+
+      navigator.clipboard.writeText(lines.join('\n')).then(function() {
+        var btn = document.getElementById('copy-btn');
+        var lbl = document.getElementById('copy-label');
+        var ico = document.getElementById('copy-icon');
+        btn.classList.add('copied');
+        lbl.textContent = 'Copied!';
+        ico.innerHTML = '<path d="M2.5 8L6 11.5L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          lbl.textContent = 'Copy';
+          ico.innerHTML = '<rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        }, 2000);
+      });
+    }
+
+    /* ── Update all ────────────────────────────────────────────── */
+    function updateAll() {
+      applyState();
+      updateTokenReadout();
+      generateSnippet();
+    }
+
+    /* ── Live interaction — only active when state allows it ───── */
+    var liveStates = ['default', 'hover', 'focus', 'active', 'filled'];
+
+    function isLive() {
+      return liveStates.indexOf(currentState) !== -1;
+    }
+
+    function setLiveClass(cls) {
+      if (!isLive()) return;
+      var wrap = document.getElementById('input-wrap');
+      var caption = document.getElementById('preview-caption');
+      wrap.className = 'cds-input-wrap' + (cls ? ' state-' + cls : '');
+      caption.textContent = cls ? cls.charAt(0).toUpperCase() + cls.slice(1) : 'Default';
+    }
+
+    (function bindInputEvents() {
+      var input = document.getElementById('demo-input');
+
+      input.addEventListener('mouseenter', function() {
+        if (!isLive()) return;
+        // Only show hover if not focused
+        if (document.activeElement !== input) setLiveClass('hover');
+      });
+
+      input.addEventListener('mouseleave', function() {
+        if (!isLive()) return;
+        if (document.activeElement !== input) {
+          var val = input.value.trim();
+          setLiveClass(val ? 'filled' : '');
+        }
+      });
+
+      input.addEventListener('mousedown', function() {
+        if (!isLive()) return;
+        setLiveClass('active');
+      });
+
+      input.addEventListener('focus', function() {
+        if (!isLive()) return;
+        setLiveClass('focus');
+      });
+
+      input.addEventListener('blur', function() {
+        if (!isLive()) return;
+        var val = input.value.trim();
+        setLiveClass(val ? 'filled' : '');
+      });
+
+      input.addEventListener('input', function() {
+        if (!isLive()) return;
+        // While typing, stay in focus state — value will be evaluated on blur
+        setLiveClass('focus');
+      });
+    })();
+
+    // Apply initial visibility from default var states
+    document.getElementById('demo-hint-inline').style.display = 'none';
+    document.getElementById('info-btn').style.display = 'none';
+
+    updateAll();
+  </script>
+</body>
+</html>
