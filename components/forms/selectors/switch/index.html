@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="wilko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Switch — CDS Configurator</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/nsp1wdf.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Primitive tokens ──────────────────────────────────────── */
+    :root {
+      --primitive-white: #ffffff;
+      --primitive-grey-1: #f4f4f4;
+      --primitive-grey-2: #e6e6e6;
+      --primitive-grey-3: #d9d9d9;
+      --primitive-grey-4: #cccccc;
+      --primitive-grey-5: #888888;
+      --primitive-grey-6: #666666;
+      --font-size-massive: 40px;
+      --font-size-xxl: 32px;
+      --font-size-xl: 28px;
+      --font-size-l: 24px;
+      --font-size-m: 20px;
+      --font-size-s: 16px;
+      --font-size-xs: 14px;
+      --font-size-xxs: 12px;
+      --font-size-tiny: 10px;
+      --radius-xs: 4px;
+      --radius-s: 8px;
+      --radius-m: 12px;
+      --radius-l: 16px;
+      --radius-xl: 24px;
+      --radius-full: 100px;
+      --stroke-thin: 1px;
+      --stroke-normal: 1.5px;
+      --stroke-thick: 2px;
+      --space-m: 32px;
+      --space-s: 24px;
+      --space-xs: 16px;
+      --space-12: 12px;
+      --space-8: 8px;
+      --space-4: 4px;
+      --motion-duration-base: 250ms;
+      --motion-duration-fast: 150ms;
+      --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Wilko semantic tokens ─────────────────────────────────── */
+    [data-brand="wilko"] {
+      --color-brand-primary: #9d2235;
+      --color-brand-secondary: #fdda24;
+      --color-btn-primary-bg: #23854a;
+      --color-btn-primary-bg-hover: #175e40;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: sofia-pro, sans-serif;
+      --font-feature-settings: "ss04" 1;
+      --font-weight-bold: 700;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 500;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #222222;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #024960;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #222222;
+      --color-success-utility: #23854a;
+      --color-error-utility: #9d2235;
+
+      /* Switch-specific */
+      --color-switch-on-bg:         #23854a;
+      --color-switch-on-bg-hover:   #175e40;
+      --color-switch-off-bg:        #d9d9d9;
+      --color-switch-off-bg-hover:  #cccccc;
+      --color-switch-thumb:         #ffffff;
+      --color-switch-label-on:      #ffffff;
+      --color-switch-label-off:     #666666;
+    }
+
+    /* ── Homebase semantic tokens ──────────────────────────────── */
+    [data-brand="homebase"] {
+      --color-brand-primary: #1d8634;
+      --color-brand-secondary: #ec7224;
+      --color-btn-primary-bg: #1d8634;
+      --color-btn-primary-bg-hover: #155d25;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: 'Rubik', sans-serif;
+      --font-feature-settings: normal;
+      --font-weight-bold: 600;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 400;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #333333;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #2b347f;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #333333;
+      --color-success-utility: #1d8634;
+      --color-error-utility: #b90d0d;
+
+      /* Switch-specific */
+      --color-switch-on-bg:         #1d8634;
+      --color-switch-on-bg-hover:   #155d25;
+      --color-switch-off-bg:        #d9d9d9;
+      --color-switch-off-bg-hover:  #cccccc;
+      --color-switch-thumb:         #ffffff;
+      --color-switch-label-on:      #ffffff;
+      --color-switch-label-off:     #666666;
+    }
+
+    [data-brand] {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page layout ───────────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    [data-brand] button,
+    [data-brand] input,
+    [data-brand] select,
+    [data-brand] textarea,
+    [data-brand] label {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+      background: var(--color-surface-page);
+      min-height: 100vh;
+      padding: var(--space-m);
+    }
+
+    .page-header {
+      margin-bottom: var(--space-s);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    .page-header h1 {
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .page-header p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+    }
+
+    /* ── Brand switcher pill ───────────────────────────────────── */
+    .brand-switcher {
+      display: flex;
+      gap: var(--space-4);
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+    }
+
+    .brand-btn {
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .brand-btn.active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Layout: preview + configurator ───────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-s);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Preview canvas ────────────────────────────────────────── */
+    .preview-canvas {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-l);
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-m);
+      position: relative;
+    }
+
+    .preview-label {
+      position: absolute;
+      bottom: var(--space-xs);
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       CDS UI SWITCH COMPONENT
+       ══════════════════════════════════════════════════════════ */
+
+    /*
+      Size map:
+        large: track 72×36px, thumb 28px, label 12px
+    */
+
+    .cds-switch {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Hidden native input */
+    .cds-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    /* Track */
+    .cds-switch-track {
+      position: relative;
+      display: flex;
+      align-items: center;
+      border-radius: var(--radius-full);
+      background: var(--color-switch-off-bg);
+      transition:
+        background var(--motion-duration-base) var(--motion-ease-standard);
+      overflow: hidden; /* clip labels */
+    }
+
+    /* Thumb */
+    .cds-switch-thumb {
+      position: absolute;
+      background: var(--color-switch-thumb);
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.18), 0 0.5px 1px rgba(0,0,0,0.10);
+      transition:
+        transform var(--motion-duration-base) var(--motion-ease-standard),
+        box-shadow var(--motion-duration-base) var(--motion-ease-standard);
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    /* ON / OFF labels inside the track */
+    .cds-switch-label-on,
+    .cds-switch-label-off {
+      position: absolute;
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+      transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .cds-switch-label-on {
+      color: var(--color-switch-label-on);
+      opacity: 0; /* hidden when off */
+    }
+
+    .cds-switch-label-off {
+      color: var(--color-switch-label-off);
+      opacity: 1; /* visible when off */
+    }
+
+    /* ── Size ──────────────────────────────────────────────────── */
+
+    /* Large: 72×36 */
+    .cds-switch.size-large .cds-switch-track  { width: 72px; height: 36px; }
+    .cds-switch.size-large .cds-switch-thumb  { width: 28px; height: 28px; left: 4px; }
+    .cds-switch.size-large .cds-switch-label-on  { font-size: 12px; right: 8px; }
+    .cds-switch.size-large .cds-switch-label-off { font-size: 12px; right: 8px; }
+
+    /* ── Checked (ON) state ─────────────────────────────────────── */
+
+    .cds-switch.is-on .cds-switch-track {
+      background: var(--color-switch-on-bg);
+    }
+
+    /* Thumb travel: track-width - thumb-size - (2 × inset) = 72-28-8 = 36px */
+    .cds-switch.size-large.is-on  .cds-switch-thumb  { transform: translateX(36px); }
+
+    .cds-switch.is-on .cds-switch-label-on  { opacity: 1; }
+    .cds-switch.is-on .cds-switch-label-off { opacity: 0; }
+
+    /* ON label sits left of thumb, aligned from left */
+    .cds-switch.is-on.size-large    .cds-switch-label-on  { left: 8px; right: auto; }
+
+    /* ── Hover ──────────────────────────────────────────────────── */
+    .cds-switch:not(.state-disabled):hover .cds-switch-track {
+      background: var(--color-switch-off-bg-hover);
+    }
+    .cds-switch.is-on:not(.state-disabled):hover .cds-switch-track {
+      background: var(--color-switch-on-bg-hover);
+    }
+    .cds-switch:not(.state-disabled):hover .cds-switch-thumb {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.22), 0 1px 2px rgba(0,0,0,0.12);
+    }
+
+    /* ── Forced configurator states ─────────────────────────────── */
+    .cds-switch.state-hover:not(.state-disabled) .cds-switch-track {
+      background: var(--color-switch-off-bg-hover);
+    }
+    .cds-switch.is-on.state-hover:not(.state-disabled) .cds-switch-track {
+      background: var(--color-switch-on-bg-hover);
+    }
+    .cds-switch.state-hover .cds-switch-thumb {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.22), 0 1px 2px rgba(0,0,0,0.12);
+    }
+
+    /* ── Focus ──────────────────────────────────────────────────── */
+    .cds-switch input:focus-visible + .cds-switch-track {
+      outline: var(--stroke-thick) solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+    .cds-switch.state-focus .cds-switch-track {
+      outline: var(--stroke-thick) solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+
+    /* ── Disabled ───────────────────────────────────────────────── */
+    .cds-switch.state-disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* ── Configurator panel ────────────────────────────────────── */
+    .configurator {
+      background: var(--color-surface-page);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .config-section {
+      padding: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .config-section:last-child { border-bottom: none; }
+
+    .config-section-title {
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-8);
+    }
+
+    /* Segmented control */
+    .seg-control {
+      display: flex;
+      gap: 3px;
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: 3px;
+    }
+
+    .seg-btn {
+      flex: 1;
+      padding: 6px 4px;
+      border-radius: calc(var(--radius-s) - 3px);
+      border: none;
+      background: transparent;
+      font-family: sofia-pro, var(--font-family);
+      font-feature-settings: "ss04" 1, var(--font-feature-settings);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .seg-btn.active {
+      background: var(--color-surface-page);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-bold);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Token readout */
+    .token-readout {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: var(--space-8) var(--space-12);
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      font-family: 'Courier New', monospace;
+    }
+
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0;
+    }
+
+    .token-name  { color: var(--color-text-secondary); }
+    .token-value { color: var(--color-brand-primary); font-weight: 600; }
+
+    /* ── Code snippet panel ────────────────────────────────────── */
+    .snippet-panel {
+      margin-top: var(--space-s);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      background: var(--color-surface-subtle);
+    }
+
+    .snippet-tabs {
+      display: flex;
+      gap: 0;
+    }
+
+    .snippet-tab {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .snippet-tab:hover { color: var(--color-text-primary); }
+
+    .snippet-tab.active {
+      color: var(--color-btn-primary-bg);
+      border-bottom-color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+    }
+
+    .snippet-copy-btn:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn.copied {
+      background: var(--color-btn-primary-bg);
+      border-color: var(--color-btn-primary-bg);
+      color: #fff;
+    }
+
+    .snippet-copy-btn svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .snippet-body {
+      padding: var(--space-xs);
+      background: var(--color-surface-page);
+      overflow-x: auto;
+    }
+
+    .snippet-pre {
+      margin: 0;
+      font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--color-text-primary);
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .snip-comment  { color: var(--color-text-secondary); }
+    .snip-tag      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-attr     { color: #6066b0; }
+    .snip-string   { color: #2a7a4f; }
+    .snip-class    { color: var(--color-btn-primary-bg); }
+    .snip-prop     { color: #6066b0; }
+    .snip-val      { color: #2a7a4f; }
+    .snip-sel      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-tok      { color: #b07c2a; }
+
+    /* ── Switch row (external label + switch) ──────────────────── */
+    .cds-switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .cds-switch-external-label {
+      font-size: var(--font-size-s);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-primary);
+      line-height: 1.3;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Config text input */
+    .config-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      border-radius: var(--radius-s);
+      font-family: sofia-pro, var(--font-family);
+      font-feature-settings: "ss04" 1;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .config-input:focus {
+      outline: none;
+      border-color: var(--color-focus-ring);
+    }
+
+    /* Toggle rows */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-row + .toggle-row {
+      border-top: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .toggle-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 11px;
+      background: var(--color-neutral-grey-3);
+      cursor: pointer;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-switch input:checked + .toggle-track { background: var(--color-btn-primary-bg); }
+    .toggle-switch input:checked + .toggle-track::after { transform: translateX(18px); }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div>
+      <h1>UI Switch</h1>
+      <p style="margin-top:3px;">Nest Design System • v1.0</p>
+    </div>
+    <div class="brand-switcher">
+      <button class="brand-btn active" id="btn-wilko" onclick="setBrand('wilko')">wilko.com</button>
+      <button class="brand-btn" id="btn-homebase" onclick="setBrand('homebase')">homebase.co.uk</button>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- Preview canvas -->
+    <div class="preview-canvas" id="preview-canvas">
+      <div id="switch-row-wrapper" style="max-width:360px;">
+        <span class="cds-switch-external-label" id="external-label-el" style="display:none;">Switch label</span>
+        <label class="cds-switch size-large" id="demo-switch" onclick="handleSwitchClick(event)">
+          <input type="checkbox" id="switch-input" onchange="handleInputChange(this.checked)">
+          <div class="cds-switch-track">
+            <span class="cds-switch-label-on" id="label-on-el">ON</span>
+            <span class="cds-switch-label-off" id="label-off-el">OFF</span>
+            <div class="cds-switch-thumb"></div>
+          </div>
+        </label>
+      </div>
+      <p class="preview-label" id="preview-caption">Large · Off · Default</p>
+    </div>
+
+    <!-- Configurator panel -->
+    <div class="configurator">
+
+      <!-- Value -->
+      <div class="config-section">
+        <div class="config-section-title">Value</div>
+        <div class="seg-control">
+          <button class="seg-btn active" id="value-off" onclick="setValue('off')">Off</button>
+          <button class="seg-btn" id="value-on"  onclick="setValue('on')">On</button>
+        </div>
+      </div>
+
+      <!-- State -->
+      <div class="config-section">
+        <div class="config-section-title">State</div>
+        <div class="seg-control">
+          <button class="seg-btn active" id="state-default"  onclick="setState('default')">Default</button>
+          <button class="seg-btn" id="state-hover"    onclick="setState('hover')">Hover</button>
+          <button class="seg-btn" id="state-focus"    onclick="setState('focus')">Focus</button>
+          <button class="seg-btn" id="state-disabled" onclick="setState('disabled')">Disabled</button>
+        </div>
+      </div>
+
+      <!-- Label -->
+      <div class="config-section">
+        <div class="config-section-title">Label</div>
+        <div class="toggle-row">
+          <span class="toggle-label">Show label</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-show-label" onchange="toggleShowLabel(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div id="label-text-section" style="margin-top: var(--space-8); display:none;">
+          <input class="config-input" id="label-text-input" type="text" value="Switch label" oninput="setLabelText(this.value)">
+        </div>
+      </div>
+
+      <!-- Token readout -->
+      <div class="config-section">
+        <div class="config-section-title">Active tokens</div>
+        <div class="token-readout" id="token-readout"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Code snippet panel -->
+  <div class="snippet-panel">
+    <div class="snippet-header">
+      <div class="snippet-tabs">
+        <button class="snippet-tab active" id="tab-html" onclick="setSnippetTab('html')">HTML</button>
+        <button class="snippet-tab" id="tab-css" onclick="setSnippetTab('css')">CSS</button>
+      </div>
+      <button class="snippet-copy-btn" id="copy-btn" onclick="copySnippet()">
+        <svg id="copy-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+    <div class="snippet-body">
+      <pre class="snippet-pre" id="snippet-output"></pre>
+    </div>
+  </div>
+
+  <script>
+    var brand        = 'wilko';
+    var currentSize  = 'large';
+    var currentState = 'default';
+    var currentValue = 'off'; // 'on' | 'off'
+    var showLabel    = false;
+    var labelText    = 'Switch label';
+    var snippetTab   = 'html';
+
+    var tokens = {
+      wilko: {
+        '--color-switch-on-bg':         '#23854a',
+        '--color-switch-on-bg-hover':   '#175e40',
+        '--color-switch-off-bg':        '#d9d9d9',
+        '--color-switch-off-bg-hover':  '#cccccc',
+        '--color-switch-thumb':         '#ffffff',
+        '--color-focus-ring':           '#024960',
+        '--font-family':                'sofia-pro'
+      },
+      homebase: {
+        '--color-switch-on-bg':         '#1d8634',
+        '--color-switch-on-bg-hover':   '#155d25',
+        '--color-switch-off-bg':        '#d9d9d9',
+        '--color-switch-off-bg-hover':  '#cccccc',
+        '--color-switch-thumb':         '#ffffff',
+        '--color-focus-ring':           '#2b347f',
+        '--font-family':                'Rubik'
+      }
+    };
+
+    var sizeMap = {
+      large: { track: '72×36px', thumb: '28px', label: '12px' }
+    };
+
+    function getSwitch() { return document.getElementById('demo-switch'); }
+    function getInput()  { return document.getElementById('switch-input'); }
+
+    // Allow clicking the switch in the demo to toggle value
+    function handleSwitchClick(e) {
+      if (currentState === 'disabled') { e.preventDefault(); return; }
+      // default label click toggles checkbox — let it
+      // then sync our state
+      setTimeout(function() {
+        var checked = getInput().checked;
+        currentValue = checked ? 'on' : 'off';
+        document.getElementById('value-on').classList.toggle('active', currentValue === 'on');
+        document.getElementById('value-off').classList.toggle('active', currentValue === 'off');
+        applyClasses();
+        updateTokenReadout();
+        generateSnippet();
+      }, 0);
+    }
+
+    function handleInputChange(checked) {
+      // handled via handleSwitchClick
+    }
+
+    function applyClasses() {
+      var sw = getSwitch();
+      sw.className = 'cds-switch size-' + currentSize + (currentValue === 'on' ? ' is-on' : '') + ' state-' + currentState;
+      getInput().checked = (currentValue === 'on');
+
+      // External label + row layout
+      var wrapper = document.getElementById('switch-row-wrapper');
+      var extLabel = document.getElementById('external-label-el');
+      extLabel.textContent = labelText;
+      extLabel.style.display = showLabel ? '' : 'none';
+      wrapper.className = showLabel ? 'cds-switch-row' : '';
+      wrapper.style.width = showLabel ? '100%' : 'auto';
+
+      document.getElementById('preview-caption').textContent =
+        cap(currentSize) + ' · ' + cap(currentValue) + ' · ' + cap(currentState);
+    }
+
+    function setBrand(b) {
+      brand = b;
+      document.documentElement.setAttribute('data-brand', b);
+      document.getElementById('btn-wilko').classList.toggle('active', b === 'wilko');
+      document.getElementById('btn-homebase').classList.toggle('active', b === 'homebase');
+      updateAll();
+    }
+
+    function setValue(v) {
+      currentValue = v;
+      document.querySelectorAll('[id^="value-"]').forEach(function(el) {
+        el.classList.toggle('active', el.id === 'value-' + v);
+      });
+      updateAll();
+    }
+
+    function setState(s) {
+      currentState = s;
+      document.querySelectorAll('[id^="state-"]').forEach(function(el) {
+        el.classList.toggle('active', el.id === 'state-' + s);
+      });
+      updateAll();
+    }
+
+    function toggleShowLabel(checked) {
+      showLabel = checked;
+      document.getElementById('label-text-section').style.display = checked ? '' : 'none';
+      updateAll();
+    }
+
+    function setLabelText(v) {
+      labelText = v;
+      updateAll();
+    }
+
+    function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    function updateTokenReadout() {
+      var t = tokens[brand];
+      var isOn = currentValue === 'on';
+      var relevant = {};
+
+      if (isOn) {
+        relevant['--color-switch-on-bg']       = t['--color-switch-on-bg'];
+        relevant['--color-switch-on-bg-hover'] = t['--color-switch-on-bg-hover'];
+      } else {
+        relevant['--color-switch-off-bg']       = t['--color-switch-off-bg'];
+        relevant['--color-switch-off-bg-hover'] = t['--color-switch-off-bg-hover'];
+      }
+      relevant['--color-switch-thumb'] = t['--color-switch-thumb'];
+      if (currentState === 'focus') {
+        relevant['--color-focus-ring'] = t['--color-focus-ring'];
+      }
+      relevant['--font-family'] = t['--font-family'];
+
+      var html = '';
+      Object.keys(relevant).forEach(function(k) {
+        html += '<div class="token-row"><span class="token-name">' + k + '</span><span class="token-value">' + relevant[k] + '</span></div>';
+      });
+      document.getElementById('token-readout').innerHTML = html;
+    }
+
+    function setSnippetTab(tab) {
+      snippetTab = tab;
+      document.getElementById('tab-html').classList.toggle('active', tab === 'html');
+      document.getElementById('tab-css').classList.toggle('active', tab === 'css');
+      generateSnippet();
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function generateSnippet() {
+      if (snippetTab === 'css') { generateCssSnippet(); return; }
+
+      var isOn       = currentValue === 'on';
+      var isDisabled = currentState === 'disabled';
+
+      var t  = '<span class="snip-tag">';     var tc  = '</span>';
+      var a  = '<span class="snip-attr">';    var ac  = '</span>';
+      var s  = '<span class="snip-string">';  var sc  = '</span>';
+      var c  = '<span class="snip-comment">'; var cc  = '</span>';
+      var cl = '<span class="snip-class">';   var clc = '</span>';
+
+      var classes = ['cds-switch', 'size-' + currentSize];
+      if (isOn) classes.push('is-on');
+      if (currentState !== 'default') classes.push('state-' + currentState);
+      var classStr = classes.join(' ');
+
+      var indent = showLabel ? '  ' : '';
+      var out = '';
+      out += c + '&lt;!-- CDS UI Switch · ' + brand + ' · ' + currentSize + ' · ' + currentValue + ' · ' + currentState + ' --&gt;' + cc + '\n';
+      out += c + '&lt;!-- Requires: &lt;html data-brand="' + brand + '"&gt; + cds-tokens.css --&gt;' + cc + '\n\n';
+
+      if (showLabel) {
+        out += t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-switch-row"' + sc + t + '&gt;' + tc + '\n';
+        out += '  ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-switch-external-label"' + sc + t + '&gt;' + tc + escapeHtml(labelText) + t + '&lt;/span&gt;' + tc + '\n';
+      }
+
+      out += indent + t + '&lt;label' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + classStr + clc + '"' + sc + t + '&gt;' + tc + '\n';
+      out += indent + '  ' + t + '&lt;input' + tc;
+      out += ' ' + a + 'type' + ac + '=' + s + '"checkbox"' + sc;
+      if (isOn)       out += ' ' + a + 'checked' + ac;
+      if (isDisabled) out += ' ' + a + 'disabled' + ac;
+      out += t + '&gt;' + tc + '\n';
+      out += indent + '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-switch-track"' + sc + t + '&gt;' + tc + '\n';
+      out += indent + '    ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-switch-label-on"' + sc + t + '&gt;' + tc + 'ON' + t + '&lt;/span&gt;' + tc + '\n';
+      out += indent + '    ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-switch-label-off"' + sc + t + '&gt;' + tc + 'OFF' + t + '&lt;/span&gt;' + tc + '\n';
+      out += indent + '    ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-switch-thumb"' + sc + t + '&gt;&lt;/div&gt;' + tc + '\n';
+      out += indent + '  ' + t + '&lt;/div&gt;' + tc + '\n';
+      out += indent + t + '&lt;/label&gt;' + tc + '\n';
+
+      if (showLabel) {
+        out += t + '&lt;/div&gt;' + tc;
+      }
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateCssSnippet() {
+      var t = tokens[brand];
+      var isOn = currentValue === 'on';
+      var sm = sizeMap[currentSize];
+
+      var c   = '<span class="snip-comment">';  var cc   = '</span>';
+      var sel = '<span class="snip-sel">';       var selc = '</span>';
+      var p   = '<span class="snip-prop">';      var pc   = '</span>';
+      var v   = '<span class="snip-val">';       var vc   = '</span>';
+      var tok = '<span class="snip-tok">';       var tokc = '</span>';
+
+      var out = '';
+      out += c + '/* CDS UI Switch · ' + brand + ' · ' + currentSize + ' · ' + currentValue + ' */' + cc + '\n';
+      out += c + '/* cds-tokens.css must be loaded and data-brand="' + brand + '" set on &lt;html&gt; */' + cc + '\n\n';
+
+      // Track — off
+      out += sel + '.cds-switch-track' + selc + ' {\n';
+      out += '  ' + p + 'background' + pc + ': ' + tok + 'var(--color-switch-off-bg)' + tokc + '; ' + c + '/* ' + t['--color-switch-off-bg'] + ' */' + cc + '\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + v + 'var(--radius-full)' + vc + ';\n';
+      out += '  ' + p + 'transition' + pc + ': ' + v + 'background 250ms ease' + vc + ';\n';
+      out += '}\n\n';
+
+      // Track — on
+      out += sel + '.cds-switch.is-on .cds-switch-track' + selc + ' {\n';
+      out += '  ' + p + 'background' + pc + ': ' + tok + 'var(--color-switch-on-bg)' + tokc + '; ' + c + '/* ' + t['--color-switch-on-bg'] + ' */' + cc + '\n';
+      out += '}\n\n';
+
+      // Thumb
+      out += sel + '.cds-switch-thumb' + selc + ' {\n';
+      out += '  ' + p + 'background' + pc + ': ' + tok + 'var(--color-switch-thumb)' + tokc + '; ' + c + '/* ' + t['--color-switch-thumb'] + ' */' + cc + '\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + v + '50%' + vc + ';\n';
+      out += '  ' + p + 'box-shadow' + pc + ': ' + v + '0 1px 4px rgba(0,0,0,0.18)' + vc + ';\n';
+      out += '  ' + p + 'transition' + pc + ': ' + v + 'transform 250ms ease' + vc + ';\n';
+      out += '}\n\n';
+
+      // Size
+      out += sel + '.cds-switch.size-' + currentSize + ' .cds-switch-track' + selc + ' { ' + p + '/* track: ' + sm.track + ' */' + pc + ' }\n';
+      out += sel + '.cds-switch.size-' + currentSize + ' .cds-switch-thumb' + selc + ' { ' + p + '/* thumb: ' + sm.thumb + ', label: ' + sm.label + ' */' + pc + ' }\n\n';
+
+      // Label row (conditional)
+      if (showLabel) {
+        out += sel + '.cds-switch-row' + selc + ' {\n';
+        out += '  ' + p + 'display' + pc + ': ' + v + 'flex' + vc + ';\n';
+        out += '  ' + p + 'align-items' + pc + ': ' + v + 'center' + vc + ';\n';
+        out += '  ' + p + 'justify-content' + pc + ': ' + v + 'space-between' + vc + ';\n';
+        out += '  ' + p + 'gap' + pc + ': ' + v + '12px' + vc + ';\n';
+        out += '}\n\n';
+        out += sel + '.cds-switch-external-label' + selc + ' {\n';
+        out += '  ' + p + 'font-size' + pc + ': ' + tok + 'var(--font-size-s)' + tokc + '; ' + c + '/* 16px */' + cc + '\n';
+        out += '  ' + p + 'font-weight' + pc + ': ' + tok + 'var(--font-weight-regular)' + tokc + ';\n';
+        out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-text-primary)' + tokc + ';\n';
+        out += '}\n\n';
+      }
+
+      // Focus
+      out += sel + '.cds-switch input:focus-visible + .cds-switch-track' + selc + ' {\n';
+      out += '  ' + p + 'outline' + pc + ': ' + v + '2px solid ' + vc + tok + 'var(--color-focus-ring)' + tokc + '; ' + c + '/* ' + t['--color-focus-ring'] + ' */' + cc + '\n';
+      out += '  ' + p + 'outline-offset' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '}\n\n';
+
+      // Disabled
+      out += sel + '.cds-switch.state-disabled' + selc + ' {\n';
+      out += '  ' + p + 'opacity' + pc + ': ' + v + '0.45' + vc + ';\n';
+      out += '  ' + p + 'cursor' + pc + ': ' + v + 'not-allowed' + vc + ';\n';
+      out += '  ' + p + 'pointer-events' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '}\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function copySnippet() {
+      var plain;
+      var t = tokens[brand];
+      var isOn = currentValue === 'on';
+      var isDisabled = currentState === 'disabled';
+
+      if (snippetTab === 'css') {
+        var sm = sizeMap[currentSize];
+        var lines = [];
+        lines.push('/* CDS UI Switch · ' + brand + ' · ' + currentSize + ' · ' + currentValue + ' */');
+        lines.push('.cds-switch-track {');
+        lines.push('  background: var(--color-switch-off-bg); /* ' + t['--color-switch-off-bg'] + ' */');
+        lines.push('  border-radius: var(--radius-full);');
+        lines.push('  transition: background 250ms ease;');
+        lines.push('}');
+        lines.push('.cds-switch.is-on .cds-switch-track {');
+        lines.push('  background: var(--color-switch-on-bg); /* ' + t['--color-switch-on-bg'] + ' */');
+        lines.push('}');
+        lines.push('.cds-switch-thumb {');
+        lines.push('  background: var(--color-switch-thumb); /* ' + t['--color-switch-thumb'] + ' */');
+        lines.push('  border-radius: 50%;');
+        lines.push('  box-shadow: 0 1px 4px rgba(0,0,0,0.18);');
+        lines.push('  transition: transform 250ms ease;');
+        lines.push('}');
+        lines.push('/* size-' + currentSize + ': track ' + sm.track + ', thumb ' + sm.thumb + ', label ' + sm.label + ' */');
+        if (showLabel) {
+          lines.push('');
+          lines.push('.cds-switch-row {');
+          lines.push('  display: flex;');
+          lines.push('  align-items: center;');
+          lines.push('  justify-content: space-between;');
+          lines.push('  gap: 12px;');
+          lines.push('}');
+          lines.push('.cds-switch-external-label {');
+          lines.push('  font-size: var(--font-size-s); /* 16px */');
+          lines.push('  font-weight: var(--font-weight-regular);');
+          lines.push('  color: var(--color-text-primary);');
+          lines.push('}');
+        }
+        lines.push('.cds-switch input:focus-visible + .cds-switch-track {');
+        lines.push('  outline: 2px solid var(--color-focus-ring); /* ' + t['--color-focus-ring'] + ' */');
+        lines.push('  outline-offset: 2px;');
+        lines.push('}');
+        lines.push('.cds-switch.state-disabled {');
+        lines.push('  opacity: 0.45;');
+        lines.push('  cursor: not-allowed;');
+        lines.push('  pointer-events: none;');
+        lines.push('}');
+        plain = lines.join('\n');
+      } else {
+        var classes = ['cds-switch', 'size-' + currentSize];
+        if (isOn) classes.push('is-on');
+        if (currentState !== 'default') classes.push('state-' + currentState);
+        var lines = [];
+        var indent = showLabel ? '  ' : '';
+        if (showLabel) {
+          lines.push('<div class="cds-switch-row">');
+          lines.push('  <span class="cds-switch-external-label">' + labelText + '</span>');
+        }
+        lines.push(indent + '<label class="' + classes.join(' ') + '">');
+        lines.push(indent + '  <input type="checkbox"' + (isOn ? ' checked' : '') + (isDisabled ? ' disabled' : '') + '>');
+        lines.push(indent + '  <div class="cds-switch-track">');
+        lines.push(indent + '    <span class="cds-switch-label-on">ON</span>');
+        lines.push(indent + '    <span class="cds-switch-label-off">OFF</span>');
+        lines.push(indent + '    <div class="cds-switch-thumb"></div>');
+        lines.push(indent + '  </div>');
+        lines.push(indent + '</label>');
+        if (showLabel) lines.push('</div>');
+        plain = lines.join('\n');
+      }
+
+      navigator.clipboard.writeText(plain).then(function() {
+        var btn = document.getElementById('copy-btn');
+        var lbl = document.getElementById('copy-label');
+        var ico = document.getElementById('copy-icon');
+        btn.classList.add('copied');
+        lbl.textContent = 'Copied!';
+        ico.innerHTML = '<path d="M2.5 8L6 11.5L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          lbl.textContent = 'Copy';
+          ico.innerHTML = '<rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        }, 2000);
+      });
+    }
+
+    function updateAll() {
+      applyClasses();
+      updateTokenReadout();
+      generateSnippet();
+    }
+
+    updateAll();
+  </script>
+</body>
+</html>
