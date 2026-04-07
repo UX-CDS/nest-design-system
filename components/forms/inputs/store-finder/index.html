@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="wilko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Finder — CDS Configurator</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/nsp1wdf.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Primitive tokens ──────────────────────────────────────── */
+    :root {
+      --primitive-white: #ffffff;
+      --primitive-grey-1: #f4f4f4;
+      --primitive-grey-2: #e6e6e6;
+      --primitive-grey-3: #d9d9d9;
+      --primitive-grey-4: #cccccc;
+      --primitive-grey-5: #888888;
+      --primitive-grey-6: #666666;
+      --font-size-s: 16px;
+      --font-size-xs: 14px;
+      --font-size-xxs: 12px;
+      --font-size-tiny: 10px;
+      --radius-xs: 4px;
+      --radius-s: 8px;
+      --radius-m: 12px;
+      --radius-l: 16px;
+      --radius-full: 100px;
+      --stroke-thin: 1px;
+      --stroke-normal: 1.5px;
+      --stroke-thick: 2px;
+      --space-m: 32px;
+      --space-s: 24px;
+      --space-xs: 16px;
+      --space-12: 12px;
+      --space-8: 8px;
+      --space-4: 4px;
+      --motion-duration-base: 250ms;
+      --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Wilko semantic tokens ─────────────────────────────────── */
+    [data-brand="wilko"] {
+      --color-brand-primary: #9d2235;
+      --color-brand-secondary: #fdda24;
+      --color-btn-primary-bg: #23854a;
+      --color-btn-primary-bg-hover: #175e40;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: sofia-pro, sans-serif;
+      --font-feature-settings: "ss04" 1;
+      --font-weight-bold: 700;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 500;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #222222;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #024960;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #222222;
+      --color-success-bg: #e4feec;
+      --color-success-border: #c8f3dc;
+      --color-success-utility: #23854a;
+      --color-error-bg: #ffeef1;
+      --color-error-border: #fcd3da;
+      --color-error-utility: #9d2235;
+      --color-input-focus-glow: #c8f3dc;
+      --color-input-focus-border: #222222;
+    }
+
+    /* ── Homebase semantic tokens ──────────────────────────────── */
+    [data-brand="homebase"] {
+      --color-brand-primary: #1d8634;
+      --color-brand-secondary: #ec7224;
+      --color-btn-primary-bg: #1d8634;
+      --color-btn-primary-bg-hover: #155d25;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: 'Rubik', sans-serif;
+      --font-feature-settings: normal;
+      --font-weight-bold: 600;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 400;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #333333;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #2b347f;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #333333;
+      --color-success-bg: #d4ffd6;
+      --color-success-border: #adf7bd;
+      --color-success-utility: #1d8634;
+      --color-error-bg: #ffeef1;
+      --color-error-border: #ffbebe;
+      --color-error-utility: #b90d0d;
+      --color-input-focus-glow: #c8f3dc;
+      --color-input-focus-border: #333333;
+    }
+
+    [data-brand] {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    [data-brand] button,
+    [data-brand] input,
+    [data-brand] select,
+    [data-brand] textarea,
+    [data-brand] label {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+      background: var(--color-surface-page);
+      min-height: 100vh;
+      padding: var(--space-m);
+    }
+
+    /* ── Page header ───────────────────────────────────────────── */
+    .page-header {
+      margin-bottom: var(--space-s);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    .page-header h1 {
+      font-size: var(--font-size-s);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .page-header p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+      margin-top: 3px;
+    }
+
+    /* ── Brand switcher pill ───────────────────────────────────── */
+    .brand-switcher {
+      display: flex;
+      gap: var(--space-4);
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+    }
+
+    .brand-btn {
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .brand-btn.active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Layout ────────────────────────────────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-s);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Preview canvas ────────────────────────────────────────── */
+    .preview-canvas {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-l);
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-m);
+      position: relative;
+    }
+
+    .preview-label {
+      position: absolute;
+      bottom: var(--space-xs);
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       CDS STORE FINDER COMPONENT
+    ══════════════════════════════════════════════════════════════ */
+
+    .cds-field {
+      width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Label row */
+    .cds-field-label-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .cds-field-label {
+      font-size: 16px;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-grey-7);
+      line-height: 1;
+      cursor: default;
+      flex-shrink: 0;
+    }
+
+    [data-brand="wilko"] .cds-field-label {
+      transform: translateY(-2px);
+    }
+
+    .cds-field-hint {
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-regular);
+      line-height: 1;
+    }
+
+    /* Validation row */
+    .cds-field-validation {
+      display: none;
+      align-items: flex-start;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+
+    .cds-field-validation.visible {
+      display: flex;
+    }
+
+    .cds-field-validation-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .cds-field-validation-text {
+      font-size: 12px;
+      line-height: 1.4;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+    }
+
+    .cds-field-validation.state-error .cds-field-validation-icon,
+    .cds-field-validation.state-error .cds-field-validation-text {
+      color: var(--color-error-utility);
+    }
+
+    /* ── Input + submit button row ─────────────────────────────── */
+    .cds-search-row {
+      display: flex;
+      gap: var(--space-8);
+      align-items: stretch;
+    }
+
+    /* Input wrapper */
+    .cds-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* The actual input */
+    .cds-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 40px 0 14px; /* right pad for clear button */
+      border: 1px solid var(--color-border-input);
+      border-radius: var(--radius-s);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-s);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-primary);
+      outline: none;
+      -webkit-font-smoothing: antialiased;
+      transition:
+        border-color var(--motion-duration-base) var(--motion-ease-standard),
+        border-width var(--motion-duration-base) var(--motion-ease-standard),
+        box-shadow var(--motion-duration-base) var(--motion-ease-standard),
+        padding var(--motion-duration-base) var(--motion-ease-standard);
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .cds-input::placeholder {
+      color: var(--color-text-disabled);
+    }
+
+    /* State: focus */
+    .cds-input-wrap.state-focus .cds-input {
+      border-width: 2px;
+      border-color: var(--color-input-focus-border);
+      padding: 0 39px 0 13px;
+      box-shadow: 0 0 0 4px var(--color-input-focus-glow);
+    }
+
+    /* State: error */
+    .cds-input-wrap.state-error .cds-input {
+      border-width: 2px;
+      border-color: var(--color-error-utility);
+      padding: 0 39px 0 13px;
+    }
+
+    /* Clear button inside input */
+    .cds-input-trailing {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .cds-input-spinner {
+      width: 18px;
+      height: 18px;
+      animation: spin 0.75s linear infinite;
+      color: var(--color-text-secondary);
+      display: none;
+    }
+
+    .cds-input-wrap.state-loading .cds-input-spinner { display: block; }
+
+    .cds-input-clear {
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .cds-input-clear:hover { color: var(--color-text-primary); }
+    .cds-input-clear svg { width: 16px; height: 16px; display: block; }
+
+    .cds-input-wrap.has-value .cds-input-clear { display: flex; }
+    .cds-input-wrap.state-loading .cds-input-clear { display: none; }
+
+    /* ── Submit button (icon-only primary) ─────────────────────── */
+    .cds-search-submit {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-label);
+      border: none;
+      border-radius: var(--radius-s);
+      cursor: pointer;
+      transition:
+        background-color var(--motion-duration-base) var(--motion-ease-standard),
+        outline var(--motion-duration-base) var(--motion-ease-standard);
+      outline: none;
+    }
+
+    .cds-search-submit:hover {
+      background: var(--color-btn-primary-bg-hover);
+    }
+
+    .cds-search-submit:focus-visible {
+      outline: var(--stroke-thick) solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+
+    .cds-search-submit.state-loading {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .cds-search-submit svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Submit button spinner */
+    .cds-submit-spinner {
+      width: 20px;
+      height: 20px;
+      animation: spin 0.75s linear infinite;
+      display: none;
+    }
+
+    .cds-search-submit.state-loading .cds-submit-search-icon { display: none; }
+    .cds-search-submit.state-loading .cds-submit-spinner { display: block; }
+
+    /* ── Use my location link ──────────────────────────────────── */
+    .cds-location-link-row {
+      margin-top: var(--space-8);
+    }
+
+    .cds-location-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: var(--color-neutral-grey-7);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-regular);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      -webkit-font-smoothing: antialiased;
+      transition: color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .cds-location-link:hover {
+      color: var(--color-btn-primary-bg);
+    }
+
+    .cds-location-link svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: currentColor;
+    }
+
+    /* ── Store results list ────────────────────────────────────── */
+    .cds-results-list {
+      margin-top: var(--space-xs);
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-s);
+      overflow: hidden;
+      background: var(--color-surface-page);
+    }
+
+    .cds-results-list.visible { display: flex; }
+
+    .cds-results-header {
+      padding: 10px 14px;
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--color-border-default);
+      background: var(--color-surface-subtle);
+    }
+
+    .cds-store-result {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-8);
+      padding: 14px;
+      border: none;
+      background: var(--color-surface-page);
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      border-bottom: 1px solid var(--color-border-default);
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .cds-store-result:last-child { border-bottom: none; }
+
+    .cds-store-result:hover { background: var(--color-surface-subtle); }
+
+    .cds-store-info { flex: 1; min-width: 0; }
+
+    .cds-store-name {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .cds-store-address {
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      display: block;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .cds-store-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+    }
+
+    .cds-store-distance {
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .cds-store-status {
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+    }
+
+    .cds-store-status.open { color: var(--color-success-utility); }
+    .cds-store-status.closed { color: var(--color-error-utility); }
+
+    .cds-store-chevron {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+    }
+
+    /* ── Configurator panel ────────────────────────────────────── */
+    .configurator {
+      background: var(--color-surface-page);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .config-section {
+      padding: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .config-section:last-child { border-bottom: none; }
+
+    .config-section-title {
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-8);
+    }
+
+    /* State select */
+    .state-select {
+      width: 100%;
+      height: 36px;
+      padding: 0 32px 0 10px;
+      border: var(--stroke-thin) solid var(--color-border-strong);
+      border-radius: var(--radius-s);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      background-color: var(--color-surface-page);
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M15 7.5L10 12.5L5 7.5' stroke='%23666666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 16px;
+      transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .state-select:focus { border-color: var(--color-focus-ring); }
+
+    /* Seg btn */
+    .seg-control {
+      display: flex;
+      gap: 3px;
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: 3px;
+    }
+
+    .seg-btn {
+      flex: 1;
+      padding: 6px 4px;
+      border-radius: calc(var(--radius-s) - 3px);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .seg-btn.active {
+      background: var(--color-surface-page);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-bold);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Toggles */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-row + .toggle-row {
+      border-top: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .toggle-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 11px;
+      background: var(--color-neutral-grey-3);
+      cursor: pointer;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-switch input:checked + .toggle-track { background: var(--color-btn-primary-bg); }
+    .toggle-switch input:checked + .toggle-track::after { transform: translateX(18px); }
+
+    /* Token readout */
+    .token-readout {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: var(--space-8) var(--space-12);
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      font-family: 'Courier New', monospace;
+    }
+
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0;
+      flex-wrap: wrap;
+    }
+
+    .token-name { color: var(--color-text-secondary); }
+    .token-value { color: var(--color-brand-primary); font-weight: 600; }
+
+    /* ── Code snippet panel ────────────────────────────────────── */
+    .snippet-panel {
+      margin-top: var(--space-s);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      background: var(--color-surface-subtle);
+    }
+
+    .snippet-tabs { display: flex; gap: 0; }
+
+    .snippet-tab {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .snippet-tab:hover { color: var(--color-text-primary); }
+
+    .snippet-tab.active {
+      color: var(--color-btn-primary-bg);
+      border-bottom-color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+    }
+
+    .snippet-copy-btn:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn.copied {
+      background: var(--color-btn-primary-bg);
+      border-color: var(--color-btn-primary-bg);
+      color: #fff;
+    }
+
+    .snippet-copy-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    .snippet-body {
+      padding: var(--space-xs);
+      background: var(--color-surface-page);
+      overflow-x: auto;
+    }
+
+    .snippet-pre {
+      margin: 0;
+      font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--color-text-primary);
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .snip-comment  { color: var(--color-text-secondary); }
+    .snip-tag      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-attr     { color: #6066b0; }
+    .snip-string   { color: #2a7a4f; }
+    .snip-class    { color: var(--color-btn-primary-bg); }
+    .snip-prop     { color: #6066b0; }
+    .snip-val      { color: #2a7a4f; }
+    .snip-sel      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-tok      { color: #b07c2a; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div>
+      <h1>Store Finder</h1>
+      <p>Nest Design System • v1.0</p>
+    </div>
+    <div class="brand-switcher">
+      <button class="brand-btn active" id="btn-wilko" onclick="setBrand('wilko')">wilko.com</button>
+      <button class="brand-btn" id="btn-homebase" onclick="setBrand('homebase')">homebase.co.uk</button>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- Preview canvas -->
+    <div class="preview-canvas" id="preview-canvas">
+
+      <div class="cds-field" id="cds-field">
+
+        <!-- Label row -->
+        <div class="cds-field-label-row">
+          <label class="cds-field-label" for="store-input">Find a store</label>
+          <span class="cds-field-hint">(Enter postcode, town or city)</span>
+        </div>
+
+        <!-- Validation row (error) -->
+        <div class="cds-field-validation" id="validation-row">
+          <svg class="cds-field-validation-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10 6.5V10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="10" cy="13" r="0.75" fill="currentColor"/>
+          </svg>
+          <span class="cds-field-validation-text" id="validation-text">No stores found. Try a different location.</span>
+        </div>
+
+        <!-- Search row: input + submit button -->
+        <div class="cds-search-row">
+
+          <div class="cds-input-wrap" id="input-wrap">
+
+            <input
+              class="cds-input"
+              id="store-input"
+              type="text"
+              autocomplete="off"
+              aria-label="Enter postcode, town or city"
+            />
+
+            <!-- Trailing: spinner + clear button -->
+            <div class="cds-input-trailing">
+              <svg class="cds-input-spinner" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-opacity="0.3" stroke-width="2"/>
+                <path d="M10 3a7 7 0 0 1 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <button class="cds-input-clear" id="clear-btn" type="button" aria-label="Clear search" onclick="clearSearch()">
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2532 15.6665C14.6437 16.0571 15.2769 16.0571 15.6674 15.6665C16.058 15.276 16.058 14.6429 15.6674 14.2523L11.4151 10L15.6674 5.74767C16.058 5.35714 16.058 4.72398 15.6674 4.33345C15.2769 3.94293 14.6437 3.94293 14.2532 4.33345L10.0009 8.58579L5.74857 4.33347C5.35804 3.94294 4.72488 3.94294 4.33436 4.33347C3.94383 4.72399 3.94383 5.35716 4.33436 5.74768L8.58668 10L4.33436 14.2523C3.94383 14.6428 3.94383 15.276 4.33436 15.6665C4.72488 16.0571 5.35805 16.0571 5.74857 15.6665L10.0009 11.4142L14.2532 15.6665Z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Submit button — icon-only primary -->
+          <button class="cds-search-submit" id="submit-btn" type="button" aria-label="Search for stores" onclick="handleSubmit()">
+            <!-- Search icon (default) -->
+            <svg class="cds-submit-search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M13 13L16.5 16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <!-- Spinner (loading) -->
+            <svg class="cds-submit-spinner" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-opacity="0.3" stroke-width="2"/>
+              <path d="M10 3a7 7 0 0 1 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+
+        </div>
+
+        <!-- Use my location link -->
+        <div class="cds-location-link-row" id="location-link-row">
+          <button class="cds-location-link" type="button" onclick="handleUseLocation()">
+            <!-- My Location crosshair icon -->
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M10 1.5V3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M10 16.5V18.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M1.5 10H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M16.5 10H18.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Use my location
+          </button>
+        </div>
+
+        <!-- Results list -->
+        <div class="cds-results-list" id="results-list">
+          <div class="cds-results-header" id="results-header">3 stores found</div>
+          <div id="results-items"></div>
+        </div>
+
+      </div>
+
+      <p class="preview-label" id="preview-caption">Default</p>
+    </div>
+
+    <!-- Configurator panel -->
+    <div class="configurator">
+
+      <!-- State -->
+      <div class="config-section">
+        <div class="config-section-title">State</div>
+        <select class="state-select" id="state-select" onchange="setConfigState(this.value)">
+          <option value="default">Default — empty</option>
+          <option value="focus">Focus — typing</option>
+          <option value="loading">Loading — searching…</option>
+          <option value="results">Results — stores found</option>
+          <option value="no-results">No results — not found</option>
+          <option value="error">Error — location denied</option>
+        </select>
+      </div>
+
+      <!-- Result count -->
+      <div class="config-section" id="result-count-section" style="display:none;">
+        <div class="config-section-title">Number of results</div>
+        <div class="seg-control">
+          <button class="seg-btn active" id="rc-2" onclick="setResultCount(2)">2</button>
+          <button class="seg-btn" id="rc-3" onclick="setResultCount(3)">3</button>
+          <button class="seg-btn" id="rc-5" onclick="setResultCount(5)">5</button>
+        </div>
+      </div>
+
+      <!-- Toggles -->
+      <div class="config-section">
+        <div class="config-section-title">Options</div>
+        <div class="toggle-row">
+          <span class="toggle-label">Show location link</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-location" checked onchange="toggleLocationLink(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Token readout -->
+      <div class="config-section">
+        <div class="config-section-title">Active tokens</div>
+        <div class="token-readout" id="token-readout"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Code snippet panel -->
+  <div class="snippet-panel">
+    <div class="snippet-header">
+      <div class="snippet-tabs">
+        <button class="snippet-tab active" id="tab-html" onclick="setSnippetTab('html')">HTML</button>
+        <button class="snippet-tab" id="tab-css" onclick="setSnippetTab('css')">CSS</button>
+        <button class="snippet-tab" id="tab-js" onclick="setSnippetTab('js')">JS</button>
+      </div>
+      <button class="snippet-copy-btn" id="copy-btn" onclick="copySnippet()">
+        <svg id="copy-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+    <div class="snippet-body">
+      <pre class="snippet-pre" id="snippet-output"></pre>
+    </div>
+  </div>
+
+  <script>
+    /* ══════════════════════════════════════════════════════════════
+       STATE
+    ══════════════════════════════════════════════════════════════ */
+    var brand = 'wilko';
+    var configState = 'default';
+    var resultCount = 2;
+    var showLocationLink = true;
+    var snippetTab = 'html';
+    var isInteractive = true;
+
+    /* Simulated store data keyed by search term */
+    var storeData = {
+      'SW1': [
+        { name: 'Victoria', address: '55 Victoria Street, London SW1H 0EU', distance: '0.3 miles', open: true,  hours: 'Open until 8pm' },
+        { name: 'Pimlico',  address: '12 Lupus Street, London SW1V 3EH',    distance: '0.8 miles', open: true,  hours: 'Open until 6pm' },
+        { name: 'Chelsea',  address: '340 Kings Road, London SW3 5UR',       distance: '1.2 miles', open: false, hours: 'Opens 9am tomorrow' },
+        { name: 'Fulham',   address: '226 Fulham Road, London SW10 9NB',     distance: '2.1 miles', open: true,  hours: 'Open until 7pm' },
+        { name: 'Vauxhall', address: '1 Wandsworth Road, London SW8 2JB',   distance: '2.5 miles', open: false, hours: 'Opens 9am tomorrow' },
+      ],
+      'B1': [
+        { name: 'Birmingham City Centre', address: '35 Corporation Street, Birmingham B2 4LS', distance: '0.4 miles', open: true,  hours: 'Open until 8pm' },
+        { name: 'Bullring',               address: 'Bullring Shopping Centre, Birmingham B5 4BE', distance: '0.7 miles', open: true,  hours: 'Open until 9pm' },
+        { name: 'Erdington',              address: '143 High Street, Erdington B23 6SS',          distance: '4.2 miles', open: false, hours: 'Opens 9am tomorrow' },
+        { name: 'Solihull',               address: '14 Poplar Road, Solihull B91 3AB',            distance: '6.1 miles', open: true,  hours: 'Open until 5.30pm' },
+        { name: 'Wolverhampton',          address: '72 Dudley Street, Wolverhampton WV1 3ER',     distance: '12.3 miles', open: true, hours: 'Open until 6pm' },
+      ],
+      'M1': [
+        { name: 'Manchester City Centre', address: '45 Market Street, Manchester M1 1WR',   distance: '0.2 miles', open: true,  hours: 'Open until 8pm' },
+        { name: 'Salford',                address: '2 Regent Road, Salford M5 4QH',          distance: '1.6 miles', open: true,  hours: 'Open until 6pm' },
+        { name: 'Stockport',              address: '15 Merseyway, Stockport SK1 1PL',        distance: '5.4 miles', open: false, hours: 'Opens 9am tomorrow' },
+        { name: 'Oldham',                 address: '23 High Street, Oldham OL1 3AQ',         distance: '6.8 miles', open: true,  hours: 'Open until 5pm' },
+        { name: 'Bolton',                 address: '4 Newport Street, Bolton BL1 1PZ',       distance: '11.1 miles', open: true, hours: 'Open until 5.30pm' },
+      ],
+      'default': [
+        { name: 'City Centre',  address: '12 High Street, Leeds LS1 4QE',         distance: '0.5 miles', open: true,  hours: 'Open until 8pm' },
+        { name: 'Kirkstall',    address: 'Kirkstall Retail Park, Leeds LS5 3BF',   distance: '2.3 miles', open: true,  hours: 'Open until 7pm' },
+        { name: 'Morley',       address: '6 Market Place, Morley LS27 8BN',        distance: '4.7 miles', open: false, hours: 'Opens 9am tomorrow' },
+        { name: 'Garforth',     address: '2 Main Street, Garforth LS25 1AF',       distance: '7.2 miles', open: true,  hours: 'Open until 6pm' },
+        { name: 'Guiseley',     address: '14 Oxford Road, Guiseley LS20 8AH',      distance: '9.4 miles', open: true,  hours: 'Open until 5.30pm' },
+      ]
+    };
+
+    var tokens = {
+      wilko: {
+        '--color-btn-primary-bg': '#23854a',
+        '--color-btn-primary-bg-hover': '#175e40',
+        '--color-border-input': '#888888',
+        '--color-input-focus-border': '#222222',
+        '--color-input-focus-glow': '#c8f3dc',
+        '--color-error-utility': '#9d2235',
+        '--font-family': 'sofia-pro'
+      },
+      homebase: {
+        '--color-btn-primary-bg': '#1d8634',
+        '--color-btn-primary-bg-hover': '#155d25',
+        '--color-border-input': '#888888',
+        '--color-input-focus-border': '#333333',
+        '--color-input-focus-glow': '#c8f3dc',
+        '--color-error-utility': '#b90d0d',
+        '--font-family': 'Rubik'
+      }
+    };
+
+    /* ══════════════════════════════════════════════════════════════
+       HELPERS
+    ══════════════════════════════════════════════════════════════ */
+    function setWrapClass(cls) {
+      var wrap = document.getElementById('input-wrap');
+      var hasValue = document.getElementById('store-input').value.trim().length > 0;
+      wrap.className = 'cds-input-wrap' + (cls ? ' ' + cls : '') + (hasValue ? ' has-value' : '');
+    }
+
+    function updateHasValue(has) {
+      var wrap = document.getElementById('input-wrap');
+      wrap.classList.toggle('has-value', has);
+    }
+
+    function hideError() {
+      var row = document.getElementById('validation-row');
+      row.classList.remove('visible', 'state-error');
+    }
+
+    function showError(msg) {
+      var row = document.getElementById('validation-row');
+      var txt = document.getElementById('validation-text');
+      txt.textContent = msg || 'No stores found. Try a different location.';
+      row.className = 'cds-field-validation visible state-error';
+    }
+
+    function hideResults() {
+      document.getElementById('results-list').classList.remove('visible');
+    }
+
+    function updateCaption(txt) {
+      document.getElementById('preview-caption').textContent = txt;
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       LIVE INTERACTION
+    ══════════════════════════════════════════════════════════════ */
+    var searchTimer = null;
+
+    function initInputEvents() {
+      var input = document.getElementById('store-input');
+
+      input.addEventListener('input', function() {
+        if (!isInteractive) return;
+        var val = input.value.trim();
+        setWrapClass('state-focus');
+        updateHasValue(val.length > 0);
+        hideError();
+        hideResults();
+        updateCaption('Focus — typing');
+      });
+
+      input.addEventListener('focus', function() {
+        if (!isInteractive) return;
+        if (!input.value.trim()) setWrapClass('state-focus');
+        updateCaption('Focus');
+      });
+
+      input.addEventListener('blur', function() {
+        if (!isInteractive) return;
+        setTimeout(function() {
+          var val = document.getElementById('store-input').value.trim();
+          if (!val) setWrapClass('');
+        }, 150);
+      });
+
+      input.addEventListener('keydown', function(e) {
+        if (!isInteractive) return;
+        if (e.key === 'Escape') { clearSearch(); }
+        if (e.key === 'Enter') { handleSubmit(); }
+      });
+    }
+
+    function handleSubmit() {
+      if (!isInteractive) return;
+      var val = document.getElementById('store-input').value.trim();
+      if (!val) return;
+
+      /* Loading */
+      setWrapClass('state-loading');
+      document.getElementById('submit-btn').classList.add('state-loading');
+      hideError();
+      hideResults();
+      updateCaption('Loading — searching…');
+
+      setTimeout(function() {
+        document.getElementById('submit-btn').classList.remove('state-loading');
+        doSearch(val);
+      }, 800);
+    }
+
+    function doSearch(val) {
+      var clean = val.toUpperCase().replace(/\s/g, '');
+      var key = Object.keys(storeData).find(function(k) {
+        return k !== 'default' && clean.startsWith(k);
+      });
+      var stores = storeData[key] || (val.length >= 3 ? storeData['default'] : null);
+
+      if (!stores) {
+        setWrapClass('state-error has-value');
+        showError('No stores found. Try a different location.');
+        updateCaption('No results');
+      } else {
+        setWrapClass('has-value');
+        hideError();
+        renderResults(stores.slice(0, resultCount));
+        updateCaption('Results — ' + Math.min(resultCount, stores.length) + ' stores found');
+      }
+    }
+
+    function renderResults(stores) {
+      var header = document.getElementById('results-header');
+      var items  = document.getElementById('results-items');
+      header.textContent = stores.length + ' store' + (stores.length !== 1 ? 's' : '') + ' found';
+
+      var html = '';
+      stores.forEach(function(s) {
+        var statusClass = s.open ? 'open' : 'closed';
+        var statusText  = s.open ? 'Open · ' + s.hours : s.hours;
+        html += '<button class="cds-store-result" type="button">';
+        html += '<div class="cds-store-info">';
+        html += '<span class="cds-store-name">' + escHtml(s.name) + '</span>';
+        html += '<span class="cds-store-address">' + escHtml(s.address) + '</span>';
+        html += '<div class="cds-store-meta">';
+        html += '<span class="cds-store-distance">' + escHtml(s.distance) + '</span>';
+        html += '<span class="cds-store-status ' + statusClass + '">' + escHtml(statusText) + '</span>';
+        html += '</div></div>';
+        html += '<svg class="cds-store-chevron" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        html += '</button>';
+      });
+      items.innerHTML = html;
+      document.getElementById('results-list').classList.add('visible');
+    }
+
+    function clearSearch() {
+      var input = document.getElementById('store-input');
+      input.value = '';
+      setWrapClass('');
+      hideError();
+      hideResults();
+      updateCaption('Default');
+      input.focus();
+      if (!isInteractive) {
+        setConfigState('default');
+        document.getElementById('state-select').value = 'default';
+      }
+    }
+
+    function handleUseLocation() {
+      if (!isInteractive) return;
+      if (!navigator.geolocation) {
+        showError('Location services are not available in this browser.');
+        return;
+      }
+      setWrapClass('state-loading');
+      document.getElementById('store-input').value = 'My location';
+      updateHasValue(true);
+      document.getElementById('submit-btn').classList.add('state-loading');
+      hideError();
+      hideResults();
+      updateCaption('Loading — using location…');
+
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          document.getElementById('submit-btn').classList.remove('state-loading');
+          /* Use default result set as a stand-in for real geo results */
+          setWrapClass('has-value');
+          renderResults(storeData['default'].slice(0, resultCount));
+          updateCaption('Results — location used');
+        },
+        function(err) {
+          document.getElementById('submit-btn').classList.remove('state-loading');
+          setWrapClass('state-error has-value');
+          showError('Location access was denied. Please enter your postcode or town manually.');
+          updateCaption('Error — location denied');
+        }
+      );
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       CONFIGURATOR
+    ══════════════════════════════════════════════════════════════ */
+    function setBrand(b) {
+      brand = b;
+      document.documentElement.setAttribute('data-brand', b);
+      document.getElementById('btn-wilko').classList.toggle('active', b === 'wilko');
+      document.getElementById('btn-homebase').classList.toggle('active', b === 'homebase');
+      updateTokenReadout();
+      generateSnippet();
+    }
+
+    function setConfigState(s) {
+      configState = s;
+      isInteractive = false;
+      hideError();
+      hideResults();
+      var input = document.getElementById('store-input');
+      var submitBtn = document.getElementById('submit-btn');
+      submitBtn.classList.remove('state-loading');
+      document.getElementById('result-count-section').style.display = s === 'results' ? '' : 'none';
+
+      switch (s) {
+        case 'default':
+          input.value = '';
+          setWrapClass('');
+          updateCaption('Default');
+          isInteractive = true;
+          break;
+        case 'focus':
+          input.value = 'Oxfo';
+          setWrapClass('state-focus');
+          updateHasValue(true);
+          updateCaption('Focus — typing');
+          isInteractive = true;
+          break;
+        case 'loading':
+          input.value = 'Oxford';
+          setWrapClass('state-loading');
+          updateHasValue(true);
+          submitBtn.classList.add('state-loading');
+          updateCaption('Loading — searching…');
+          break;
+        case 'results':
+          input.value = 'Oxford';
+          setWrapClass('has-value');
+          updateHasValue(true);
+          renderResults(storeData['default'].slice(0, resultCount));
+          updateCaption('Results — stores found');
+          isInteractive = true;
+          break;
+        case 'no-results':
+          input.value = 'ZZ99 9ZZ';
+          setWrapClass('state-error has-value');
+          updateHasValue(true);
+          showError('No stores found. Try a different location.');
+          updateCaption('No results');
+          isInteractive = true;
+          break;
+        case 'error':
+          input.value = 'My location';
+          setWrapClass('state-error has-value');
+          updateHasValue(true);
+          showError('Location access was denied. Please enter your postcode or town manually.');
+          updateCaption('Error — location denied');
+          isInteractive = true;
+          break;
+      }
+      updateTokenReadout();
+      generateSnippet();
+    }
+
+    function setResultCount(n) {
+      resultCount = n;
+      [2, 3, 5].forEach(function(v) {
+        document.getElementById('rc-' + v).classList.toggle('active', v === n);
+      });
+      if (configState === 'results') {
+        renderResults(storeData['default'].slice(0, n));
+        updateCaption('Results — ' + n + ' stores found');
+      }
+      generateSnippet();
+    }
+
+    function toggleLocationLink(show) {
+      showLocationLink = show;
+      document.getElementById('location-link-row').style.display = show ? '' : 'none';
+      generateSnippet();
+    }
+
+    /* ── Token readout ─────────────────────────────────────────── */
+    function updateTokenReadout() {
+      var t = tokens[brand];
+      var relevant = {
+        '--color-btn-primary-bg': t['--color-btn-primary-bg'],
+        '--color-border-input': t['--color-border-input'],
+        '--color-input-focus-border': t['--color-input-focus-border'],
+        '--color-input-focus-glow': t['--color-input-focus-glow'],
+        '--font-family': t['--font-family']
+      };
+      if (configState === 'no-results' || configState === 'error') {
+        relevant['--color-error-utility'] = t['--color-error-utility'];
+      }
+      var html = '';
+      Object.keys(relevant).forEach(function(k) {
+        html += '<div class="token-row"><span class="token-name">' + k + '</span><span class="token-value">' + relevant[k] + '</span></div>';
+      });
+      document.getElementById('token-readout').innerHTML = html;
+    }
+
+    /* ── Snippet tabs ──────────────────────────────────────────── */
+    function setSnippetTab(tab) {
+      snippetTab = tab;
+      ['html','css','js'].forEach(function(t) {
+        document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+      });
+      generateSnippet();
+    }
+
+    function generateSnippet() {
+      if (snippetTab === 'css') { generateCssSnippet(); return; }
+      if (snippetTab === 'js')  { generateJsSnippet();  return; }
+      generateHtmlSnippet();
+    }
+
+    function generateHtmlSnippet() {
+      var t  = '<span class="snip-tag">';   var tc  = '</span>';
+      var a  = '<span class="snip-attr">';  var ac  = '</span>';
+      var s  = '<span class="snip-string">';var sc  = '</span>';
+      var c  = '<span class="snip-comment">';var cc = '</span>';
+      var cl = '<span class="snip-class">'; var clc = '</span>';
+
+      var out = '';
+      out += c + '&lt;!-- CDS Store Finder · ' + brand + ' · ' + configState + ' --&gt;' + cc + '\n';
+      out += c + '&lt;!-- Requires: &lt;html data-brand="' + brand + '"&gt; + cds-tokens.css --&gt;' + cc + '\n\n';
+
+      out += t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + 'cds-field' + clc + '"' + sc + t + '&gt;' + tc + '\n\n';
+
+      out += '  ' + c + '&lt;!-- Label --&gt;' + cc + '\n';
+      out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-label-row"' + sc + t + '&gt;' + tc + '\n';
+      out += '    ' + t + '&lt;label' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-label"' + sc + ' ' + a + 'for' + ac + '=' + s + '"store-input"' + sc + t + '&gt;' + tc + 'Find a store' + t + '&lt;/label&gt;' + tc + '\n';
+      out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+
+      if (configState === 'no-results' || configState === 'error') {
+        var errMsg = configState === 'error'
+          ? 'Location access was denied. Please enter your postcode or town manually.'
+          : 'No stores found. Try a different location.';
+        out += '  ' + c + '&lt;!-- Validation error --&gt;' + cc + '\n';
+        out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + 'cds-field-validation visible state-error' + clc + '"' + sc + t + '&gt;' + tc + '\n';
+        out += '    &lt;svg class="cds-field-validation-icon" ...&gt;&lt;/svg&gt;\n';
+        out += '    ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-validation-text"' + sc + t + '&gt;' + tc + errMsg + t + '&lt;/span&gt;' + tc + '\n';
+        out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+      }
+
+      out += '  ' + c + '&lt;!-- Search row --&gt;' + cc + '\n';
+      out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-search-row"' + sc + t + '&gt;' + tc + '\n\n';
+
+      var wrapCls = 'cds-input-wrap';
+      if (configState === 'focus') wrapCls += ' state-focus';
+      if (configState === 'loading') wrapCls += ' state-loading has-value';
+      if (configState === 'no-results' || configState === 'error') wrapCls += ' state-error has-value';
+      if (configState === 'results') wrapCls += ' has-value';
+
+      out += '    ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + wrapCls + clc + '"' + sc + t + '&gt;' + tc + '\n';
+      out += '      ' + t + '&lt;input' + tc + '\n';
+      out += '        ' + a + 'class' + ac + '=' + s + '"cds-input"' + sc + '\n';
+      out += '        ' + a + 'id' + ac + '=' + s + '"store-input"' + sc + '\n';
+      out += '        ' + a + 'type' + ac + '=' + s + '"text"' + sc + '\n';
+      out += '        ' + a + 'placeholder' + ac + '=' + s + '"Enter postcode, town or city"' + sc + '\n';
+      out += '        ' + a + 'aria-label' + ac + '=' + s + '"Enter postcode, town or city"' + sc + '\n';
+      out += '      ' + t + '/&gt;' + tc + '\n';
+      out += '      ' + c + '&lt;!-- Clear button + spinner --&gt;' + cc + '\n';
+      out += '      &lt;div class="cds-input-trailing"&gt;...&lt;/div&gt;\n';
+      out += '    ' + t + '&lt;/div&gt;' + tc + '\n\n';
+
+      var submitCls = 'cds-search-submit' + (configState === 'loading' ? ' state-loading' : '');
+      out += '    ' + c + '&lt;!-- Submit button --&gt;' + cc + '\n';
+      out += '    ' + t + '&lt;button' + tc;
+      out += ' ' + a + 'class' + ac + '=' + s + '"' + cl + submitCls + clc + '"' + sc;
+      out += ' ' + a + 'type' + ac + '=' + s + '"button"' + sc;
+      out += ' ' + a + 'aria-label' + ac + '=' + s + '"Search for stores"' + sc;
+      out += t + '&gt;' + tc + '\n';
+      out += '      &lt;svg class="cds-submit-search-icon" ...&gt;&lt;/svg&gt;\n';
+      out += '      &lt;svg class="cds-submit-spinner" ...&gt;&lt;/svg&gt;\n';
+      out += '    ' + t + '&lt;/button&gt;' + tc + '\n\n';
+      out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+
+      if (showLocationLink) {
+        out += '  ' + c + '&lt;!-- Use my location --&gt;' + cc + '\n';
+        out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-location-link-row"' + sc + t + '&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;button' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-location-link"' + sc + ' ' + a + 'type' + ac + '=' + s + '"button"' + sc + t + '&gt;' + tc + '\n';
+        out += '      &lt;svg ...&gt;&lt;/svg&gt;\n';
+        out += '      Use my location\n';
+        out += '    ' + t + '&lt;/button&gt;' + tc + '\n';
+        out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+      }
+
+      if (configState === 'results') {
+        out += '  ' + c + '&lt;!-- Results list --&gt;' + cc + '\n';
+        out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + 'cds-results-list visible' + clc + '"' + sc + t + '&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-results-header"' + sc + t + '&gt;' + tc + resultCount + ' stores found' + t + '&lt;/div&gt;' + tc + '\n';
+        out += '    ' + c + '&lt;!-- .cds-store-result × ' + resultCount + ' --&gt;' + cc + '\n';
+        out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+      }
+
+      out += t + '&lt;/div&gt;' + tc;
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateCssSnippet() {
+      var c   = '<span class="snip-comment">'; var cc   = '</span>';
+      var sel = '<span class="snip-sel">';      var selc = '</span>';
+      var p   = '<span class="snip-prop">';     var pc   = '</span>';
+      var v   = '<span class="snip-val">';      var vc   = '</span>';
+      var tok = '<span class="snip-tok">';      var tokc = '</span>';
+      var t   = tokens[brand];
+
+      var out = '';
+      out += c + '/* CDS Store Finder · ' + brand + ' */' + cc + '\n\n';
+
+      out += sel + '.cds-search-row' + selc + ' {\n';
+      out += '  ' + p + 'display' + pc + ': ' + v + 'flex' + vc + ';\n';
+      out += '  ' + p + 'gap' + pc + ': ' + v + '8px' + vc + ';\n';
+      out += '  ' + p + 'align-items' + pc + ': ' + v + 'stretch' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input' + selc + ' {\n';
+      out += '  ' + p + 'width' + pc + ': ' + v + '100%' + vc + ';\n';
+      out += '  ' + p + 'height' + pc + ': ' + v + '48px' + vc + ';\n';
+      out += '  ' + p + 'padding' + pc + ': ' + v + '0 40px 0 14px' + vc + ';\n';
+      out += '  ' + p + 'border' + pc + ': ' + v + '1px solid ' + vc + tok + 'var(--color-border-input)' + tokc + '; ' + c + '/* ' + t['--color-border-input'] + ' */' + cc + '\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + tok + 'var(--radius-s)' + tokc + ';\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + tok + 'var(--font-size-s)' + tokc + ';\n';
+      out += '  ' + p + 'outline' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-focus .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-input-focus-border)' + tokc + '; ' + c + '/* ' + t['--color-input-focus-border'] + ' */' + cc + '\n';
+      out += '  ' + p + 'box-shadow' + pc + ': ' + v + '0 0 0 4px ' + vc + tok + 'var(--color-input-focus-glow)' + tokc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-error .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-error-utility)' + tokc + '; ' + c + '/* ' + t['--color-error-utility'] + ' */' + cc + '\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-search-submit' + selc + ' {\n';
+      out += '  ' + p + 'width' + pc + ': ' + v + '48px' + vc + ';\n';
+      out += '  ' + p + 'height' + pc + ': ' + v + '48px' + vc + ';\n';
+      out += '  ' + p + 'display' + pc + ': ' + v + 'flex' + vc + ';\n';
+      out += '  ' + p + 'align-items' + pc + ': ' + v + 'center' + vc + ';\n';
+      out += '  ' + p + 'justify-content' + pc + ': ' + v + 'center' + vc + ';\n';
+      out += '  ' + p + 'background' + pc + ': ' + tok + 'var(--color-btn-primary-bg)' + tokc + '; ' + c + '/* ' + t['--color-btn-primary-bg'] + ' */' + cc + '\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-btn-primary-label)' + tokc + ';\n';
+      out += '  ' + p + 'border' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + tok + 'var(--radius-s)' + tokc + ';\n';
+      out += '  ' + p + 'cursor' + pc + ': ' + v + 'pointer' + vc + ';\n';
+      out += '  ' + p + 'flex-shrink' + pc + ': ' + v + '0' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-search-submit:hover' + selc + ' {\n';
+      out += '  ' + p + 'background' + pc + ': ' + tok + 'var(--color-btn-primary-bg-hover)' + tokc + '; ' + c + '/* ' + t['--color-btn-primary-bg-hover'] + ' */' + cc + '\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-location-link' + selc + ' {\n';
+      out += '  ' + p + 'display' + pc + ': ' + v + 'inline-flex' + vc + ';\n';
+      out += '  ' + p + 'align-items' + pc + ': ' + v + 'center' + vc + ';\n';
+      out += '  ' + p + 'gap' + pc + ': ' + v + '6px' + vc + ';\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-neutral-grey-7)' + tokc + ';\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + tok + 'var(--font-size-xs)' + tokc + ';\n';
+      out += '  ' + p + 'text-decoration' + pc + ': ' + v + 'underline' + vc + ';\n';
+      out += '  ' + p + 'text-underline-offset' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'background' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '  ' + p + 'border' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '  ' + p + 'cursor' + pc + ': ' + v + 'pointer' + vc + ';\n';
+      out += '}\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateJsSnippet() {
+      var c  = '<span class="snip-comment">'; var cc  = '</span>';
+      var kw = '<span class="snip-attr">';    var kwc = '</span>';
+      var fn = '<span class="snip-class">';   var fnc = '</span>';
+      var s  = '<span class="snip-string">';  var sc  = '</span>';
+
+      var out = '';
+      out += c + '/* CDS Store Finder — core interaction */' + cc + '\n\n';
+
+      out += c + '/* Submit on button click or Enter key */' + cc + '\n';
+      out += fn + 'function' + fnc + ' handleSubmit() {\n';
+      out += '  ' + kw + 'var' + kwc + ' val = document.getElementById(' + s + '"store-input"' + sc + ').value.trim();\n';
+      out += '  ' + kw + 'if' + kwc + ' (!val) ' + kw + 'return' + kwc + ';\n\n';
+      out += '  setLoadingState();\n\n';
+      out += '  ' + c + '/* Replace with your real store finder API call */' + cc + '\n';
+      out += '  fetch(' + s + '`/api/stores?q=${encodeURIComponent(val)}`' + sc + ')\n';
+      out += '    .then(' + kw + 'function' + kwc + '(r) { ' + kw + 'return' + kwc + ' r.json(); })\n';
+      out += '    .then(' + kw + 'function' + kwc + '(data) {\n';
+      out += '      ' + kw + 'if' + kwc + ' (!data.stores || data.stores.length === 0) {\n';
+      out += '        showNoResults();\n';
+      out += '      } ' + kw + 'else' + kwc + ' {\n';
+      out += '        renderResults(data.stores);\n';
+      out += '      }\n';
+      out += '    })\n';
+      out += '    .' + fn + 'catch' + fnc + '(' + kw + 'function' + kwc + '() { showError(); });\n';
+      out += '}\n\n';
+
+      out += c + '/* Use geolocation */' + cc + '\n';
+      out += fn + 'function' + fnc + ' handleUseLocation() {\n';
+      out += '  ' + kw + 'if' + kwc + ' (!navigator.geolocation) ' + kw + 'return' + kwc + ';\n\n';
+      out += '  setLoadingState();\n\n';
+      out += '  navigator.geolocation.getCurrentPosition(\n';
+      out += '    ' + kw + 'function' + kwc + '(pos) {\n';
+      out += '      ' + kw + 'var' + kwc + ' lat = pos.coords.latitude;\n';
+      out += '      ' + kw + 'var' + kwc + ' lng = pos.coords.longitude;\n';
+      out += '      fetch(' + s + '`/api/stores?lat=${lat}&lng=${lng}`' + sc + ')\n';
+      out += '        .then(' + kw + 'function' + kwc + '(r) { ' + kw + 'return' + kwc + ' r.json(); })\n';
+      out += '        .then(renderResults)\n';
+      out += '        .' + fn + 'catch' + fnc + '(showError);\n';
+      out += '    },\n';
+      out += '    ' + kw + 'function' + kwc + '() {\n';
+      out += '      showError(' + s + '"Location access was denied. Please enter your postcode or town manually."' + sc + ');\n';
+      out += '    }\n';
+      out += '  );\n';
+      out += '}\n\n';
+
+      out += c + '/* Render results into .cds-results-list */' + cc + '\n';
+      out += fn + 'function' + fnc + ' renderResults(stores) {\n';
+      out += '  ' + kw + 'var' + kwc + ' html = stores.map(' + kw + 'function' + kwc + '(s) {\n';
+      out += '    ' + kw + 'return' + kwc + ' ' + s + '`&lt;button class="cds-store-result"&gt;' + sc + '\n';
+      out += '           + ' + s + '`&lt;span class="cds-store-name"&gt;${s.name}&lt;/span&gt;...' + sc + '\n';
+      out += '           + ' + s + '`&lt;/button&gt;`' + sc + ';\n';
+      out += '  }).join(' + s + '""' + sc + ');\n';
+      out += '  document.getElementById(' + s + '"results-items"' + sc + ').innerHTML = html;\n';
+      out += '  document.querySelector(' + s + '".cds-results-list"' + sc + ').classList.add(' + s + '"visible"' + sc + ');\n';
+      out += '}\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    /* ── Copy ──────────────────────────────────────────────────── */
+    function copySnippet() {
+      var text = document.getElementById('snippet-output').innerText || document.getElementById('snippet-output').textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        var btn = document.getElementById('copy-btn');
+        var lbl = document.getElementById('copy-label');
+        var ico = document.getElementById('copy-icon');
+        btn.classList.add('copied');
+        lbl.textContent = 'Copied!';
+        ico.innerHTML = '<path d="M2.5 8L6 11.5L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          lbl.textContent = 'Copy';
+          ico.innerHTML = '<rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        }, 2000);
+      });
+    }
+
+    /* ── Init ──────────────────────────────────────────────────── */
+    initInputEvents();
+    updateTokenReadout();
+    generateSnippet();
+  </script>
+
+</body>
+</html>

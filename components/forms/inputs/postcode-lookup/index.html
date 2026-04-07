@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="wilko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Postcode Lookup — CDS Configurator</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/nsp1wdf.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Primitive tokens ──────────────────────────────────────── */
+    :root {
+      --primitive-white: #ffffff;
+      --primitive-grey-1: #f4f4f4;
+      --primitive-grey-2: #e6e6e6;
+      --primitive-grey-3: #d9d9d9;
+      --primitive-grey-4: #cccccc;
+      --primitive-grey-5: #888888;
+      --primitive-grey-6: #666666;
+      --font-size-s: 16px;
+      --font-size-xs: 14px;
+      --font-size-xxs: 12px;
+      --font-size-tiny: 10px;
+      --radius-xs: 4px;
+      --radius-s: 8px;
+      --radius-m: 12px;
+      --radius-l: 16px;
+      --radius-full: 100px;
+      --stroke-thin: 1px;
+      --stroke-normal: 1.5px;
+      --stroke-thick: 2px;
+      --space-m: 32px;
+      --space-s: 24px;
+      --space-xs: 16px;
+      --space-12: 12px;
+      --space-8: 8px;
+      --space-4: 4px;
+      --motion-duration-base: 250ms;
+      --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Wilko semantic tokens ─────────────────────────────────── */
+    [data-brand="wilko"] {
+      --color-brand-primary: #9d2235;
+      --color-brand-secondary: #fdda24;
+      --color-btn-primary-bg: #23854a;
+      --color-btn-primary-bg-hover: #175e40;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: sofia-pro, sans-serif;
+      --font-feature-settings: "ss04" 1;
+      --font-weight-bold: 700;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 500;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #222222;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #024960;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #222222;
+      --color-success-bg: #e4feec;
+      --color-success-border: #c8f3dc;
+      --color-success-utility: #23854a;
+      --color-error-bg: #ffeef1;
+      --color-error-border: #fcd3da;
+      --color-error-utility: #9d2235;
+      --color-input-focus-glow: #c8f3dc;
+      --color-input-focus-border: #222222;
+    }
+
+    /* ── Homebase semantic tokens ──────────────────────────────── */
+    [data-brand="homebase"] {
+      --color-brand-primary: #1d8634;
+      --color-brand-secondary: #ec7224;
+      --color-btn-primary-bg: #1d8634;
+      --color-btn-primary-bg-hover: #155d25;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: 'Rubik', sans-serif;
+      --font-feature-settings: normal;
+      --font-weight-bold: 600;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 400;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #333333;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #2b347f;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #333333;
+      --color-success-bg: #d4ffd6;
+      --color-success-border: #adf7bd;
+      --color-success-utility: #1d8634;
+      --color-error-bg: #ffeef1;
+      --color-error-border: #ffbebe;
+      --color-error-utility: #b90d0d;
+      --color-input-focus-glow: #c8f3dc;
+      --color-input-focus-border: #333333;
+    }
+
+    [data-brand] {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    [data-brand] button,
+    [data-brand] input,
+    [data-brand] select,
+    [data-brand] textarea,
+    [data-brand] label {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+      background: var(--color-surface-page);
+      min-height: 100vh;
+      padding: var(--space-m);
+    }
+
+    /* ── Page header ───────────────────────────────────────────── */
+    .page-header {
+      margin-bottom: var(--space-s);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    .page-header h1 {
+      font-size: var(--font-size-s);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .page-header p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+      margin-top: 3px;
+    }
+
+    /* ── Brand switcher pill ───────────────────────────────────── */
+    .brand-switcher {
+      display: flex;
+      gap: var(--space-4);
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+    }
+
+    .brand-btn {
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .brand-btn.active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Layout ────────────────────────────────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-s);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Preview canvas ────────────────────────────────────────── */
+    .preview-canvas {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-l);
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-m);
+      position: relative;
+    }
+
+    .preview-label {
+      position: absolute;
+      bottom: 48px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       CDS POSTCODE LOOKUP COMPONENT
+    ══════════════════════════════════════════════════════════════ */
+
+    .cds-field {
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Label row */
+    .cds-field-label-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .cds-field-label {
+      font-size: 16px;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-neutral-grey-7);
+      line-height: 1;
+      cursor: default;
+    }
+
+    [data-brand="wilko"] .cds-field-label {
+      transform: translateY(-2px);
+    }
+
+    /* Validation row */
+    .cds-field-validation {
+      display: none;
+      align-items: flex-start;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+
+    .cds-field-validation.visible {
+      display: flex;
+    }
+
+    .cds-field-validation-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .cds-field-validation-text {
+      font-size: 12px;
+      line-height: 1.4;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+    }
+
+    .cds-field-validation.state-error .cds-field-validation-icon,
+    .cds-field-validation.state-error .cds-field-validation-text {
+      color: var(--color-error-utility);
+    }
+
+    /* Input wrapper — position: relative for dropdown */
+    .cds-input-wrap {
+      position: relative;
+      width: 320px;
+    }
+
+    /* The actual input */
+    .cds-input {
+      width: 320px;
+      height: 48px;
+      padding: 0 14px 0 44px; /* left pad for leading search icon; right for clear/spinner */
+      border: 1px solid var(--color-border-input);
+      border-radius: var(--radius-s);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-s);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-primary);
+      outline: none;
+      -webkit-font-smoothing: antialiased;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      transition:
+        border-color var(--motion-duration-base) var(--motion-ease-standard),
+        border-width var(--motion-duration-base) var(--motion-ease-standard),
+        box-shadow var(--motion-duration-base) var(--motion-ease-standard),
+        padding var(--motion-duration-base) var(--motion-ease-standard);
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .cds-input::placeholder {
+      color: var(--color-text-disabled);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    /* State: focus */
+    .cds-input-wrap.state-focus .cds-input {
+      border-width: 2px;
+      border-color: var(--color-input-focus-border);
+      padding: 0 13px 0 43px;
+      box-shadow: 0 0 0 4px var(--color-input-focus-glow);
+    }
+
+    /* State: error */
+    .cds-input-wrap.state-error .cds-input {
+      border-width: 2px;
+      border-color: var(--color-error-utility);
+      padding: 0 13px 0 43px;
+    }
+
+    /* State: open dropdown — rounded bottom corners removed */
+    .cds-input-wrap.state-open .cds-input {
+      border-width: 2px;
+      border-color: var(--color-input-focus-border);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      padding: 0 13px 0 43px;
+      box-shadow: 0 0 0 4px var(--color-input-focus-glow);
+    }
+
+    /* State: selected (address chosen) */
+    .cds-input-wrap.state-selected .cds-input {
+      border-width: 2px;
+      border-color: var(--color-success-utility);
+      padding: 0 13px 0 43px;
+    }
+
+    /* Leading search icon (left, decorative) */
+    .cds-input-leading {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    /* Search / clear icon */
+    .cds-input-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+
+    /* Spinner animation */
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .cds-input-spinner {
+      width: 18px;
+      height: 18px;
+      animation: spin 0.75s linear infinite;
+      color: var(--color-text-secondary);
+      display: none;
+    }
+
+    /* Trailing area — clear button + spinner only */
+    .cds-input-trailing {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cds-input-wrap.state-loading .cds-input-spinner { display: block; }
+
+    /* Clear button (shows when text entered and not loading) */
+    .cds-input-clear {
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .cds-input-clear:hover { color: var(--color-text-primary); }
+    .cds-input-clear svg { width: 16px; height: 16px; display: block; }
+
+    .cds-input-wrap.has-value .cds-input-clear { display: flex; }
+    .cds-input-wrap.state-loading .cds-input-clear { display: none; }
+    .cds-input-wrap.state-selected .cds-input-clear { display: flex; }
+
+    /* ── Address dropdown ──────────────────────────────────────── */
+    .cds-address-dropdown {
+      position: absolute;
+      top: calc(100% - 1px); /* overlap input bottom border */
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: var(--color-surface-page);
+      border: 2px solid var(--color-input-focus-border);
+      border-top: none;
+      border-bottom-left-radius: var(--radius-s);
+      border-bottom-right-radius: var(--radius-s);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+      max-height: 260px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .cds-input-wrap.state-open .cds-address-dropdown { display: block; }
+
+    /* Address count header */
+    .cds-address-count {
+      padding: 8px 14px 6px;
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    /* Individual address option */
+    .cds-address-option {
+      display: block;
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      text-align: left;
+      cursor: pointer;
+      -webkit-font-smoothing: antialiased;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+      line-height: 1.3;
+    }
+
+    .cds-address-option:last-child { border-bottom: none; }
+
+    .cds-address-option:hover,
+    .cds-address-option:focus {
+      background: var(--color-surface-subtle);
+      outline: none;
+    }
+
+    .cds-address-option:focus-visible {
+      outline: 2px solid var(--color-focus-ring);
+      outline-offset: -2px;
+    }
+
+    /* Highlight matched postcode fragment */
+    .cds-address-option mark {
+      background: transparent;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .cds-address-option .addr-line1 {
+      display: block;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .cds-address-option .addr-line2 {
+      display: block;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      margin-top: 1px;
+    }
+
+    /* No results state — rendered inside dropdown */
+    .cds-address-noresults {
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .cds-address-noresults svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--color-error-utility);
+      margin-top: 1px;
+    }
+
+    .cds-address-noresults p {
+      font-size: var(--font-size-xs);
+      color: var(--color-error-utility);
+      line-height: 1.4;
+    }
+
+    /* Dropdown border turns error-red when no results */
+    .cds-input-wrap.state-no-results .cds-address-dropdown {
+      border-color: var(--color-error-utility);
+    }
+
+    .cds-input-wrap.state-no-results .cds-input {
+      border-color: var(--color-error-utility);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    /* ── Selected address display ───────────────────────────────── */
+    .cds-selected-address {
+      display: none;
+      margin-top: 8px;
+      padding: 10px 14px;
+      background: var(--color-success-bg);
+      border: var(--stroke-thin) solid var(--color-success-border);
+      border-radius: var(--radius-s);
+    }
+
+    .cds-selected-address.visible { display: block; }
+
+    .cds-selected-address-line {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      line-height: 1.5;
+    }
+
+    /* ── Manual entry link ─────────────────────────────────────── */
+    .cds-manual-link-row {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cds-manual-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-neutral-grey-7);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Configurator panel ────────────────────────────────────── */
+    .configurator {
+      background: var(--color-surface-page);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .config-section {
+      padding: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .config-section:last-child { border-bottom: none; }
+
+    .config-section-title {
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-8);
+    }
+
+    /* State dropdown */
+    .state-select {
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      border-radius: var(--radius-s);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M15 7.5L10 12.5L5 7.5' stroke='%23666666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 16px;
+      padding-right: 32px;
+      transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .state-select:focus { border-color: var(--color-focus-ring); }
+
+    /* Toggles */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-row + .toggle-row {
+      border-top: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .toggle-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 11px;
+      background: var(--color-neutral-grey-3);
+      cursor: pointer;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-switch input:checked + .toggle-track { background: var(--color-btn-primary-bg); }
+    .toggle-switch input:checked + .toggle-track::after { transform: translateX(18px); }
+
+    /* Token readout */
+    .token-readout {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: var(--space-8) var(--space-12);
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      font-family: 'Courier New', monospace;
+    }
+
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0;
+      flex-wrap: wrap;
+    }
+
+    .token-name { color: var(--color-text-secondary); }
+    .token-value { color: var(--color-brand-primary); font-weight: 600; }
+
+    /* ── Code snippet panel ────────────────────────────────────── */
+    .snippet-panel {
+      margin-top: var(--space-s);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      background: var(--color-surface-subtle);
+    }
+
+    .snippet-tabs { display: flex; gap: 0; }
+
+    .snippet-tab {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .snippet-tab:hover { color: var(--color-text-primary); }
+
+    .snippet-tab.active {
+      color: var(--color-btn-primary-bg);
+      border-bottom-color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+    }
+
+    .snippet-copy-btn:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn.copied {
+      background: var(--color-btn-primary-bg);
+      border-color: var(--color-btn-primary-bg);
+      color: #fff;
+    }
+
+    .snippet-copy-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    .snippet-body {
+      padding: var(--space-xs);
+      background: var(--color-surface-page);
+      overflow-x: auto;
+    }
+
+    .snippet-pre {
+      margin: 0;
+      font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--color-text-primary);
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .snip-comment  { color: var(--color-text-secondary); }
+    .snip-tag      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-attr     { color: #6066b0; }
+    .snip-string   { color: #2a7a4f; }
+    .snip-class    { color: var(--color-btn-primary-bg); }
+    .snip-prop     { color: #6066b0; }
+    .snip-val      { color: #2a7a4f; }
+    .snip-sel      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-tok      { color: #b07c2a; }
+
+    /* ── Demo postcode hint ────────────────────────────────────── */
+    .demo-hint {
+      position: absolute;
+      bottom: var(--space-xs);
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      pointer-events: auto;
+    }
+
+    .demo-postcode {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: var(--radius-xs);
+      border: var(--stroke-thin) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .demo-postcode:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div>
+      <h1>Postcode Lookup</h1>
+      <p>Nest Design System • v1.0</p>
+    </div>
+    <div class="brand-switcher">
+      <button class="brand-btn active" id="btn-wilko" onclick="setBrand('wilko')">wilko.com</button>
+      <button class="brand-btn" id="btn-homebase" onclick="setBrand('homebase')">homebase.co.uk</button>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- Preview canvas -->
+    <div class="preview-canvas" id="preview-canvas">
+
+      <div class="cds-field" id="cds-field">
+
+        <!-- Label row -->
+        <div class="cds-field-label-row">
+          <label class="cds-field-label" for="postcode-input">Postcode</label>
+        </div>
+
+        <!-- Input with dropdown -->
+        <div class="cds-input-wrap" id="input-wrap">
+
+          <!-- Leading search icon (decorative) -->
+          <div class="cds-input-leading" aria-hidden="true">
+            <svg class="cds-input-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M13 13L16.5 16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <input
+            class="cds-input"
+            id="postcode-input"
+            type="text"
+            autocomplete="off"
+            maxlength="8"
+            aria-label="Enter postcode"
+            aria-autocomplete="list"
+            aria-controls="address-dropdown"
+            aria-expanded="false"
+          />
+
+          <!-- Trailing: spinner + clear button -->
+          <div class="cds-input-trailing">
+            <!-- Spinner (loading state) -->
+            <svg class="cds-input-spinner" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-opacity="0.3" stroke-width="2"/>
+              <path d="M10 3a7 7 0 0 1 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <!-- Clear button -->
+            <button class="cds-input-clear" id="clear-btn" type="button" aria-label="Clear postcode" onclick="clearPostcode()">
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2532 15.6665C14.6437 16.0571 15.2769 16.0571 15.6674 15.6665C16.058 15.276 16.058 14.6429 15.6674 14.2523L11.4151 10L15.6674 5.74767C16.058 5.35714 16.058 4.72398 15.6674 4.33345C15.2769 3.94293 14.6437 3.94293 14.2532 4.33345L10.0009 8.58579L5.74857 4.33347C5.35804 3.94294 4.72488 3.94294 4.33436 4.33347C3.94383 4.72399 3.94383 5.35716 4.33436 5.74768L8.58668 10L4.33436 14.2523C3.94383 14.6428 3.94383 15.276 4.33436 15.6665C4.72488 16.0571 5.35805 16.0571 5.74857 15.6665L10.0009 11.4142L14.2532 15.6665Z" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Address dropdown -->
+          <div class="cds-address-dropdown" id="address-dropdown" role="listbox" aria-label="Address suggestions">
+            <div class="cds-address-count" id="address-count"></div>
+            <div id="address-list"></div>
+          </div>
+        </div>
+
+        <!-- Selected address confirmation -->
+        <div class="cds-selected-address" id="selected-display">
+          <span class="cds-selected-address-line" id="selected-text"></span>
+        </div>
+
+        <!-- Manual entry link -->
+        <div class="cds-manual-link-row">
+          <button class="cds-manual-link" type="button" id="manual-link" onclick="handleManualEntry()">
+            Enter address manually
+          </button>
+        </div>
+
+      </div>
+
+      <p class="preview-label" id="preview-caption">Default</p>
+      <p class="demo-hint">Try: <button class="demo-postcode" onclick="tryPostcode('SW1A')">SW1A</button> <button class="demo-postcode" onclick="tryPostcode('EC1A')">EC1A</button> <button class="demo-postcode" onclick="tryPostcode('M1')">M1 1</button> <button class="demo-postcode" onclick="tryPostcode('E1')">E1</button> <button class="demo-postcode" onclick="tryPostcode('B1')">B1</button></p>
+    </div>
+
+    <!-- Configurator panel -->
+    <div class="configurator">
+
+      <!-- State -->
+      <div class="config-section">
+        <div class="config-section-title">State</div>
+        <select class="state-select" id="state-select" onchange="setConfigState(this.value)">
+          <option value="default">Default — empty</option>
+          <option value="loading">Loading — searching…</option>
+          <option value="results">Results — addresses found</option>
+          <option value="no-results">No results — invalid postcode</option>
+          <option value="selected">Selected — address chosen</option>
+        </select>
+      </div>
+
+      <!-- Result count -->
+      <div class="config-section" id="result-count-section">
+        <div class="config-section-title">Number of results</div>
+        <div style="display:flex;gap:3px;background:var(--color-surface-subtle);border-radius:var(--radius-s);padding:3px;">
+          <button class="seg-btn active" id="rc-3" onclick="setResultCount(3)">3</button>
+          <button class="seg-btn" id="rc-5" onclick="setResultCount(5)">5</button>
+          <button class="seg-btn" id="rc-8" onclick="setResultCount(8)">8</button>
+        </div>
+      </div>
+
+      <!-- Toggles -->
+      <div class="config-section">
+        <div class="config-section-title">Options</div>
+        <div class="toggle-row">
+          <span class="toggle-label">Show manual entry link</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-manual" checked onchange="toggleManualLink(this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Token readout -->
+      <div class="config-section">
+        <div class="config-section-title">Active tokens</div>
+        <div class="token-readout" id="token-readout"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Code snippet panel -->
+  <div class="snippet-panel">
+    <div class="snippet-header">
+      <div class="snippet-tabs">
+        <button class="snippet-tab active" id="tab-html" onclick="setSnippetTab('html')">HTML</button>
+        <button class="snippet-tab" id="tab-css" onclick="setSnippetTab('css')">CSS</button>
+        <button class="snippet-tab" id="tab-js" onclick="setSnippetTab('js')">JS</button>
+      </div>
+      <button class="snippet-copy-btn" id="copy-btn" onclick="copySnippet()">
+        <svg id="copy-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+    <div class="snippet-body">
+      <pre class="snippet-pre" id="snippet-output"></pre>
+    </div>
+  </div>
+
+  <style>
+    /* Seg btn for result count selector */
+    .seg-btn {
+      flex: 1;
+      padding: 6px 4px;
+      border-radius: calc(var(--radius-s) - 3px);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+    .seg-btn.active {
+      background: var(--color-surface-page);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-bold);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+  </style>
+
+  <script>
+    /* ══════════════════════════════════════════════════════════════
+       STATE
+    ══════════════════════════════════════════════════════════════ */
+    var brand = 'wilko';
+    var configState = 'default';
+    var resultCount = 3;
+    var showManualLink = true;
+    var snippetTab = 'html';
+
+    /* Simulated UK address data keyed by postcode prefix */
+    var addressData = {
+      'SW1A': [
+        { line1: '10 Downing Street',      line2: 'Westminster, London SW1A 2AA' },
+        { line1: '11 Downing Street',      line2: 'Westminster, London SW1A 2AB' },
+        { line1: 'Buckingham Palace',      line2: 'Westminster, London SW1A 1AA' },
+        { line1: '70 Whitehall',           line2: 'Westminster, London SW1A 2AS' },
+        { line1: 'Horse Guards',           line2: 'Westminster, London SW1A 2AX' },
+        { line1: 'Cabinet Office',         line2: 'Westminster, London SW1A 2WH' },
+        { line1: 'HM Treasury',            line2: 'Westminster, London SW1A 2HQ' },
+        { line1: 'Foreign Office',         line2: 'Westminster, London SW1A 2AH' },
+      ],
+      'EC1A': [
+        { line1: '1 St Martin\'s Le Grand', line2: 'City of London EC1A 4JQ' },
+        { line1: 'Barbican Centre',         line2: 'Silk Street, London EC1A 8DS' },
+        { line1: 'St Bartholomew\'s Hospital', line2: 'West Smithfield, London EC1A 7BE' },
+        { line1: '15 Cloth Fair',           line2: 'City of London EC1A 7NJ' },
+        { line1: 'Smithfield Market',       line2: 'Charterhouse Street, London EC1A 9LH' },
+        { line1: 'Museum of London',        line2: '150 London Wall, London EC1A 4HD' },
+        { line1: 'Guildhall',               line2: 'Gresham Street, London EC1A 7NH' },
+        { line1: '50 Long Lane',            line2: 'City of London EC1A 9ET' },
+      ],
+      'M1': [
+        { line1: '1 Piccadilly Gardens',   line2: 'Manchester M1 1RG' },
+        { line1: 'Manchester Arndale',     line2: 'Market Street, Manchester M1 1SW' },
+        { line1: '2 St Peter\'s Square',   line2: 'Manchester M1 4AH' },
+        { line1: 'Piccadilly Station',     line2: 'Piccadilly Place, Manchester M1 2BN' },
+        { line1: '30 Brown Street',        line2: 'Manchester M1 1DA' },
+        { line1: 'Central Library',        line2: 'St Peter\'s Square, Manchester M1 4BU' },
+        { line1: 'Corn Exchange',          line2: 'Exchange Square, Manchester M1 1LA' },
+        { line1: 'The Printworks',         line2: 'Exchange Square, Manchester M1 1AB' },
+      ],
+      'E1': [
+        { line1: '1 Whitechapel High Street', line2: 'Tower Hamlets, London E1 7RA' },
+        { line1: 'Spitalfields Market',       line2: 'Brushfield Street, London E1 6AA' },
+        { line1: '10 Princelet Street',       line2: 'Tower Hamlets, London E1 6QH' },
+        { line1: 'Brick Lane Market',         line2: 'Brick Lane, London E1 6QL' },
+        { line1: 'Whitechapel Gallery',       line2: '77-82 Whitechapel High Street E1 7QX' },
+        { line1: 'Aldgate East Station',      line2: 'Whitechapel High Street, London E1 7PT' },
+        { line1: 'London Hospital',           line2: 'Whitechapel Road, London E1 1BB' },
+        { line1: '25 Commercial Street',      line2: 'Tower Hamlets, London E1 6LP' },
+      ],
+      'B1': [
+        { line1: '1 Centenary Square',    line2: 'Birmingham B1 1BB' },
+        { line1: 'Symphony Hall',         line2: 'Broad Street, Birmingham B1 2EA' },
+        { line1: 'Library of Birmingham', line2: 'Centenary Square, Birmingham B1 2ND' },
+        { line1: 'Arena Birmingham',      line2: 'King Edward\'s Road, Birmingham B1 2AA' },
+        { line1: 'Brindleyplace',         line2: 'Birmingham B1 2JB' },
+        { line1: 'Hyatt Regency',         line2: '2 Bridge Street, Birmingham B1 2JZ' },
+        { line1: 'Birmingham Rep',        line2: 'Centenary Square, Birmingham B1 2EP' },
+        { line1: '55 Broad Street',       line2: 'Birmingham B1 2HJ' },
+      ]
+    };
+
+    /* UK postcode regex — partial match for lookup trigger */
+    var postcodePartialRe = /^[A-Z]{1,2}[0-9][0-9A-Z]?(\s*[0-9][A-Z]{2})?$/i;
+
+    /* ══════════════════════════════════════════════════════════════
+       LIVE INTERACTION
+    ══════════════════════════════════════════════════════════════ */
+    var lookupTimer = null;
+    var currentAddresses = [];
+    var isInteractive = true; /* false when configurator overrides */
+
+    function initInputEvents() {
+      var input = document.getElementById('postcode-input');
+
+      input.addEventListener('input', function() {
+        if (!isInteractive) return;
+        var val = input.value.trim();
+
+        setWrapClass('state-focus');
+        updateHasValue(val.length > 0);
+        hideDropdown();
+        hideError();
+        hideSelected();
+
+        clearTimeout(lookupTimer);
+
+        if (val.length === 0) {
+          setWrapClass('state-focus');
+          updateCaption('Typing');
+          return;
+        }
+
+        if (val.length >= 4) {
+          setWrapClass('state-loading');
+          updateCaption('Loading');
+          lookupTimer = setTimeout(function() { doLookup(val); }, 500);
+        } else {
+          updateCaption('Typing — ' + val.length + ' chars');
+        }
+      });
+
+      input.addEventListener('focus', function() {
+        if (!isInteractive) return;
+        var val = input.value.trim();
+        if (!val) setWrapClass('state-focus');
+      });
+
+      input.addEventListener('blur', function() {
+        if (!isInteractive) return;
+        /* Small delay to allow option clicks to fire */
+        setTimeout(function() {
+          var wrap = document.getElementById('input-wrap');
+          if (wrap.classList.contains('state-open')) return;
+          var val = document.getElementById('postcode-input').value.trim();
+          if (!val) setWrapClass('');
+        }, 150);
+      });
+
+      input.addEventListener('keydown', function(e) {
+        if (!isInteractive) return;
+        if (e.key === 'Escape') { clearPostcode(); }
+      });
+    }
+
+    function doLookup(val) {
+      var clean = val.toUpperCase().replace(/\s/g, '');
+      /* Find matching data by prefix */
+      var key = Object.keys(addressData).find(function(k) {
+        return clean.startsWith(k.replace(/\s/g, ''));
+      });
+
+      var addresses = key ? addressData[key] : null;
+      var validFormat = postcodePartialRe.test(val);
+
+      if (!addresses || !validFormat) {
+        /* Only show no-results once the user has typed a full-ish postcode (7+ chars) */
+        if (val.replace(/\s/g, '').length >= 7) {
+          showNoResults();
+        } else {
+          /* Not enough chars yet — back to focus, keep searching */
+          setWrapClass('state-focus');
+          updateCaption('Typing');
+        }
+      } else {
+        showResults(addresses.slice(0, 8), val);
+      }
+    }
+
+    function showResults(addresses, query) {
+      currentAddresses = addresses;
+      var list = document.getElementById('address-list');
+      var countEl = document.getElementById('address-count');
+      countEl.textContent = addresses.length + ' address' + (addresses.length !== 1 ? 'es' : '') + ' found';
+
+      var html = '';
+      addresses.forEach(function(addr, i) {
+        html += '<button class="cds-address-option" role="option" tabindex="0" onclick="selectAddress(' + i + ')">';
+        html += '<span class="addr-line1">' + escHtml(addr.line1) + '</span>';
+        html += '<span class="addr-line2">' + escHtml(addr.line2) + '</span>';
+        html += '</button>';
+      });
+      list.innerHTML = html;
+
+      setWrapClass('state-open');
+      document.getElementById('postcode-input').setAttribute('aria-expanded', 'true');
+      hideError();
+      updateCaption('Results — ' + addresses.length + ' found');
+    }
+
+    function showNoResults() {
+      currentAddresses = [];
+      var countEl = document.getElementById('address-count');
+      var list = document.getElementById('address-list');
+      countEl.textContent = '';
+      list.innerHTML =
+        '<div class="cds-address-noresults">' +
+          '<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+            '<path fill-rule="evenodd" clip-rule="evenodd" d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5ZM9.25 6.5C9.25 6.08579 9.58579 5.75 10 5.75C10.4142 5.75 10.75 6.08579 10.75 6.5V10.5C10.75 10.9142 10.4142 11.25 10 11.25C9.58579 11.25 9.25 10.9142 9.25 10.5V6.5ZM10 14.25C10.4832 14.25 10.875 13.8582 10.875 13.375C10.875 12.8918 10.4832 12.5 10 12.5C9.51675 12.5 9.125 12.8918 9.125 13.375C9.125 13.8582 9.51675 14.25 10 14.25Z" fill="currentColor"/>' +
+          '</svg>' +
+          '<p>No addresses found. Check the postcode and try again.</p>' +
+        '</div>';
+      setWrapClass('state-open state-no-results');
+      document.getElementById('postcode-input').setAttribute('aria-expanded', 'true');
+      hideError();
+      updateCaption('No results');
+    }
+
+    function hideDropdown() {
+      var wrap = document.getElementById('input-wrap');
+      if (wrap.classList.contains('state-open')) {
+        wrap.classList.remove('state-open', 'state-no-results');
+        wrap.classList.add('state-focus');
+      }
+      document.getElementById('postcode-input').setAttribute('aria-expanded', 'false');
+    }
+
+    function hideError() { /* validation row removed — error shown inside dropdown */ }
+
+    function hideSelected() {
+      document.getElementById('selected-display').classList.remove('visible');
+      setWrapClass('');
+    }
+
+    function selectAddress(idx) {
+      var addr = currentAddresses[idx];
+      if (!addr) return;
+
+      var input = document.getElementById('postcode-input');
+      /* Format the postcode from the line2 */
+      var pc = addr.line2.match(/[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/i);
+      if (pc) input.value = pc[0].toUpperCase();
+
+      setWrapClass('state-selected');
+      updateHasValue(true);
+      hideDropdown();
+      hideError();
+
+      var display = document.getElementById('selected-display');
+      document.getElementById('selected-text').textContent = addr.line1 + ', ' + addr.line2;
+      display.classList.add('visible');
+
+      updateCaption('Selected');
+      document.getElementById('postcode-input').setAttribute('aria-expanded', 'false');
+      generateSnippet();
+    }
+
+    function clearPostcode() {
+      var input = document.getElementById('postcode-input');
+      input.value = '';
+      clearTimeout(lookupTimer);
+      hideDropdown();
+      hideError();
+      hideSelected();
+      setWrapClass('');
+      updateHasValue(false);
+      currentAddresses = [];
+      updateCaption('Default');
+      input.focus();
+    }
+
+    function setWrapClass(cls) {
+      var wrap = document.getElementById('input-wrap');
+      wrap.className = 'cds-input-wrap' + (cls ? ' ' + cls : '');
+    }
+
+    function updateHasValue(has) {
+      var wrap = document.getElementById('input-wrap');
+      if (has) wrap.classList.add('has-value');
+      else wrap.classList.remove('has-value');
+    }
+
+    function updateCaption(text) {
+      document.getElementById('preview-caption').textContent = text;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       CONFIGURATOR CONTROLS
+    ══════════════════════════════════════════════════════════════ */
+    function setConfigState(s) {
+      configState = s;
+      isInteractive = (s === 'default');
+
+      var input = document.getElementById('postcode-input');
+      clearTimeout(lookupTimer);
+      hideError();
+      hideSelected();
+      hideDropdown();
+      updateHasValue(false);
+
+      /* Reset input value */
+      input.value = '';
+      input.disabled = false;
+      input.readOnly = false;
+
+      var captions = {
+        'default':    'Default',
+        'loading':    'Loading',
+        'results':    'Results — addresses found',
+        'no-results': 'No results',
+        'selected':   'Selected'
+      };
+
+      updateCaption(captions[s] || s);
+
+      if (s === 'default') {
+        setWrapClass('');
+        updateHasValue(false);
+        document.getElementById('result-count-section').style.display = 'none';
+      } else if (s === 'loading') {
+        input.value = 'SW1A';
+        setWrapClass('state-loading');
+        updateHasValue(true);
+        document.getElementById('result-count-section').style.display = 'none';
+      } else if (s === 'results') {
+        input.value = 'SW1A 1AA';
+        updateHasValue(true);
+        currentAddresses = addressData['SW1A'].slice(0, resultCount);
+        showResultsConfig(currentAddresses, 'SW1A 1AA');
+        document.getElementById('result-count-section').style.display = 'block';
+      } else if (s === 'no-results') {
+        input.value = 'ZZ99 9ZZ';
+        updateHasValue(true);
+        showNoResults();
+        document.getElementById('result-count-section').style.display = 'none';
+      } else if (s === 'selected') {
+        var addr = addressData['SW1A'][0];
+        input.value = 'SW1A 2AA';
+        setWrapClass('state-selected');
+        updateHasValue(true);
+        document.getElementById('selected-display').classList.add('visible');
+        document.getElementById('selected-text').textContent = addr.line1 + ', ' + addr.line2;
+        document.getElementById('result-count-section').style.display = 'none';
+      }
+
+      updateTokenReadout();
+      generateSnippet();
+    }
+
+    function showResultsConfig(addresses, query) {
+      currentAddresses = addresses;
+      var list = document.getElementById('address-list');
+      var countEl = document.getElementById('address-count');
+      countEl.textContent = addresses.length + ' address' + (addresses.length !== 1 ? 'es' : '') + ' found';
+      var html = '';
+      addresses.forEach(function(addr, i) {
+        html += '<button class="cds-address-option" role="option" tabindex="0" onclick="selectAddress(' + i + ')">';
+        html += '<span class="addr-line1">' + escHtml(addr.line1) + '</span>';
+        html += '<span class="addr-line2">' + escHtml(addr.line2) + '</span>';
+        html += '</button>';
+      });
+      list.innerHTML = html;
+      setWrapClass('state-open');
+      document.getElementById('postcode-input').setAttribute('aria-expanded', 'true');
+    }
+
+    function setResultCount(n) {
+      resultCount = n;
+      ['3','5','8'].forEach(function(v) {
+        document.getElementById('rc-' + v).classList.toggle('active', parseInt(v) === n);
+      });
+      if (configState === 'results') {
+        currentAddresses = addressData['SW1A'].slice(0, n);
+        showResultsConfig(currentAddresses, 'SW1A 1AA');
+      }
+      generateSnippet();
+    }
+
+    function toggleManualLink(v) {
+      showManualLink = v;
+      document.getElementById('manual-link').parentElement.style.display = v ? '' : 'none';
+      generateSnippet();
+    }
+
+    function tryPostcode(pc) {
+      if (!isInteractive) {
+        /* Switch back to interactive default state first */
+        document.getElementById('state-select').value = 'default';
+        setConfigState('default');
+      }
+      var input = document.getElementById('postcode-input');
+      input.value = pc;
+      input.focus();
+      clearTimeout(lookupTimer);
+      updateHasValue(true);
+      setWrapClass('state-loading');
+      updateCaption('Loading');
+      lookupTimer = setTimeout(function() { doLookup(pc); }, 500);
+    }
+
+    function handleManualEntry() {
+      /* In a real implementation this would show a manual address form */
+      alert('Enter address manually — link clicked.\n\nIn production this would reveal a full manual address form.');
+    }
+
+    function setBrand(b) {
+      brand = b;
+      document.documentElement.setAttribute('data-brand', b);
+      document.getElementById('btn-wilko').classList.toggle('active', b === 'wilko');
+      document.getElementById('btn-homebase').classList.toggle('active', b === 'homebase');
+      updateTokenReadout();
+      generateSnippet();
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       TOKEN READOUT
+    ══════════════════════════════════════════════════════════════ */
+    var tokensByState = {
+      wilko: {
+        'default':    { '--color-border-input': '#888888', '--color-surface-page': '#ffffff', '--font-family': 'sofia-pro' },
+        'loading':    { '--color-border-input': '#888888', 'spinner': 'visible', '--color-text-secondary': '#666666' },
+        'results':    { '--color-input-focus-border': '#222222', 'border-width': '2px', '--color-input-focus-glow': '#c8f3dc' },
+        'no-results': { '--color-error-utility': '#9d2235', 'border-width': '2px', 'validation': 'visible' },
+        'selected':   { '--color-success-utility': '#23854a', '--color-success-bg': '#e4feec', 'border-width': '2px' }
+      },
+      homebase: {
+        'default':    { '--color-border-input': '#888888', '--color-surface-page': '#ffffff', '--font-family': 'Rubik' },
+        'loading':    { '--color-border-input': '#888888', 'spinner': 'visible', '--color-text-secondary': '#666666' },
+        'results':    { '--color-input-focus-border': '#333333', 'border-width': '2px', '--color-input-focus-glow': '#c8f3dc' },
+        'no-results': { '--color-error-utility': '#b90d0d', 'border-width': '2px', 'validation': 'visible' },
+        'selected':   { '--color-success-utility': '#1d8634', '--color-success-bg': '#d4ffd6', 'border-width': '2px' }
+      }
+    };
+
+    function updateTokenReadout() {
+      var map = tokensByState[brand][configState] || tokensByState[brand]['default'];
+      var html = '';
+      Object.keys(map).forEach(function(k) {
+        html += '<div class="token-row"><span class="token-name">' + escHtml(k) + '</span><span class="token-value">' + escHtml(map[k]) + '</span></div>';
+      });
+      document.getElementById('token-readout').innerHTML = html;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       SNIPPET GENERATION
+    ══════════════════════════════════════════════════════════════ */
+    function setSnippetTab(tab) {
+      snippetTab = tab;
+      ['html','css','js'].forEach(function(t) {
+        document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+      });
+      generateSnippet();
+    }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function generateSnippet() {
+      if (snippetTab === 'css') { generateCssSnippet(); return; }
+      if (snippetTab === 'js')  { generateJsSnippet();  return; }
+
+      var t = '<span class="snip-tag">'; var tc = '</span>';
+      var a = '<span class="snip-attr">'; var ac = '</span>';
+      var s = '<span class="snip-string">'; var sc = '</span>';
+      var c = '<span class="snip-comment">'; var cc = '</span>';
+      var cl = '<span class="snip-class">'; var clc = '</span>';
+
+      var out = '';
+      out += c + '&lt;!-- CDS Postcode Lookup · ' + brand + ' · ' + configState + ' --&gt;' + cc + '\n';
+      out += c + '&lt;!-- Requires: &lt;html data-brand="' + brand + '"&gt; + cds-tokens.css --&gt;' + cc + '\n\n';
+      out += t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field"' + sc + t + '&gt;' + tc + '\n\n';
+      out += '  ' + c + '&lt;!-- Label --&gt;' + cc + '\n';
+      out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-label-row"' + sc + t + '&gt;' + tc + '\n';
+      out += '    ' + t + '&lt;label' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-label"' + sc + ' ' + a + 'for' + ac + '=' + s + '"postcode-input"' + sc + t + '&gt;' + tc + 'Postcode' + t + '&lt;/label&gt;' + tc + '\n';
+      out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+
+      if (configState === 'no-results') {
+        out += '  ' + c + '&lt;!-- Validation row (shown when no results) --&gt;' + cc + '\n';
+        out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + 'cds-field-validation visible state-error' + clc + '"' + sc + t + '&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;svg' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-validation-icon"' + sc + ' ' + a + 'viewBox' + ac + '=' + s + '"0 0 20 20"' + sc + t + '&gt;' + tc + c + '&lt;!-- error icon --&gt;' + cc + t + '&lt;/svg&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-field-validation-text"' + sc + t + '&gt;' + tc + 'No addresses found for this postcode. Check and try again.' + t + '&lt;/span&gt;' + tc + '\n';
+        out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+      }
+
+      var wrapCls = 'cds-input-wrap';
+      if (configState === 'loading')    wrapCls += ' state-loading';
+      if (configState === 'results')    wrapCls += ' state-open';
+      if (configState === 'no-results') wrapCls += ' state-error';
+      if (configState === 'selected')   wrapCls += ' state-selected';
+      var hasValue = configState !== 'default';
+      if (hasValue) wrapCls += ' has-value';
+
+      out += '  ' + c + '&lt;!-- Input + dropdown wrapper --&gt;' + cc + '\n';
+      out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + wrapCls + clc + '"' + sc + t + '&gt;' + tc + '\n';
+      out += '    ' + t + '&lt;input' + tc + '\n';
+      out += '      ' + a + 'class' + ac + '=' + s + '"cds-input"' + sc + '\n';
+      out += '      ' + a + 'id' + ac + '=' + s + '"postcode-input"' + sc + '\n';
+      out += '      ' + a + 'type' + ac + '=' + s + '"text"' + sc + '\n';
+      out += '      ' + a + 'placeholder' + ac + '=' + s + '"e.g. SW1A 1AA"' + sc + '\n';
+      out += '      ' + a + 'maxlength' + ac + '=' + s + '"8"' + sc + '\n';
+      out += '      ' + a + 'autocomplete' + ac + '=' + s + '"off"' + sc + '\n';
+      out += '      ' + a + 'aria-autocomplete' + ac + '=' + s + '"list"' + sc + '\n';
+      out += '      ' + a + 'aria-controls' + ac + '=' + s + '"address-dropdown"' + sc + '\n';
+      out += '      ' + a + 'aria-expanded' + ac + '=' + s + (configState === 'results' ? '"true"' : '"false"') + sc + '\n';
+      out += '    ' + t + '/&gt;' + tc + '\n';
+      out += '    ' + c + '&lt;!-- .cds-input-trailing: search icon, spinner, clear btn --&gt;' + cc + '\n';
+      if (configState === 'results') {
+        out += '    ' + c + '&lt;!-- Address dropdown (role=listbox) --&gt;' + cc + '\n';
+        out += '    ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-address-dropdown"' + sc + ' ' + a + 'id' + ac + '=' + s + '"address-dropdown"' + sc + ' ' + a + 'role' + ac + '=' + s + '"listbox"' + sc + t + '&gt;' + tc + '\n';
+        out += '      ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-address-count"' + sc + t + '&gt;' + tc + resultCount + ' addresses found' + t + '&lt;/div&gt;' + tc + '\n';
+        for (var i = 0; i < Math.min(resultCount, 2); i++) {
+          var addr = addressData['SW1A'][i];
+          out += '      ' + t + '&lt;button' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-address-option"' + sc + ' ' + a + 'role' + ac + '=' + s + '"option"' + sc + t + '&gt;' + tc + '\n';
+          out += '        ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"addr-line1"' + sc + t + '&gt;' + tc + escHtml(addr.line1) + t + '&lt;/span&gt;' + tc + '\n';
+          out += '        ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"addr-line2"' + sc + t + '&gt;' + tc + escHtml(addr.line2) + t + '&lt;/span&gt;' + tc + '\n';
+          out += '      ' + t + '&lt;/button&gt;' + tc + '\n';
+        }
+        if (resultCount > 2) out += '      ' + c + '&lt;!-- + ' + (resultCount - 2) + ' more --&gt;' + cc + '\n';
+        out += '    ' + t + '&lt;/div&gt;' + tc + '\n';
+      }
+      out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+
+      if (configState === 'selected') {
+        out += '  ' + c + '&lt;!-- Selected address confirmation --&gt;' + cc + '\n';
+        out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + 'cds-selected-address visible' + clc + '"' + sc + t + '&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-selected-address-line"' + sc + t + '&gt;' + tc + '10 Downing Street, Westminster, London SW1A 2AA' + t + '&lt;/span&gt;' + tc + '\n';
+        out += '  ' + t + '&lt;/div&gt;' + tc + '\n\n';
+      }
+
+      if (showManualLink) {
+        out += '  ' + c + '&lt;!-- Manual entry link --&gt;' + cc + '\n';
+        out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-manual-link-row"' + sc + t + '&gt;' + tc + '\n';
+        out += '    ' + t + '&lt;button' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-manual-link"' + sc + ' ' + a + 'type' + ac + '=' + s + '"button"' + sc + t + '&gt;' + tc + '\n';
+        out += '      Enter address manually\n';
+        out += '    ' + t + '&lt;/button&gt;' + tc + '\n';
+        out += '  ' + t + '&lt;/div&gt;' + tc + '\n';
+      }
+
+      out += t + '&lt;/div&gt;' + tc;
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateCssSnippet() {
+      var c   = '<span class="snip-comment">'; var cc   = '</span>';
+      var sel = '<span class="snip-sel">';      var selc = '</span>';
+      var p   = '<span class="snip-prop">';     var pc   = '</span>';
+      var v   = '<span class="snip-val">';      var vc   = '</span>';
+      var tok = '<span class="snip-tok">';      var tokc = '</span>';
+
+      var grey7 = brand === 'wilko' ? '#222222' : '#333333';
+
+      var out = '';
+      out += c + '/* CDS Postcode Lookup · ' + brand + ' */' + cc + '\n\n';
+
+      out += sel + '.cds-input' + selc + ' {\n';
+      out += '  ' + p + 'width' + pc + ': ' + v + '320px' + vc + ';\n';
+      out += '  ' + p + 'height' + pc + ': ' + v + '48px' + vc + ';\n';
+      out += '  ' + p + 'padding' + pc + ': ' + v + '0 14px 0 44px' + vc + ';\n';
+      out += '  ' + p + 'border' + pc + ': ' + v + '1px solid ' + vc + tok + 'var(--color-border-input)' + tokc + ';\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + tok + 'var(--radius-s)' + tokc + ';\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + tok + 'var(--font-size-s)' + tokc + ';\n';
+      out += '  ' + p + 'text-transform' + pc + ': ' + v + 'uppercase' + vc + ';\n';
+      out += '  ' + p + 'letter-spacing' + pc + ': ' + v + '0.04em' + vc + ';\n';
+      out += '  ' + p + 'outline' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-open .cds-input,' + selc + '\n';
+      out += sel + '.cds-input-wrap.state-focus .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-input-focus-border)' + tokc + '; ' + c + '/* ' + grey7 + ' */' + cc + '\n';
+      out += '  ' + p + 'box-shadow' + pc + ': ' + v + '0 0 0 4px ' + vc + tok + 'var(--color-input-focus-glow)' + tokc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-open .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-bottom-left-radius' + pc + ': ' + v + '0' + vc + ';\n';
+      out += '  ' + p + 'border-bottom-right-radius' + pc + ': ' + v + '0' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-error .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-error-utility)' + tokc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-input-wrap.state-selected .cds-input' + selc + ' {\n';
+      out += '  ' + p + 'border-width' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '  ' + p + 'border-color' + pc + ': ' + tok + 'var(--color-success-utility)' + tokc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-address-dropdown' + selc + ' {\n';
+      out += '  ' + p + 'border' + pc + ': ' + v + '2px solid ' + vc + tok + 'var(--color-input-focus-border)' + tokc + ';\n';
+      out += '  ' + p + 'border-top' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '  ' + p + 'border-radius' + pc + ': ' + v + '0 0 ' + vc + tok + 'var(--radius-s)' + tokc + ' ' + tok + 'var(--radius-s)' + tokc + ';\n';
+      out += '  ' + p + 'max-height' + pc + ': ' + v + '260px' + vc + ';\n';
+      out += '  ' + p + 'overflow-y' + pc + ': ' + v + 'auto' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-manual-link' + selc + ' {\n';
+      out += '  ' + p + 'color' + pc + ': ' + tok + 'var(--color-neutral-grey-7)' + tokc + ';\n';
+      out += '  ' + p + 'font-weight' + pc + ': ' + tok + 'var(--font-weight-regular)' + tokc + ';\n';
+      out += '  ' + p + 'font-size' + pc + ': ' + tok + 'var(--font-size-xs)' + tokc + ';\n';
+      out += '  ' + p + 'text-decoration' + pc + ': ' + v + 'underline' + vc + ';\n';
+      out += '  ' + p + 'text-underline-offset' + pc + ': ' + v + '2px' + vc + ';\n';
+      out += '}\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateJsSnippet() {
+      var c   = '<span class="snip-comment">'; var cc = '</span>';
+      var kw  = '<span class="snip-attr">';    var kwc = '</span>';
+      var fn  = '<span class="snip-class">';   var fnc = '</span>';
+      var s   = '<span class="snip-string">';  var sc  = '</span>';
+      var tok = '<span class="snip-tok">';     var tokc = '</span>';
+
+      var out = '';
+      out += c + '/* CDS Postcode Lookup — core lookup logic */' + cc + '\n\n';
+
+      out += c + '/* Trigger lookup after 4+ chars with 500ms debounce */' + cc + '\n';
+      out += kw + 'var' + kwc + ' lookupTimer = ' + tok + 'null' + tokc + ';\n\n';
+
+      out += fn + 'function' + fnc + ' onPostcodeInput(value) {\n';
+      out += '  clearTimeout(lookupTimer);\n';
+      out += '  ' + kw + 'if' + kwc + ' (value.length &lt; 4) { hideDropdown(); ' + kw + 'return' + kwc + '; }\n\n';
+      out += '  setLoadingState();\n';
+      out += '  lookupTimer = setTimeout(' + kw + 'function' + kwc + '() {\n';
+      out += '    fetchAddresses(value);\n';
+      out += '  }, 500);\n';
+      out += '}\n\n';
+
+      out += c + '/* Validate UK postcode format (partial match) */' + cc + '\n';
+      out += kw + 'var' + kwc + ' postcodeRe = ' + s + '/^[A-Z]{1,2}[0-9][0-9A-Z]?(\\s?[0-9][A-Z]{2})?$/i' + sc + ';\n\n';
+
+      out += fn + 'function' + fnc + ' fetchAddresses(postcode) {\n';
+      out += '  ' + c + '/* Replace with your address lookup API call */' + cc + '\n';
+      out += '  ' + kw + 'if' + kwc + ' (!postcodeRe.test(postcode)) { showNoResults(); ' + kw + 'return' + kwc + '; }\n\n';
+      out += '  ' + c + '/* Example using postcodes.io (free, no key required): */' + cc + '\n';
+      out += '  fetch(' + s + '`https://api.postcodes.io/postcodes/${postcode}/autocomplete`' + sc + ')\n';
+      out += '    .then(' + kw + 'function' + kwc + '(r) { ' + kw + 'return' + kwc + ' r.json(); })\n';
+      out += '    .then(' + kw + 'function' + kwc + '(data) {\n';
+      out += '      ' + kw + 'if' + kwc + ' (!data.result || data.result.length === 0) { showNoResults(); ' + kw + 'return' + kwc + '; }\n';
+      out += '      renderAddresses(data.result);\n';
+      out += '    })\n';
+      out += '    .' + fn + 'catch' + fnc + '(' + kw + 'function' + kwc + '() { showNoResults(); });\n';
+      out += '}\n\n';
+
+      out += fn + 'function' + fnc + ' renderAddresses(addresses) {\n';
+      out += '  ' + c + '/* Build dropdown options from address array */' + cc + '\n';
+      out += '  ' + kw + 'var' + kwc + ' list = document.getElementById(' + s + '"address-list"' + sc + ');\n';
+      out += '  list.innerHTML = addresses.map(' + kw + 'function' + kwc + '(addr, i) {\n';
+      out += '    ' + kw + 'return' + kwc + ' ' + s + '`&lt;button class="cds-address-option"' + sc + '\n';
+      out += '             + ' + s + '`onclick="selectAddress(${i})"&gt;' + sc + '\n';
+      out += '             + addr.line1 + ' + s + '"&lt;/button&gt;"' + sc + ';\n';
+      out += '  }).join(' + s + '""' + sc + ');\n';
+      out += '  ' + c + '/* Then add state-open class to .cds-input-wrap */' + cc + '\n';
+      out += '}\n\n';
+
+      out += fn + 'function' + fnc + ' showNoResults() {\n';
+      out += '  ' + c + '/* Add state-error to .cds-input-wrap, show validation row */' + cc + '\n';
+      out += '  document.getElementById(' + s + '"input-wrap"' + sc + ').className =\n';
+      out += '    ' + s + '"cds-input-wrap state-error has-value"' + sc + ';\n';
+      out += '  document.getElementById(' + s + '"validation-row"' + sc + ').className =\n';
+      out += '    ' + s + '"cds-field-validation visible state-error"' + sc + ';\n';
+      out += '}\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    /* ── Copy plain text ───────────────────────────────────────── */
+    function copySnippet() {
+      var text = document.getElementById('snippet-output').innerText || document.getElementById('snippet-output').textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        var btn = document.getElementById('copy-btn');
+        var lbl = document.getElementById('copy-label');
+        var ico = document.getElementById('copy-icon');
+        btn.classList.add('copied');
+        lbl.textContent = 'Copied!';
+        ico.innerHTML = '<path d="M2.5 8L6 11.5L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          lbl.textContent = 'Copy';
+          ico.innerHTML = '<rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        }, 2000);
+      });
+    }
+
+    /* ── Init ──────────────────────────────────────────────────── */
+    document.getElementById('result-count-section').style.display = 'none';
+    initInputEvents();
+    updateTokenReadout();
+    generateSnippet();
+  </script>
+
+</body>
+</html>
