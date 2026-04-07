@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="wilko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drawer / Bottom Sheet — CDS Configurator</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/nsp1wdf.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Primitive tokens ──────────────────────────────────────── */
+    :root {
+      --primitive-white: #ffffff;
+      --primitive-grey-1: #f4f4f4;
+      --primitive-grey-2: #e6e6e6;
+      --primitive-grey-3: #d9d9d9;
+      --primitive-grey-4: #cccccc;
+      --primitive-grey-5: #888888;
+      --primitive-grey-6: #666666;
+      --font-size-massive: 40px;
+      --font-size-xxl: 32px;
+      --font-size-xl: 28px;
+      --font-size-l: 24px;
+      --font-size-m: 20px;
+      --font-size-s: 16px;
+      --font-size-xs: 14px;
+      --font-size-xxs: 12px;
+      --font-size-tiny: 10px;
+      --radius-xs: 4px;
+      --radius-s: 8px;
+      --radius-m: 12px;
+      --radius-l: 16px;
+      --radius-xl: 24px;
+      --radius-full: 100px;
+      --stroke-thin: 1px;
+      --stroke-normal: 1.5px;
+      --stroke-thick: 2px;
+      --space-massive: 96px;
+      --space-xxl: 80px;
+      --space-xl: 64px;
+      --space-l: 48px;
+      --space-m: 32px;
+      --space-s: 24px;
+      --space-xs: 16px;
+      --space-12: 12px;
+      --space-8: 8px;
+      --space-4: 4px;
+      --motion-duration-fast: 150ms;
+      --motion-duration-base: 250ms;
+      --motion-duration-slow: 400ms;
+      --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+      --motion-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+      --motion-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+    }
+
+    /* ── Wilko semantic tokens ─────────────────────────────────── */
+    [data-brand="wilko"] {
+      --color-brand-primary: #9d2235;
+      --color-brand-secondary: #fdda24;
+      --color-btn-primary-bg: #23854a;
+      --color-btn-primary-bg-hover: #175e40;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: sofia-pro, sans-serif;
+      --font-feature-settings: "ss04" 1;
+      --font-weight-bold: 700;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 500;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #222222;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #024960;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #222222;
+    }
+
+    /* ── Homebase semantic tokens ──────────────────────────────── */
+    [data-brand="homebase"] {
+      --color-brand-primary: #1d8634;
+      --color-brand-secondary: #ec7224;
+      --color-btn-primary-bg: #1d8634;
+      --color-btn-primary-bg-hover: #155d25;
+      --color-btn-primary-label: #ffffff;
+      --color-btn-radius: 100px;
+      --font-family: 'Rubik', sans-serif;
+      --font-feature-settings: normal;
+      --font-weight-bold: 600;
+      --font-weight-semibold: 600;
+      --font-weight-medium: 400;
+      --font-weight-regular: 400;
+      --color-surface-page: #ffffff;
+      --color-surface-subtle: #f4f4f4;
+      --color-text-primary: #333333;
+      --color-text-secondary: #666666;
+      --color-text-disabled: #888888;
+      --color-border-default: #e6e6e6;
+      --color-border-strong: #cccccc;
+      --color-border-input: #888888;
+      --color-focus-ring: #2b347f;
+      --color-neutral-grey-3: #d9d9d9;
+      --color-neutral-grey-5: #888888;
+      --color-neutral-grey-7: #333333;
+    }
+
+    [data-brand] {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    [data-brand] button,
+    [data-brand] input,
+    [data-brand] select,
+    [data-brand] textarea,
+    [data-brand] label {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      -webkit-font-smoothing: antialiased;
+      background: var(--color-surface-page);
+      min-height: 100vh;
+      padding: var(--space-m);
+    }
+
+    /* ── Page header ───────────────────────────────────────────── */
+    .page-header {
+      margin-bottom: var(--space-s);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    .page-header h1 {
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .page-header p {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+    }
+
+    /* ── Brand switcher ────────────────────────────────────────── */
+    .brand-switcher {
+      display: flex;
+      gap: var(--space-4);
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+    }
+
+    .brand-btn {
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .brand-btn.active {
+      background: var(--color-brand-primary);
+      color: #ffffff;
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Layout: preview + configurator ───────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--space-s);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Preview canvas ────────────────────────────────────────── */
+    .preview-canvas {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-l);
+      min-height: 520px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preview-label {
+      position: absolute;
+      bottom: var(--space-xs);
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── Wireframe page inside canvas ──────────────────────────── */
+    .wireframe-page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Fake wireframe header */
+    .wf-header {
+      height: 48px;
+      background: var(--color-border-default);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-xs);
+      gap: var(--space-8);
+      flex-shrink: 0;
+    }
+
+    .wf-logo {
+      width: 60px;
+      height: 20px;
+      background: var(--color-border-strong);
+      border-radius: var(--radius-xs);
+    }
+
+    .wf-nav {
+      display: flex;
+      gap: var(--space-8);
+      margin-left: auto;
+    }
+
+    .wf-nav-item {
+      width: 44px;
+      height: 14px;
+      background: var(--color-border-strong);
+      border-radius: var(--radius-xs);
+    }
+
+    /* Fake wireframe body */
+    .wf-body {
+      flex: 1;
+      padding: var(--space-xs);
+      overflow-y: auto;
+    }
+
+    .wf-hero {
+      height: 100px;
+      background: var(--color-border-default);
+      border-radius: var(--radius-s);
+      margin-bottom: var(--space-xs);
+    }
+
+    .wf-text-block {
+      margin-bottom: var(--space-8);
+    }
+
+    .wf-line {
+      height: 10px;
+      background: var(--color-border-default);
+      border-radius: var(--radius-xs);
+      margin-bottom: 6px;
+    }
+
+    .wf-line.short  { width: 55%; }
+    .wf-line.medium { width: 75%; }
+    .wf-line.full   { width: 100%; }
+
+    /* Centred trigger area */
+    .wf-trigger-area {
+      display: flex;
+      justify-content: center;
+      padding: var(--space-xs) 0;
+    }
+
+    /* ── CDS Primary Button (trigger) ──────────────────────────── */
+    .cds-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-label);
+      border-radius: var(--color-btn-radius, var(--radius-full));
+      border: none;
+      font-family: var(--font-family);
+      font-weight: var(--font-weight-bold);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-s);
+      padding: 0 24px;
+      height: 44px;
+      cursor: pointer;
+      white-space: nowrap;
+      -webkit-font-smoothing: antialiased;
+      outline: none;
+      transition: background-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .cds-btn-primary:hover {
+      background-color: var(--color-btn-primary-bg-hover);
+    }
+
+    .cds-btn-primary:focus-visible {
+      outline: var(--stroke-thick) solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+
+    /* ── Overlay ───────────────────────────────────────────────── */
+    .cds-drawer-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      z-index: 10;
+      pointer-events: none;
+      transition: background var(--motion-duration-slow) var(--motion-ease-standard);
+    }
+
+    .cds-drawer-overlay.is-open {
+      background: rgba(0, 0, 0, 0.48);
+      pointer-events: auto;
+    }
+
+    /* ── Drawer / Bottom Sheet shell ───────────────────────────── */
+    .cds-drawer {
+      position: absolute;
+      background: var(--color-surface-page);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      transition:
+        transform var(--motion-duration-slow) var(--motion-ease-decelerate),
+        opacity var(--motion-duration-slow) var(--motion-ease-decelerate);
+    }
+
+    /* ── Desktop: right-side drawer ────────────────────────────── */
+    .cds-drawer.variant-desktop {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 430px;
+      border-radius: 0;
+      transform: translateX(100%);
+      box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+    }
+
+    .cds-drawer.variant-desktop.is-open {
+      transform: translateX(0);
+    }
+
+    /* ── Mobile: bottom sheet ──────────────────────────────────── */
+    .cds-drawer.variant-mobile {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      /* height is content-driven, capped below */
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      transform: translateY(100%);
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+    }
+
+    .cds-drawer.variant-mobile.is-open {
+      transform: translateY(0);
+    }
+
+    /* Long content: mobile sheet leaves 72px at top for close reachability */
+    .cds-drawer.variant-mobile.content-long {
+      max-height: calc(100% - 72px);
+    }
+
+    /* Short content: mobile sheet aligns to bottom, content-height only */
+    .cds-drawer.variant-mobile.content-short {
+      max-height: 85%;
+    }
+
+    /* ── Drawer header ─────────────────────────────────────────── */
+    .cds-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-xs) var(--space-s);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      flex-shrink: 0;
+    }
+
+    /* Mobile: pill handle above header */
+    .cds-drawer.variant-mobile .cds-drawer-header {
+      padding-top: var(--space-xs);
+    }
+
+    .cds-drawer-handle {
+      display: none;
+    }
+
+    .cds-drawer-title {
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      /* Truncate if text length exceeds area */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-right: var(--space-8);
+    }
+
+    .cds-drawer-close {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      background: var(--color-surface-page);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-text-primary);
+      transition: background var(--motion-duration-fast) var(--motion-ease-standard);
+    }
+
+    .cds-drawer-close:hover {
+      background: var(--color-surface-subtle);
+    }
+
+    .cds-drawer-close:focus-visible {
+      outline: var(--stroke-thick) solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+
+    .cds-drawer-close svg {
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+
+    /* ── Drawer body (scrollable) ──────────────────────────────── */
+    .cds-drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-xs) var(--space-s);
+      /* 24px / 1.5rem bottom padding as per spec */
+      padding-bottom: var(--space-s);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Desktop long: ensure close is reachable — scroll starts after header */
+    .cds-drawer.variant-desktop .cds-drawer-body {
+      padding-top: var(--space-xs);
+    }
+
+    /* ── Drawer body copy styles ───────────────────────────────── */
+    .cds-drawer-body p {
+      font-size: var(--font-size-s);
+      color: var(--color-text-primary);
+      line-height: 1.6;
+      margin-bottom: var(--space-xs);
+    }
+
+    .cds-drawer-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .cds-drawer-body ul {
+      padding-left: var(--space-xs);
+      margin-bottom: var(--space-xs);
+    }
+
+    .cds-drawer-body li {
+      font-size: var(--font-size-s);
+      color: var(--color-text-primary);
+      line-height: 1.6;
+      margin-bottom: var(--space-8);
+    }
+
+    /* ── Configurator panel ────────────────────────────────────── */
+    .configurator {
+      background: var(--color-surface-page);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .config-section {
+      padding: var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .config-section:last-child { border-bottom: none; }
+
+    .config-section-title {
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-8);
+    }
+
+    /* Segmented control */
+    .seg-control {
+      display: flex;
+      gap: 3px;
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: 3px;
+    }
+
+    .seg-btn {
+      flex: 1;
+      padding: 6px 4px;
+      border-radius: calc(var(--radius-s) - 3px);
+      border: none;
+      background: transparent;
+      font-family: sofia-pro, var(--font-family);
+      font-feature-settings: "ss04" 1, var(--font-feature-settings);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .seg-btn.active {
+      background: var(--color-surface-page);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-bold);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Toggles */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-row + .toggle-row {
+      border-top: var(--stroke-thin) solid var(--color-border-default);
+    }
+
+    .toggle-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+    }
+
+    .toggle-sub {
+      font-size: var(--font-size-xxs);
+      color: var(--color-text-secondary);
+      display: block;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 11px;
+      background: var(--color-neutral-grey-3);
+      cursor: pointer;
+      transition: background var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .toggle-switch input:checked + .toggle-track {
+      background: var(--color-btn-primary-bg);
+    }
+
+    .toggle-switch input:checked + .toggle-track::after {
+      transform: translateX(18px);
+    }
+
+    /* Text input */
+    .config-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      border-radius: var(--radius-s);
+      font-family: sofia-pro, var(--font-family);
+      font-feature-settings: "ss04" 1;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-primary);
+      background: var(--color-surface-page);
+      transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+    }
+
+    .config-input:focus {
+      outline: none;
+      border-color: var(--color-focus-ring);
+    }
+
+    /* Token readout */
+    .token-readout {
+      background: var(--color-surface-subtle);
+      border-radius: var(--radius-s);
+      padding: var(--space-8) var(--space-12);
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      font-family: 'Courier New', monospace;
+    }
+
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0;
+    }
+
+    .token-name { color: var(--color-text-secondary); }
+    .token-value { color: var(--color-brand-primary); font-weight: 600; }
+
+    /* ── Code snippet panel ────────────────────────────────────── */
+    .snippet-panel {
+      margin-top: var(--space-s);
+      border: var(--stroke-thin) solid var(--color-border-default);
+      border-radius: var(--radius-l);
+      overflow: hidden;
+    }
+
+    .snippet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xs);
+      border-bottom: var(--stroke-thin) solid var(--color-border-default);
+      background: var(--color-surface-subtle);
+    }
+
+    .snippet-tabs {
+      display: flex;
+      gap: 0;
+    }
+
+    .snippet-tab {
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .snippet-tab:hover { color: var(--color-text-primary); }
+
+    .snippet-tab.active {
+      color: var(--color-btn-primary-bg);
+      border-bottom-color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: var(--stroke-normal) solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings);
+      font-size: var(--font-size-xxs);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: all var(--motion-duration-base) var(--motion-ease-standard);
+      white-space: nowrap;
+    }
+
+    .snippet-copy-btn:hover {
+      border-color: var(--color-btn-primary-bg);
+      color: var(--color-btn-primary-bg);
+    }
+
+    .snippet-copy-btn.copied {
+      background: var(--color-btn-primary-bg);
+      border-color: var(--color-btn-primary-bg);
+      color: #fff;
+    }
+
+    .snippet-copy-btn svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .snippet-body {
+      padding: var(--space-xs);
+      background: var(--color-surface-page);
+      overflow-x: auto;
+    }
+
+    .snippet-pre {
+      margin: 0;
+      font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--color-text-primary);
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .snip-comment  { color: var(--color-text-secondary); }
+    .snip-tag      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-attr     { color: #6066b0; }
+    .snip-string   { color: #2a7a4f; }
+    .snip-class    { color: var(--color-btn-primary-bg); }
+    .snip-prop     { color: #6066b0; }
+    .snip-val      { color: #2a7a4f; }
+    .snip-sel      { color: var(--color-brand-primary); font-weight: 600; }
+    .snip-tok      { color: #b07c2a; }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div>
+      <h1>Drawer / Bottom Sheet</h1>
+      <p style="margin-top:3px;">Nest Design System • v1.0</p>
+    </div>
+    <div class="brand-switcher">
+      <button class="brand-btn active" id="btn-wilko" onclick="setBrand('wilko')">wilko.com</button>
+      <button class="brand-btn" id="btn-homebase" onclick="setBrand('homebase')">homebase.co.uk</button>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- ── Preview canvas ──────────────────────────────────────── -->
+    <div class="preview-canvas" id="preview-canvas">
+
+      <!-- Wireframe page -->
+      <div class="wireframe-page" id="wireframe-page">
+
+        <!-- Fake header bar -->
+        <div class="wf-header">
+          <div class="wf-logo"></div>
+          <div class="wf-nav">
+            <div class="wf-nav-item"></div>
+            <div class="wf-nav-item"></div>
+            <div class="wf-nav-item"></div>
+          </div>
+        </div>
+
+        <!-- Fake body content -->
+        <div class="wf-body">
+          <div class="wf-hero"></div>
+          <div class="wf-text-block">
+            <div class="wf-line full"></div>
+            <div class="wf-line medium"></div>
+            <div class="wf-line short"></div>
+          </div>
+          <div class="wf-text-block">
+            <div class="wf-line full"></div>
+            <div class="wf-line full"></div>
+            <div class="wf-line medium"></div>
+          </div>
+
+          <!-- Trigger button -->
+          <div class="wf-trigger-area">
+            <button class="cds-btn-primary" id="open-drawer-btn" onclick="openDrawer()">
+              Open Drawer
+            </button>
+          </div>
+
+          <div class="wf-text-block" style="margin-top: var(--space-xs);">
+            <div class="wf-line full"></div>
+            <div class="wf-line medium"></div>
+            <div class="wf-line short"></div>
+          </div>
+          <div class="wf-text-block">
+            <div class="wf-line full"></div>
+            <div class="wf-line full"></div>
+            <div class="wf-line medium"></div>
+          </div>
+          <div class="wf-text-block">
+            <div class="wf-line full"></div>
+            <div class="wf-line short"></div>
+          </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="cds-drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+
+        <!-- The Drawer / Bottom Sheet -->
+        <div class="cds-drawer variant-desktop content-short" id="cds-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title-text">
+
+          <!-- Inner top: handle (mobile only) + header -->
+          <div class="cds-drawer-inner-top">
+            <div class="cds-drawer-handle"></div>
+            <div class="cds-drawer-header">
+              <span class="cds-drawer-title" id="drawer-title-text">Drawer header</span>
+              <button class="cds-drawer-close" onclick="closeDrawer()" aria-label="Close drawer">
+                <!-- Close X icon -->
+                <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2532 15.6665C14.6437 16.0571 15.2769 16.0571 15.6674 15.6665C16.058 15.276 16.058 14.6429 15.6674 14.2523L11.4151 10L15.6674 5.74767C16.058 5.35714 16.058 4.72398 15.6674 4.33345C15.2769 3.94293 14.6437 3.94293 14.2532 4.33345L10.0009 8.58579L5.74857 4.33347C5.35804 3.94294 4.72488 3.94294 4.33436 4.33347C3.94383 4.72399 3.94383 5.35716 4.33436 5.74768L8.58668 10L4.33436 14.2523C3.94383 14.6428 3.94383 15.276 4.33436 15.6665C4.72488 16.0571 5.35805 16.0571 5.74857 15.6665L10.0009 11.4142L14.2532 15.6665Z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Scrollable body -->
+          <div class="cds-drawer-body" id="drawer-body">
+            <!-- Content injected by JS -->
+          </div>
+        </div>
+
+      </div><!-- /wireframe-page -->
+
+      <p class="preview-label" id="preview-caption">Desktop · Short content</p>
+    </div><!-- /preview-canvas -->
+
+    <!-- ── Configurator panel ───────────────────────────────────── -->
+    <div class="configurator">
+
+      <!-- Viewport -->
+      <div class="config-section">
+        <div class="config-section-title">Viewport</div>
+        <div class="seg-control">
+          <button class="seg-btn active" id="vp-desktop" onclick="setViewport('desktop')">Desktop</button>
+          <button class="seg-btn" id="vp-mobile" onclick="setViewport('mobile')">Mobile</button>
+        </div>
+      </div>
+
+      <!-- Content length -->
+      <div class="config-section">
+        <div class="config-section-title">Content length</div>
+        <div class="seg-control">
+          <button class="seg-btn active" id="cl-short" onclick="setContentLength('short')">Short</button>
+          <button class="seg-btn" id="cl-long" onclick="setContentLength('long')">Long</button>
+        </div>
+      </div>
+
+      <!-- Drawer title -->
+      <div class="config-section">
+        <div class="config-section-title">Drawer title</div>
+        <input class="config-input" id="title-input" type="text" value="Drawer header" oninput="setTitle(this.value)" />
+      </div>
+
+      <!-- Token readout -->
+      <div class="config-section">
+        <div class="config-section-title">Active tokens</div>
+        <div class="token-readout" id="token-readout"></div>
+      </div>
+
+    </div><!-- /configurator -->
+
+  </div><!-- /layout -->
+
+  <!-- ── Code snippet panel ──────────────────────────────────────── -->
+  <div class="snippet-panel">
+    <div class="snippet-header">
+      <div class="snippet-tabs">
+        <button class="snippet-tab active" id="tab-html" onclick="setSnippetTab('html')">HTML</button>
+        <button class="snippet-tab" id="tab-css" onclick="setSnippetTab('css')">CSS</button>
+      </div>
+      <button class="snippet-copy-btn" id="copy-btn" onclick="copySnippet()">
+        <svg id="copy-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+    <div class="snippet-body">
+      <pre class="snippet-pre" id="snippet-output"></pre>
+    </div>
+  </div>
+
+  <script>
+    /* ── State ──────────────────────────────────────────────────── */
+    var brand         = 'wilko';
+    var viewport      = 'desktop';
+    var contentLength = 'short';
+    var drawerTitle   = 'Drawer header';
+    var drawerOpen    = false;
+    var snippetTab    = 'html';
+
+    /* ── Content blocks ─────────────────────────────────────────── */
+    var shortContent = [
+      '<p>Information should be chunked into scannable sections and easy to consume.</p>',
+      '<p>Keep the information brief, including only critical information with the option to link to see more details on another page.</p>'
+    ].join('');
+
+    var longContent = [
+      '<p>Information should be chunked into scannable sections and easy to consume.</p>',
+      '<ul>',
+      '<li>Keep the information brief, including only critical information with the option to link to see more details on another page</li>',
+      '<li>Users should spend no more than a minute or so consuming this information — if it takes several minutes, consider linking to a page with more content instead of using a bottom sheet</li>',
+      '<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</li>',
+      '<li>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>',
+      '<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>',
+      '</ul>',
+      '<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'
+    ].join('');
+
+    /* ── Tokens ──────────────────────────────────────────────────── */
+    var tokens = {
+      wilko: {
+        '--color-surface-page':    '#ffffff',
+        '--color-border-default':  '#e6e6e6',
+        '--color-text-primary':    '#222222',
+        '--radius-xl':             '24px',
+        '--motion-duration-slow':  '400ms',
+        '--font-family':           'sofia-pro'
+      },
+      homebase: {
+        '--color-surface-page':    '#ffffff',
+        '--color-border-default':  '#e6e6e6',
+        '--color-text-primary':    '#333333',
+        '--radius-xl':             '24px',
+        '--motion-duration-slow':  '400ms',
+        '--font-family':           'Rubik'
+      }
+    };
+
+    /* ── Drawer open / close ─────────────────────────────────────── */
+    function openDrawer() {
+      drawerOpen = true;
+      document.getElementById('cds-drawer').classList.add('is-open');
+      document.getElementById('drawer-overlay').classList.add('is-open');
+    }
+
+    function closeDrawer() {
+      drawerOpen = false;
+      document.getElementById('cds-drawer').classList.remove('is-open');
+      document.getElementById('drawer-overlay').classList.remove('is-open');
+    }
+
+    /* ── Config setters ─────────────────────────────────────────── */
+    function setBrand(b) {
+      brand = b;
+      document.documentElement.setAttribute('data-brand', b);
+      document.getElementById('btn-wilko').classList.toggle('active', b === 'wilko');
+      document.getElementById('btn-homebase').classList.toggle('active', b === 'homebase');
+      updateAll();
+    }
+
+    function setViewport(v) {
+      viewport = v;
+      document.getElementById('vp-desktop').classList.toggle('active', v === 'desktop');
+      document.getElementById('vp-mobile').classList.toggle('active', v === 'mobile');
+      closeDrawer();
+      updateAll();
+    }
+
+    function setContentLength(cl) {
+      contentLength = cl;
+      document.getElementById('cl-short').classList.toggle('active', cl === 'short');
+      document.getElementById('cl-long').classList.toggle('active', cl === 'long');
+      updateAll();
+    }
+
+    function setTitle(v) {
+      drawerTitle = v;
+      updateAll();
+    }
+
+    /* ── Apply drawer variant classes ───────────────────────────── */
+    function updateDrawerVariant() {
+      var drawer = document.getElementById('cds-drawer');
+      // Remove all variant/content classes
+      drawer.classList.remove('variant-desktop', 'variant-mobile', 'content-short', 'content-long');
+      drawer.classList.add('variant-' + viewport, 'content-' + contentLength);
+    }
+
+    /* ── Update body content ─────────────────────────────────────── */
+    function updateDrawerContent() {
+      document.getElementById('drawer-body').innerHTML =
+        contentLength === 'short' ? shortContent : longContent;
+    }
+
+    /* ── Update title ────────────────────────────────────────────── */
+    function updateDrawerTitle() {
+      document.getElementById('drawer-title-text').textContent = drawerTitle;
+    }
+
+    /* ── Token readout ───────────────────────────────────────────── */
+    function updateTokenReadout() {
+      var t = tokens[brand];
+      var relevant = {
+        '--color-surface-page':   t['--color-surface-page'],
+        '--color-border-default': t['--color-border-default'],
+        '--radius-xl':            t['--radius-xl'],
+        '--motion-duration-slow': t['--motion-duration-slow'],
+        '--font-family':          t['--font-family']
+      };
+      var html = '';
+      Object.keys(relevant).forEach(function(k) {
+        html += '<div class="token-row"><span class="token-name">' + k + '</span><span class="token-value">' + relevant[k] + '</span></div>';
+      });
+      document.getElementById('token-readout').innerHTML = html;
+    }
+
+    /* ── Preview caption ─────────────────────────────────────────── */
+    function updateCaption() {
+      var vLabel = viewport === 'desktop' ? 'Desktop' : 'Mobile';
+      var cLabel = contentLength === 'short' ? 'Short content' : 'Long content';
+      document.getElementById('preview-caption').textContent = vLabel + ' · ' + cLabel;
+    }
+
+    /* ── Snippet tab ─────────────────────────────────────────────── */
+    function setSnippetTab(tab) {
+      snippetTab = tab;
+      document.getElementById('tab-html').classList.toggle('active', tab === 'html');
+      document.getElementById('tab-css').classList.toggle('active', tab === 'css');
+      generateSnippet();
+    }
+
+    /* ── HTML snippet ────────────────────────────────────────────── */
+    function generateHtmlSnippet() {
+      var t = '<span class="snip-tag">';   var tc  = '</span>';
+      var a = '<span class="snip-attr">'; var ac  = '</span>';
+      var s = '<span class="snip-string">'; var sc = '</span>';
+      var c = '<span class="snip-comment">'; var cc = '</span>';
+      var cl = '<span class="snip-class">'; var clc = '</span>';
+
+      var variantClass = 'variant-' + viewport + ' content-' + contentLength;
+      var bodyContent = contentLength === 'short' ? 'short' : 'long';
+      var isMobile = viewport === 'mobile';
+
+      var out = '';
+      out += c + '&lt;!-- CDS Drawer · ' + brand + ' · ' + viewport + ' · ' + contentLength + ' content --&gt;' + cc + '\n';
+      out += c + '&lt;!-- Requires: &lt;html data-brand="' + brand + '"&gt; + cds-tokens.css --&gt;' + cc + '\n\n';
+
+      out += c + '&lt;!-- Overlay --&gt;' + cc + '\n';
+      out += t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"' + cl + 'cds-drawer-overlay' + clc + '"' + sc + ' ' + a + 'onclick' + ac + '=' + s + '"closeDrawer()"' + sc + t + '&gt;&lt;/div&gt;' + tc + '\n\n';
+
+      out += c + '&lt;!-- Drawer --&gt;' + cc + '\n';
+      out += t + '&lt;div' + tc + '\n';
+      out += '  ' + a + 'class' + ac + '=' + s + '"' + cl + 'cds-drawer ' + variantClass + clc + '"' + sc + '\n';
+      out += '  ' + a + 'role' + ac + '=' + s + '"dialog"' + sc + '\n';
+      out += '  ' + a + 'aria-modal' + ac + '=' + s + '"true"' + sc + '\n';
+      out += '  ' + a + 'aria-labelledby' + ac + '=' + s + '"drawer-title"' + sc + '\n';
+      out += t + '&gt;' + tc + '\n';
+
+      out += '\n  ' + c + '&lt;!-- Inner top --&gt;' + cc + '\n';
+      out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-drawer-inner-top"' + sc + t + '&gt;' + tc + '\n';
+      if (isMobile) {
+        out += '    ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-drawer-handle"' + sc + t + '&gt;&lt;/div&gt;' + tc + '\n';
+      }
+      out += '    ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-drawer-header"' + sc + t + '&gt;' + tc + '\n';
+      out += '      ' + t + '&lt;span' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-drawer-title"' + sc + ' ' + a + 'id' + ac + '=' + s + '"drawer-title"' + sc + t + '&gt;' + tc + escHtml(drawerTitle) + t + '&lt;/span&gt;' + tc + '\n';
+      out += '      ' + t + '&lt;button' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-drawer-close"' + sc + ' ' + a + 'onclick' + ac + '=' + s + '"closeDrawer()"' + sc + ' ' + a + 'aria-label' + ac + '=' + s + '"Close drawer"' + sc + t + '&gt;' + tc + '\n';
+      out += '        ' + c + '&lt;!-- Close icon SVG --&gt;' + cc + '\n';
+      out += '      ' + t + '&lt;/button&gt;' + tc + '\n';
+      out += '    ' + t + '&lt;/div&gt;' + tc + '\n';
+      out += '  ' + t + '&lt;/div&gt;' + tc + '\n';
+
+      out += '\n  ' + c + '&lt;!-- Scrollable body --&gt;' + cc + '\n';
+      out += '  ' + t + '&lt;div' + tc + ' ' + a + 'class' + ac + '=' + s + '"cds-drawer-body"' + sc + t + '&gt;' + tc + '\n';
+      out += '    ' + c + '&lt;!-- ' + bodyContent + ' content here --&gt;' + cc + '\n';
+      out += '  ' + t + '&lt;/div&gt;' + tc + '\n';
+      out += t + '&lt;/div&gt;' + tc;
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    /* ── CSS snippet ─────────────────────────────────────────────── */
+    function generateCssSnippet() {
+      var c   = '<span class="snip-comment">';  var cc  = '</span>';
+      var sel = '<span class="snip-sel">';       var selc = '</span>';
+      var p   = '<span class="snip-prop">';      var pc  = '</span>';
+      var v   = '<span class="snip-val">';       var vc  = '</span>';
+      var tok = '<span class="snip-tok">';       var tokc = '</span>';
+      var isMobile = viewport === 'mobile';
+
+      var out = '';
+      out += c + '/* CDS Drawer · ' + brand + ' · ' + viewport + ' · ' + contentLength + ' content */' + cc + '\n\n';
+
+      out += sel + '.cds-drawer' + selc + ' {\n';
+      out += '  ' + p + 'position' + pc + ': ' + v + 'fixed' + vc + ';\n';
+      out += '  ' + p + 'background' + pc + ': ' + tok + 'var(--color-surface-page)' + tokc + ';\n';
+      out += '  ' + p + 'z-index' + pc + ': ' + v + '400' + vc + ';\n';
+      out += '  ' + p + 'display' + pc + ': ' + v + 'flex' + vc + ';\n';
+      out += '  ' + p + 'flex-direction' + pc + ': ' + v + 'column' + vc + ';\n';
+      out += '  ' + p + 'transition' + pc + ': ' + tok + 'transform var(--motion-duration-slow) var(--motion-ease-decelerate)' + tokc + ';\n';
+      out += '}\n\n';
+
+      if (!isMobile) {
+        out += c + '/* Desktop: right-side drawer */' + cc + '\n';
+        out += sel + '.cds-drawer.variant-desktop' + selc + ' {\n';
+        out += '  ' + p + 'top' + pc + ': ' + v + '0' + vc + ';\n';
+        out += '  ' + p + 'right' + pc + ': ' + v + '0' + vc + ';\n';
+        out += '  ' + p + 'bottom' + pc + ': ' + v + '0' + vc + ';\n';
+        out += '  ' + p + 'width' + pc + ': ' + v + '100%' + vc + ';\n';
+        out += '  ' + p + 'max-width' + pc + ': ' + v + '430px' + vc + ';\n';
+        out += '  ' + p + 'transform' + pc + ': ' + v + 'translateX(100%)' + vc + ';\n';
+        out += '}\n';
+        out += sel + '.cds-drawer.variant-desktop.is-open' + selc + ' {\n';
+        out += '  ' + p + 'transform' + pc + ': ' + v + 'translateX(0)' + vc + ';\n';
+        out += '}\n\n';
+      } else {
+        out += c + '/* Mobile: bottom sheet */' + cc + '\n';
+        out += sel + '.cds-drawer.variant-mobile' + selc + ' {\n';
+        out += '  ' + p + 'left' + pc + ': ' + v + '0' + vc + ';\n';
+        out += '  ' + p + 'right' + pc + ': ' + v + '0' + vc + ';\n';
+        out += '  ' + p + 'bottom' + pc + ': ' + v + '0' + vc + ';\n';
+        out += '  ' + p + 'border-radius' + pc + ': ' + tok + 'var(--radius-xl) var(--radius-xl) 0 0' + tokc + ';\n';
+        out += '  ' + p + 'transform' + pc + ': ' + v + 'translateY(100%)' + vc + ';\n';
+        if (contentLength === 'long') {
+          out += '  ' + p + 'max-height' + pc + ': ' + v + 'calc(100% - 72px)' + vc + '; ' + c + '/* leave 72px at top for close reachability */' + cc + '\n';
+        } else {
+          out += '  ' + p + 'max-height' + pc + ': ' + v + '85%' + vc + ';\n';
+        }
+        out += '}\n';
+        out += sel + '.cds-drawer.variant-mobile.is-open' + selc + ' {\n';
+        out += '  ' + p + 'transform' + pc + ': ' + v + 'translateY(0)' + vc + ';\n';
+        out += '}\n\n';
+      }
+
+      out += sel + '.cds-drawer-overlay' + selc + ' {\n';
+      out += '  ' + p + 'position' + pc + ': ' + v + 'fixed' + vc + ';\n';
+      out += '  ' + p + 'inset' + pc + ': ' + v + '0' + vc + ';\n';
+      out += '  ' + p + 'background' + pc + ': ' + v + 'rgba(0,0,0,0)' + vc + ';\n';
+      out += '  ' + p + 'transition' + pc + ': ' + tok + 'background var(--motion-duration-slow) var(--motion-ease-standard)' + tokc + ';\n';
+      out += '  ' + p + 'pointer-events' + pc + ': ' + v + 'none' + vc + ';\n';
+      out += '}\n';
+      out += sel + '.cds-drawer-overlay.is-open' + selc + ' {\n';
+      out += '  ' + p + 'background' + pc + ': ' + v + 'rgba(0,0,0,0.48)' + vc + ';\n';
+      out += '  ' + p + 'pointer-events' + pc + ': ' + v + 'auto' + vc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-drawer-header' + selc + ' {\n';
+      out += '  ' + p + 'display' + pc + ': ' + v + 'flex' + vc + ';\n';
+      out += '  ' + p + 'align-items' + pc + ': ' + v + 'center' + vc + ';\n';
+      out += '  ' + p + 'justify-content' + pc + ': ' + v + 'space-between' + vc + ';\n';
+      out += '  ' + p + 'padding' + pc + ': ' + tok + 'var(--space-xs) var(--space-s)' + tokc + ';\n';
+      out += '  ' + p + 'border-bottom' + pc + ': ' + tok + 'var(--stroke-thin) solid var(--color-border-default)' + tokc + ';\n';
+      out += '}\n\n';
+
+      out += sel + '.cds-drawer-body' + selc + ' {\n';
+      out += '  ' + p + 'flex' + pc + ': ' + v + '1' + vc + ';\n';
+      out += '  ' + p + 'overflow-y' + pc + ': ' + v + 'auto' + vc + ';\n';
+      out += '  ' + p + 'padding' + pc + ': ' + tok + 'var(--space-xs) var(--space-s) var(--space-s)' + tokc + '; ' + c + '/* 24px bottom per spec */' + cc + '\n';
+      out += '}\n';
+
+      document.getElementById('snippet-output').innerHTML = out;
+    }
+
+    function generateSnippet() {
+      if (snippetTab === 'css') { generateCssSnippet(); return; }
+      generateHtmlSnippet();
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    /* ── Copy ────────────────────────────────────────────────────── */
+    function copySnippet() {
+      var pre = document.getElementById('snippet-output');
+      var plain = pre.textContent || pre.innerText;
+      navigator.clipboard.writeText(plain).then(function() {
+        var btn = document.getElementById('copy-btn');
+        var lbl = document.getElementById('copy-label');
+        var ico = document.getElementById('copy-icon');
+        btn.classList.add('copied');
+        lbl.textContent = 'Copied!';
+        ico.innerHTML = '<path d="M2.5 8L6 11.5L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+        setTimeout(function() {
+          btn.classList.remove('copied');
+          lbl.textContent = 'Copy';
+          ico.innerHTML = '<rect x="5" y="5" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        }, 2000);
+      });
+    }
+
+    /* ── Keyboard: Escape closes drawer ─────────────────────────── */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && drawerOpen) closeDrawer();
+    });
+
+    /* ── Master update ───────────────────────────────────────────── */
+    function updateAll() {
+      updateDrawerVariant();
+      updateDrawerContent();
+      updateDrawerTitle();
+      updateTokenReadout();
+      updateCaption();
+      generateSnippet();
+    }
+
+    updateAll();
+  </script>
+</body>
+</html>
